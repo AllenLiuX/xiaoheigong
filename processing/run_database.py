@@ -6,6 +6,8 @@ from definitions import ROOT_DIR
 
 
 def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
+    pdf_min_page = int(pdf_min_page) if len(pdf_min_page) > 0 else 0
+    min_word_count = int(min_word_count) if len(min_word_count) > 0 else 0
     existing_pdfs = mg.search_datas(search_keyword=search_keyword, pdf_min_page=int(pdf_min_page),
                                     min_word_count=int(min_word_count),
                                     num_years=num_years, db='articles')
