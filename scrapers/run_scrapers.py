@@ -23,7 +23,7 @@ def search(search_keyword: str, filter_keyword: str, min_words: str, pdf_min_num
     robo.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
              num_years=num_years, get_pdf=get_pdf)
     _36kr.run(search_keyword=search_keyword, min_word_count=min_words, num_years=num_years, get_pdf=get_pdf)
-    wspm.run(search_keyword, min_words, num_years, 15, '', get_pdf=get_pdf)
+    # wspm.run(search_keyword, min_words, num_years, 15, '', get_pdf=get_pdf)
 
     # cyzone.run(search_keyword=search_keyword)
     # huxiu.run(search_keyword=search_keyword)
@@ -45,7 +45,7 @@ def run_all(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_yea
     else:
         search(search_keyword=search_keyword, filter_keyword=filter_keyword, min_words=min_words,
                pdf_min_num_page=pdf_min_num_page, num_years=num_years,
-               get_pdf=False)
+               get_pdf=True)
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
