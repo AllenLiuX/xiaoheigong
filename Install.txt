@@ -1,0 +1,12 @@
+For Unix users:
+
+Installing xpdf:
+
+1. Copy the xpdf directory to /usr/local/share
+
+2. Copy the executables in bin64 (xpdf, pdftotext, etc.) to to /usr/local/bin.
+
+3. Copy the man pages (*.1 and *.5) to /usr/local/man/man1 and
+   /usr/local/man/man5.
+
+4. Copy doc/sample-xpdfrc file to /usr/local/etc/xpdfrc.

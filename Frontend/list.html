@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="list.css">
+    <script src="statics/jquery-3.4.1.js"></script>
+    <script src="search.js"></script>
+    <title>小黑科技</title>
+</head>
+<header>
+</header>
+<body>
+<div id="seq-box">
+    <input type="button" value="页数排序" id="seq-button">
+    <input type="button" value="日期排序" id="seq-button">
+    <input type="button" value="关联性排序" id="seq-button">
+</div>
+<div id="set-box">
+    <select class="filter-box" name="type">
+            <option value="all">企业基本情况</option>
+            <option value="研报">。。。</option>
+            <option value="资讯">。。。</option>
+            <option value="other">。。。</option>
+    </select>
+    <select class="filter-box" name="type">
+            <option value="all">小tag</option>
+            <option value="研报">。。。</option>
+            <option value="资讯">。。。</option>
+            <option value="other">。。。</option>
+    </select>
+</div>
+<div id="container">
+    <form>
+        <div id="search-box">
+            <h1 class="page-title">小黑科技</h1>
+            <input type="text" name="company" id="input-text" placeholder="公司名">
+            <input type="text" name="keywords" id="input-text" placeholder="关键词(Optional)">
+            <input type="submit" value="搜索" id="sub-button" onclick="change()">
+        </div>
+        <label class="filter-title">年份</label>
+        <label for="y0">不限</label>
+        <input type="radio" id="y0" value="none" name="Time"/>
+        <label for="y3">一年内</label>
+        <input type="radio" id="y3" value="1" name="Time"/>
+        <label for="y2">三年内</label>
+        <input type="radio" id="y2" value="3" name="Time"/>
+        <label for="y1">五年内</label>
+        <input type="radio" id="y1" value="5" name="Time"/>
+        <br><br>
+        <label class="filter-title">研报页数</label>
+        <label for="p0">不限</label>
+        <input type="radio" id="p0" value="none" name="Page"/>
+        <label for="p1">10 page+</label>
+        <input type="radio" id="p1" value="10" name="Page"/>
+        <label for="p2">20 page+</label>
+        <input type="radio" id="p2" value="20" name="Page"/>
+        <br><br>
+        <label class="filter-title">资料种类</label>
+        <select class="filter-box" name="type">
+            <option value="all">全部</option>
+            <option value="研报">研报</option>
+            <option value="资讯">资讯</option>
+            <option value="other">其他</option>
+        </select>
+        <br><br>
+        <label class="filter-title">标题需包括</label>
+        <select class="filter-box" name="title">
+            <option value="none">无</option>
+            <option value="周报">周报</option>
+            <option value="深度">深度</option>
+            <option value="公司名">公司名</option>
+        </select>
+<!--        <input type="text">-->
+        <br><br>
+        <label class="filter-title">获取数量</label>
+        <label for="a0">不限</label>
+        <input type="radio" id="a0" value="none" name="Amount"/>
+        <label for="a1">10个以内</label>
+        <input type="radio" id="a1" value="10" name="Amount"/>
+        <label for="a2">30个以内</label>
+        <input type="radio" id="a2" value="30" name="Amount"/>
+        <label for="a3">50个以内</label>
+        <input type="radio" id="a3" value="50" name="Amount"/>
+    </form>
+</div>
+<div class="content">
+    <ul>
+            <li>
+                <div class="left"><img src="../img/new1.png" alt=""></div>
+                <div class="right">
+                    <div class="right_top">
+                        <h3>【申万宏源】中芯国际（00981）：强势崛起的中国芯</h3>
+                    </div>
+                    <div class="right_bottom">
+                        <div class="right_bottom_left">
+                            <span>作者</span>  <span>来源</span>  <span>种类</span> <span>|</span> <span>7小时前</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="left"><img src="../img/new2.png" alt=""></div>
+                <div class="right">
+                    <div class="right_top">
+                        <h3>【西南证券】昊华科技（600378）：昊华科技产品分析梳理</h3>
+                    </div>
+                    <div class="right_bottom">
+                        <div class="right_bottom_left">
+                            <span>作者</span>  <span>来源</span>  <span>种类</span> <span>|</span> <span>7小时前</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="left"><img src="../img/new1.png" alt=""></div>
+                <div class="right">
+                    <div class="right_top">
+                        <h3>中芯科技战略报告</h3>
+                    </div>
+                    <div class="right_bottom">
+                        <div class="right_bottom_left">
+                            <span>发现报告</span>  <span>来源</span>  <span>种类</span> <span>|</span> <span>7小时前</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="left"><img src="pics/tech3.jpg" alt=""></div>
+                <div class="right">
+                    <div class="right_top">
+                        <h3>中芯科技</h3>
+                    </div>
+                    <div class="right_bottom">
+                        <div class="right_bottom_left">
+                            <span>作者</span>  <span>来源</span>  <span>种类</span> <span>|</span> <span>7小时前</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="left"><img src="../img/new1.png" alt=""></div>
+                <div class="right">
+                    <div class="right_top">
+                        <h3>XXX</h3>
+                    </div>
+                    <div class="right_bottom">
+                        <div class="right_bottom_left">
+                            <span>作者</span>  <span>来源</span>  <span>种类</span> <span>|</span> <span>7小时前</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="left"><img src="../img/new1.png" alt=""></div>
+                <div class="right">
+                    <div class="right_top">
+                        <h3>XXXX</h3>
+                    </div>
+                    <div class="right_bottom">
+                        <div class="right_bottom_left">
+                            <span>作者</span>  <span>来源</span>  <span>种类</span> <span>|</span> <span>7小时前</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="left"><img src="../img/new1.png" alt=""></div>
+                <div class="right">
+                    <div class="right_top">
+                        <h3>XXX</h3>
+                    </div>
+                    <div class="right_bottom">
+                        <div class="right_bottom_left">
+                            <span>作者</span>  <span>来源</span>  <span>种类</span> <span>|</span> <span>7小时前</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        <li>
+                <div class="left"><img src="../img/new1.png" alt=""></div>
+                <div class="right">
+                    <div class="right_top">
+                        <h3>XXX</h3>
+                    </div>
+                    <div class="right_bottom">
+                        <div class="right_bottom_left">
+                            <span>作者</span>  <span>来源</span>  <span>种类</span> <span>|</span> <span>7小时前</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        <li>
+                <div class="left"><img src="../img/new1.png" alt=""></div>
+                <div class="right">
+                    <div class="right_top">
+                        <h3>XXX</h3>
+                    </div>
+                    <div class="right_bottom">
+                        <div class="right_bottom_left">
+                            <span>作者</span>  <span>来源</span>  <span>种类</span> <span>|</span> <span>7小时前</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+</div>
+</body>
+</html>
