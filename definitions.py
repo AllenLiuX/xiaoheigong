@@ -3,6 +3,8 @@ import os
 # The root project directory
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 OSS_PATH = 'http://xiaoheipdf.oss-accelerate.aliyuncs.com/'
+CHROME_DRIVER_PATH = os.path.join(ROOT_DIR, 'venv', 'chromedriver')
+
 
 # The number of occurrences of the company name in a pdf as a keyword
 COMPANY_NAME_OCCUR = 30
