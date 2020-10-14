@@ -6,8 +6,9 @@ from definitions import ROOT_DIR
 
 
 def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
-    existing_pdfs = mg.search_datas(search_keyword=search_keyword, pdf_min_page=pdf_min_page, min_word_count=min_word_count,
-                              num_years=num_years, db='articles')
+    existing_pdfs = mg.search_datas(search_keyword=search_keyword, pdf_min_page=int(pdf_min_page),
+                                    min_word_count=int(min_word_count),
+                                    num_years=num_years, db='articles')
     for pdf in existing_pdfs:
         pdf.pop('_id')
         pdf.pop('content')
@@ -27,4 +28,4 @@ def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
 
 
 if __name__ == '__main__':
-    pp.pprint(get_db_results('中芯国际', 20, 3000, 5))
+    pp.pprint(get_db_results('中芯国际', '150', '3000', 5))
