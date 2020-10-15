@@ -68,7 +68,7 @@ export default function Search() {
 									<td> {article.date} </td>
 									<td> {article.org_name} </td>
 									<td> {article.doc_type} </td>
-									<td> <a href={article.download_url}>OPEN</a> </td>
+									<td> <a href={article.download_url} target="_blank">OPEN</a> </td>
 								</tr>
 							)
 						})}
