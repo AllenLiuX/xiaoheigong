@@ -220,8 +220,7 @@ class Filter:
         :param search_keyword: search keyword
         """
         # Loading local summary
-        save_path = os.path.join(ROOT_DIR, 'cache', search_keyword, 'summary.json')
-        source_summary = json.load(open(save_path, 'r', encoding='utf-8'))
+        source_summary = json.load(open('summary.json', 'r', encoding='utf-8'))
 
         # Removing unnecessary attribute
         if 'search_keyword' in source_summary.keys():
@@ -248,7 +247,7 @@ class Filter:
             self.summary.update({search_keyword: updated})
 
         # Saving local summary
-        json.dump(source_summary, open(save_path, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+        json.dump(source_summary, open('summary.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
 
     def save_summary(self, search_keyword):
         """
