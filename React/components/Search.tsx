@@ -44,7 +44,7 @@ export default function Search() {
 		<>
 		{loading ? 
 			<div>
-				{results.source != 200
+				{results.status != 200
 				?
 				<Loading/>:
 				<div>
