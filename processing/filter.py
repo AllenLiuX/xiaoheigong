@@ -227,7 +227,7 @@ class Filter:
         if 'search_keyword' in source_summary.keys():
             source_summary.pop('search_keyword')
 
-        source_name = source_summary[search_keyword]['source']                              # '36kr'
+        source_name = source_summary['source']                              # '36kr'
 
         # Removing blacklisted ids from local summary
         for doc in source_summary['data'].copy():
