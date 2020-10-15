@@ -30,7 +30,7 @@ export default function Search() {
 		axios.post(`http://8.210.91.108:5000/`, {params})
         .then(res => {
 			console.log(res)
-			setResults(res.data)
+			setResults(res)
         })
         .catch(err => {
             console.log(err);
@@ -60,7 +60,7 @@ export default function Search() {
 						</tr>
 					</thead>
 					<tbody>
-						{results.data[0].map((article, i) => {
+						{results.data.data[0].map((article, i) => {
 							return (
 								<tr key={i}>
 									<td> {article.source} </td>
