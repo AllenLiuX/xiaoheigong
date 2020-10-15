@@ -30,7 +30,7 @@ export default function Search() {
 		axios.post(`http://8.210.91.108:5000/`, {params})
         .then(res => {
 			console.log(res)
-			setResults(res.data.data[0])
+			setResults(res.data)
         })
         .catch(err => {
             console.log(err);
@@ -44,7 +44,7 @@ export default function Search() {
 		<>
 		{loading ? 
 			<div>
-				{results.length == 0
+				{results.source != 200
 				?
 				<Loading/>:
 				<div>
@@ -56,10 +56,11 @@ export default function Search() {
 							<th>Date</th>
 							<th>Author</th>
 							<th>Type</th>
+							<th>Link</th>
 						</tr>
 					</thead>
 					<tbody>
-						{results.map((article, i) => {
+						{results.data[0].map((article, i) => {
 							return (
 								<tr key={i}>
 									<td> {article.source} </td>
@@ -67,6 +68,7 @@ export default function Search() {
 									<td> {article.date} </td>
 									<td> {article.org_name} </td>
 									<td> {article.doc_type} </td>
+									<td> <a href={article.download_url}>OPEN</a> </td>
 								</tr>
 							)
 						})}
@@ -143,7 +145,7 @@ export default function Search() {
 								className="custom-control-input"
 								value="inf"
 								id="year-4"
-								checked={inputDate === "inf"}
+								checked={inputDate === "100"}
 								onChange={(event) => setInputDate(event.target.value)}
 							/>
 							<label className="custom-control-label" htmlFor="year-4"> 不限</label>
@@ -195,7 +197,7 @@ export default function Search() {
 								className="custom-control-input"
 								value="inf"
 								id="length-4"
-								checked={inputLength === "inf"}
+								checked={inputLength === "0"}
 								onChange={(event) => setInputLength(event.target.value)}
 							/>
 							<label className="custom-control-label" htmlFor="length-4">不限</label>
