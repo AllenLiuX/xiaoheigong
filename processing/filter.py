@@ -129,8 +129,9 @@ class Filter:
                 try:
                     pdfkit.from_file(filename, pdf_filename, options=options)
                 except:
+                    print("fuck!!!!")
                     continue
-                # Removing html files
+                # Removing html files                
                 os.remove(filename)
         os.chdir(curr_dir)
 
@@ -283,6 +284,7 @@ class Filter:
 
                 # Convert html files to pdf first for news sources
                 if file_type == 'news':
+                    print("FUCK")
                     self.html_to_pdf(curr_dir)
 
                 # Process all pdf files
