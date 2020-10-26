@@ -9,6 +9,7 @@ export default function Search() {
 	const [inputType, setInputType] = useState("全部")
 	const [loading, setLoading] = useState(false)
 	const [results, setResults] = useState([])
+	const [status, setStatus] = useState(Number())
 
 	const submitHandler = event => {
 		event.preventDefault();
@@ -30,7 +31,8 @@ export default function Search() {
 		axios.post(`http://8.210.91.108:5000/`, {params})
         .then(res => {
 			console.log(res)
-			setResults(res)
+			setResults(res.data.data[0])
+			setStatus(res.status)
         })
         .catch(err => {
             console.log(err);
@@ -44,7 +46,7 @@ export default function Search() {
 		<>
 		{loading ? 
 			<div>
-				{results.status != 200
+				{status != 200
 				?
 				<Loading/>:
 				<div>
@@ -60,7 +62,7 @@ export default function Search() {
 						</tr>
 					</thead>
 					<tbody>
-						{results.data.data[0].map((article, i) => {
+						{results.map((article, i) => {
 							return (
 								<tr key={i}>
 									<td> {article.source} </td>

@@ -224,3 +224,5 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 React/node_modules
+
+React/.next/
