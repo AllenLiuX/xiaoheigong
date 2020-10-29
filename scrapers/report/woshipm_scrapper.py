@@ -12,6 +12,7 @@ import os
 import sys
 import getopt
 import time
+sys.path.append('/root/xiaoheigong')
 from definitions import ROOT_DIR, OSS_PATH
 import oss.mongodb as mg
 import oss.oss as ossfile
@@ -107,6 +108,8 @@ def form_json(id, soup, content, searchword, begin_time, current_path, oss_path,
     print('title:', title)
     info['title'] = title
     # print(info)
+    if not os.path.exists(current_path):
+        os.makedirs(current_path)
     json_save_path = os.path.join(current_path, id + '.json')
     with open(json_save_path, 'w') as f:
         f.write(json.dumps(info, ensure_ascii=False, indent=4, separators=(',', ':')))
@@ -220,7 +223,7 @@ def main():
     print("Found articles count: " + str(len(ids)))
     for id in ids:
         print("Processing article #" + str(id))
-        status = process_article(id, int(words_min), searchword, keywords, begin_time)
+        status = process_article(id, int(words_min), searchword, keywords, begin_time, False)
         if not status:
             break
 

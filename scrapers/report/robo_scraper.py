@@ -2,15 +2,14 @@ import datetime
 import json
 import os
 
-from definitions import ROOT_DIR, OSS_PATH
-from utils.get_cookies import get_cookies
 import requests
 from fake_useragent import UserAgent
+
+import oss.mongodb as mg
+from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError
-import pprint as pp
-import oss.mongodb as mg
-import oss.oss as ossfile
+from utils.get_cookies import get_cookies
 
 
 class ROBO:
@@ -46,9 +45,10 @@ class ROBO:
         self.summary = {'source': 'robo', 'source_type': 'report', 'search_keyword': '', 'search_time': '', 'data': []}
 
     def check_database(self, search_keyword: str, pdf_min_num_page: str, num_years: int):
-        db_existing = mg.search_datas(search_keyword=search_keyword, min_word_count='', pdf_min_page=pdf_min_num_page, num_years=num_years)
+        db_existing = mg.search_datas(search_keyword=search_keyword, min_word_count='',
+                                      pdf_min_page=int(pdf_min_num_page), num_years=num_years)
         for file in db_existing:
-            self.whitelist.add(file['_id'])
+            self.whitelist.add(file['doc_id'])
 
     def get_pdf_id(self, search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int) -> dict:
         # Adding blacklist
@@ -69,11 +69,17 @@ class ROBO:
             'pubTimeEnd': str(curr_year) + '1231',
             'minPageCount': pdf_min_num_page
         }
-        response = self.s.get(url=search_url, headers=headers, params=params).json()
-        json_list = response['data']['list']
+        # Updatig summary before search
+        self.summary.update({'search_keyword': search_keyword})
+        self.summary.update({'search_time': str(datetime.datetime.now().date())})
 
-        if not json_list:
+        response = self.s.get(url=search_url, headers=headers, params=params).json()
+
+        # Bad request
+        if response['code'] != 1:
             raise NoDocError('No documents found')
+
+        json_list = response['data']['list']
 
         id_list = {doc['data']['id']: doc for doc in json_list}
 
@@ -82,10 +88,9 @@ class ROBO:
             id_list = self.blacklist.bwlist_filter(id_list, self.source)
 
         # Filter Whitelist
-        self.check_database(search_keyword=search_keyword, pdf_min_num_page=pdf_min_num_page, num_years=num_years)
         for doc_id in id_list.copy():
             id_match_res = mg.show_datas('robo', query={'doc_id': str(doc_id)})
-            if doc_id in self.whitelist or id_match_res:
+            if id_match_res:
                 print('article #' + str(doc_id) + ' is already in database. Skipped.')
                 id_list.pop(doc_id)
 
@@ -137,11 +142,6 @@ class ROBO:
         current_path = os.path.join(keyword_dir, 'report', '萝卜投研')
 
         for pdf_id in url_list:
-            # whitelist by database
-            id_match_res = mg.show_datas('robo', query={'doc_id': pdf_id})
-            if id_match_res:
-                print('article #' + str(pdf_id) + ' is already in database. Skipped.')
-                continue
             pdf_save_path = os.path.join(current_path, str(pdf_id) + '.pdf')
             txt_save_path = os.path.join(current_path, str(pdf_id) + '.json')
 
@@ -173,8 +173,7 @@ class ROBO:
 
                 self.summary.update({'source': 'robo'})
                 self.summary.update({'source_type': 'report'})
-                self.summary.update({'search_keyword': search_keyword})
-                self.summary.update({'search_time': str(datetime.datetime.now().date())})
+
 
                 doc_info_copy = doc_info.copy()
                 doc_info_copy.pop('_id')
@@ -214,4 +213,4 @@ def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_yea
 
 
 if __name__ == '__main__':
-    run(search_keyword='可口可乐', filter_keyword='', pdf_min_num_page='400', num_years=2, get_pdf=True)
+    run(search_keyword='中芯国际', filter_keyword='', pdf_min_num_page='3000', num_years=2, get_pdf=True)
