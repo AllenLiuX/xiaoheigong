@@ -1,19 +1,33 @@
-import scrapers.run_scrapers as run_all
-import processing.filter as filter
-import processing.upload as upload
-import processing.run_database as run_database
 import pprint as pp
 
+import processing.filter as filter
+import processing.run_database as run_database
+import processing.upload as upload
+import scrapers.run_scrapers as run_scrapers
 
-def run(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_years):
+
+def run_all(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_years):
     run_database.get_db_results(search_keyword=search_keyword, pdf_min_page=pdf_min_num_page, min_word_count=min_words,
                                 num_years=num_years)
-    run_all.run_all(search_keyword=search_keyword, filter_keyword=filter_keyword, min_words=min_words,
-                    pdf_min_num_page=pdf_min_num_page, num_years=num_years)
-    filter.run_both_filters()
+    run_scrapers.run_all(search_keyword=search_keyword, filter_keyword=filter_keyword, min_words=min_words,
+                         pdf_min_num_page=pdf_min_num_page, num_years=num_years)
+    filter.run_both_filters(search_keyword=search_keyword)
     upload.update_filtered(search_keyword=search_keyword)
     return upload.transfer(search_keyword=search_keyword)
 
 
+def search_db(search_keyword, min_words, pdf_min_num_page, num_years):
+    return run_database.get_db_results(search_keyword, pdf_min_num_page, min_words, num_years)
+
+
+def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_years):
+    run_scrapers.run_all(search_keyword=search_keyword, filter_keyword=filter_keyword, min_words=min_words,
+                         pdf_min_num_page=pdf_min_num_page, num_years=num_years)
+    filter.run_both_filters(search_keyword=search_keyword)
+    upload.update_filtered(search_keyword=search_keyword)
+
+
 if __name__ == '__main__':
-    pp.pprint(run(search_keyword='中芯国际', filter_keyword='', min_words='3000', pdf_min_num_page='150', num_years=1))
+    pp.pprint(
+        run_database.get_db_results(search_keyword='中芯国际', pdf_min_page='120', min_word_count='3000', num_years=1))
+    # pp.pprint(run(search_keyword='sdflksdlkfj', filter_keyword='', min_words='239482394879', pdf_min_num_page='238947239847', num_years=1))

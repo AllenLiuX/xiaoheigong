@@ -6,14 +6,11 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-import pprint as pp
 
+import oss.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError
-
-import oss.mongodb as mg
-import oss.oss as ossfile
 
 now = datetime.now()
 
@@ -27,7 +24,8 @@ class _36KR():
         self.summary = {}
 
     def check_database(self, search_keyword: str, min_word_count: str, num_years: int):
-        db_existing = mg.search_datas(search_keyword=search_keyword, pdf_min_page='', min_word_count=min_word_count,
+        db_existing = mg.search_datas(search_keyword=search_keyword, pdf_min_page='',
+                                      min_word_count=int(min_word_count),
                                       num_years=num_years)
         for file in db_existing:
             self.whitelist.add(file['_id'])
@@ -42,8 +40,7 @@ class _36KR():
                              {
                                  "class": "kr-search-result-list-main clearfloat"})  # find class that contains search results
 
-        if not articles:
-            raise NoDocError('No documents found')
+
 
         articles_count = 0
 
@@ -56,17 +53,22 @@ class _36KR():
         # Generate db whitelist
         self.check_database(search_keyword=search_keyword, min_word_count=min_word_count, num_years=num_years)
 
-        for a in articles.find_all('a', {"class": "article-item-title weight-bold"},
-                                   href=True):  # find all a links with href within class
-            valid = self.textScrape(search_keyword, "https://36kr.com" + a['href'], path, num_years,
-                                    get_pdf)
-            if valid:
-                articles_count += 1
+        if articles:
+            for a in articles.find_all('a', {"class": "article-item-title weight-bold"},
+                                       href=True):  # find all a links with href within class
+                valid = self.textScrape(search_keyword, "https://36kr.com" + a['href'], path, num_years,
+                                        get_pdf)
+                if valid:
+                    articles_count += 1
 
         # Save summary
         summary_save_path = os.path.join(path, 'summary.json')
+
         with open(summary_save_path, 'w', encoding='utf-8') as f:
             json.dump(self.summary, f, ensure_ascii=False, indent=4)
+
+        if not articles:
+            raise NoDocError('No documents found')
 
         print('--------Finished downloading %d articles from 36kr--------' % articles_count)
 
@@ -142,9 +144,6 @@ class _36KR():
             doc_info_copy = doc_info.copy()
             self.summary['data'].append(doc_info_copy)
 
-            with open(json_save_path, 'w', encoding='utf-8') as f:
-                json.dump(doc_info, f, ensure_ascii=False, indent=4)
-
             # store doc_info to mongodb
             mg.insert_data(doc_info, '36kr')
 
@@ -186,4 +185,4 @@ def run(search_keyword, min_word_count, num_years, get_pdf):
 
 
 if __name__ == '__main__':
-    run(search_keyword='可口可乐', min_word_count='3000', num_years=1, get_pdf=True)
+    run(search_keyword='sdflksdlkfj', min_word_count='3000', num_years=1, get_pdf=True)

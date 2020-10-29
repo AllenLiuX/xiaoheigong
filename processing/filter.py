@@ -1,13 +1,12 @@
 import json
+import os
 import time
 
-import xpdf_python.wrapper as xpdf
-import os
 import pdfkit
 
-from utils import bwlist
+import xpdf_python.wrapper as xpdf
 from definitions import ROOT_DIR, COMPANY_NAME_OCCUR
-import pprint as pp
+from utils import bwlist
 
 
 class Filter:
@@ -131,7 +130,7 @@ class Filter:
                 except:
                     print("fuck!!!!")
                     continue
-                # Removing html files                
+                # Removing html files
                 os.remove(filename)
         os.chdir(curr_dir)
 
@@ -144,7 +143,6 @@ class Filter:
         os.chdir(directory)
         company_name_threshold = COMPANY_NAME_OCCUR
         self.blacklist = bwlist.BWList(search_keyword, 'black')
-        self.whitelist = bwlist.BWList(search_keyword, 'white')
 
         for filename in os.listdir(os.curdir):
             if filename.endswith('.pdf'):
@@ -191,8 +189,6 @@ class Filter:
                         json.dump(attributes, file, ensure_ascii=False, indent=4)
                         file.close()
 
-                    # Save downloaded id to whitelist
-                    self.whitelist.add_to_bwlist(source, doc_id)
                 except (ValueError, SyntaxError, FileNotFoundError):
                     print('--------%s put to blacklist--------' % doc_id)
                     # Save problematic id to blacklist
@@ -207,8 +203,7 @@ class Filter:
                         os.remove(doc_id + '.txt')
                     continue
 
-        # Saving blacklist and whitelist
-        self.whitelist.save_bwlist()
+        # Saving blacklist
         self.blacklist.save_bwlist()
 
         if os.path.exists('summary.json'):
@@ -234,11 +229,6 @@ class Filter:
             if source_name in self.blacklist.list.keys() and doc['doc_id'] in self.blacklist.list[source_name]:
                 source_summary['data'].remove(doc)
 
-        # if source_name in self.blacklist.list.keys():
-        #     for source_id in self.blacklist.list[source_name]:
-        #         if source_id in source_summary['data'].keys():
-        #             source_summary['data'].pop(source_id)
-
         # Update to overall summary
         if search_keyword not in self.summary.keys():
             self.summary.update({search_keyword: {source_name: source_summary.copy()}})
@@ -260,49 +250,52 @@ class Filter:
             with open(save_path, 'w', encoding='utf-8') as f:
                 json.dump(self.summary, f, ensure_ascii=False, indent=4)
 
-    def run_filter(self, file_type: str):
+    def run_filter(self, search_keyword: str, file_type: str):
         """
         For news: html --> pdf --> process pdf --> update json
         For reports: pdf --> process pdf --> update json
+        :param search_keyword: search keyword
         :param file_type: can either be 'news' or 'report'
         """
         os.chdir(ROOT_DIR)
 
-        for keyword_name in os.listdir('cache'):
-            # keyword_name: 中芯国际/可口可乐……
-            if not os.path.isdir(os.path.join('cache', keyword_name)):
+        if not os.path.isdir(os.path.join('cache', search_keyword)):
+            # cache/中芯国际 not exist
+            return
+
+        if not os.path.isdir(os.path.join('cache', search_keyword, file_type)):
+            # cache/中芯国际/news 不存在
+            return
+
+        for source_name in os.listdir(os.path.join('cache', search_keyword, file_type)):
+            # source_name: 发现报告/萝卜投研……
+            curr_dir = os.path.join('cache', search_keyword, file_type, source_name)
+
+            # path does not exist
+            if not os.path.isdir(curr_dir):
                 continue
-            for source_name in os.listdir(os.path.join('cache', keyword_name, file_type)):
-                # source_name: 发现报告/萝卜投研……
-                curr_dir = os.path.join('cache', keyword_name, file_type, source_name)
 
-                # path does not exist
-                if not os.path.isdir(curr_dir):
-                    continue
+            print('======== Processing files from %s ========' % source_name)
 
-                print('======== Processing files from %s ========' % source_name)
+            # Convert html files to pdf first for news sources
+            if file_type == 'news':
+                self.html_to_pdf(curr_dir)
 
-                # Convert html files to pdf first for news sources
-                if file_type == 'news':
-                    print("FUCK")
-                    self.html_to_pdf(curr_dir)
-
-                # Process all pdf files
-                self.pdf_process(curr_dir, keyword_name)
-            self.save_summary(keyword_name)
+            # Process all pdf files
+            self.pdf_process(curr_dir, search_keyword)
+        self.save_summary(search_keyword)
 
 
-def run_both_filters():
+def run_both_filters(search_keyword):
     """
     Runs both news filter and reports filter. News filter converts html to pdf, Report filter doesn't.
     """
     start_time = time.time()
     file_filter = Filter()
-    file_filter.run_filter(file_type='news')
-    file_filter.run_filter(file_type='report')
+    file_filter.run_filter(search_keyword=search_keyword, file_type='news')
+    file_filter.run_filter(search_keyword=search_keyword, file_type='report')
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
 if __name__ == '__main__':
-    run_both_filters()
-
+    run_both_filters(search_keyword='腾讯')
