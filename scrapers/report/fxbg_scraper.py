@@ -1,15 +1,13 @@
 import datetime
 import json
 import os
-import pprint as pp
 from typing import Optional
 
 import requests
 from fake_useragent import UserAgent
 
 import oss.mongodb as mg
-import oss.oss as ossfile
-from definitions import ROOT_DIR, OSS_PATH
+from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError
 
@@ -89,10 +87,17 @@ class FXBG:
             'User-Id': self.user_id,
             'VERSION': '1.0.0',
         })
-        response = self.s.post(url=search_url, data=json.dumps(payload), headers=headers).json()
 
-        if not response['data']['dataList']:
+        # Update summary before searching
+        self.summary.update({'search_keyword': search_keyword})
+        self.summary.update({'search_time': str(datetime.datetime.now())})
+
+        response = self.s.post(url=search_url, data=json.dumps(payload), headers=headers)
+
+        if response.status_code != 200:
             raise NoDocError('No documents found')
+
+        response = response.json()
 
         id_list = {doc['docId']: doc for doc in response['data']['dataList']}
 
@@ -101,7 +106,7 @@ class FXBG:
             id_list = self.blacklist.bwlist_filter(id_list, self.source)
 
         # Checking whitelist
-        self.check_database(search_keyword=search_keyword, pdf_min_num_page=pdf_min_num_page, num_years=num_years)
+        # self.check_database(search_keyword=search_keyword, pdf_min_num_page=pdf_min_num_page, num_years=num_years)
         for doc_id in id_list.copy():
             id_match_res = mg.show_datas('fxbg', query={'doc_id': doc_id})
             if doc_id in self.whitelist or id_match_res:
@@ -215,8 +220,6 @@ class FXBG:
             pdf_count += 1
 
             # Saving into summary
-            self.summary.update({'search_keyword': search_keyword})
-            self.summary.update({'search_time': str(datetime.datetime.now())})
 
             doc_info_copy = doc_info.copy()
             doc_info_copy.pop('_id')

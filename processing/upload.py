@@ -1,10 +1,10 @@
-import os
 import json
+import os
+import pprint as pp
+
 from definitions import ROOT_DIR
 from definitions import translate
 from oss.mongodb import update_datas
-from processing.run_database import get_db_results
-import pprint as pp
 
 
 def update_filtered(search_keyword):
@@ -31,6 +31,11 @@ def update_filtered(search_keyword):
 
 
 def transfer(search_keyword):
+    """
+    Collects all the data from current search and from database, and return a list of results to the frontend
+    :param search_keyword: current search keyword
+    :return: a tuple of a list of results, and the length of the list
+    """
     all_results = []
     summary = os.path.join(ROOT_DIR, 'cache', search_keyword, 'summary.json')
     summary = json.load(open(summary, 'r', encoding='utf-8'))[search_keyword]
