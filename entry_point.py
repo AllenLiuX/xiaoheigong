@@ -29,5 +29,4 @@ def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_year
 
 if __name__ == '__main__':
     pp.pprint(
-        run_database.get_db_results(search_keyword='中芯国际', pdf_min_page='120', min_word_count='3000', num_years=1))
-    # pp.pprint(run(search_keyword='sdflksdlkfj', filter_keyword='', min_words='239482394879', pdf_min_num_page='238947239847', num_years=1))
+        search_db(search_keyword='中芯国际', min_words='3000', pdf_min_num_page='150', num_years=1))
