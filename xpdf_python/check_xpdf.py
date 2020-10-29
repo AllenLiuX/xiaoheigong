@@ -1,6 +1,8 @@
 import os
 import sys
 
+# if on mac, it should be /usr/local/bin/pdftotext
+# if on linux, it should be /usr/bin/pdftotext
 if os.path.isfile('/usr/bin/pdftotext'):
 	pass
 else:
