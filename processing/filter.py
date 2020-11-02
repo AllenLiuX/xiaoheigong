@@ -255,7 +255,7 @@ class Filter:
         For news: html --> pdf --> process pdf --> update json
         For reports: pdf --> process pdf --> update json
         :param search_keyword: search keyword
-        :param file_type: can either be 'news' or 'report'
+        :param file_type: can either be 'html' or 'has_pdf'
         """
         os.chdir(ROOT_DIR)
 
@@ -278,7 +278,7 @@ class Filter:
             print('======== Processing files from %s ========' % source_name)
 
             # Convert html files to pdf first for news sources
-            if file_type == 'news':
+            if file_type == 'html':
                 self.html_to_pdf(curr_dir)
 
             # Process all pdf files
@@ -292,10 +292,10 @@ def run_both_filters(search_keyword):
     """
     start_time = time.time()
     file_filter = Filter()
-    file_filter.run_filter(search_keyword=search_keyword, file_type='news')
-    file_filter.run_filter(search_keyword=search_keyword, file_type='report')
+    file_filter.run_filter(search_keyword=search_keyword, file_type='html')
+    file_filter.run_filter(search_keyword=search_keyword, file_type='has_pdf')
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
 if __name__ == '__main__':
-    run_both_filters(search_keyword='腾讯')
+    run_both_filters(search_keyword='中芯国际')

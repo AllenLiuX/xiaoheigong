@@ -138,10 +138,15 @@ class _36KR():
                 'date': date,
                 'org_name': author,
                 'oss_path': 'news/36kr/' + str(doc_id) + '.pdf',
-                'doc_type': 'NEWS'
+                'doc_type': 'NEWS',
+                'has_pdf': 'html'
             }
 
             doc_info_copy = doc_info.copy()
+
+            with open(json_save_path, 'w', encoding='utf-8') as f:
+                json.dump(doc_info, f, ensure_ascii=False, indent=4)
+
             self.summary['data'].append(doc_info_copy)
 
             # store doc_info to mongodb
@@ -159,13 +164,13 @@ class _36KR():
             if search_keyword not in os.listdir('cache'):
                 os.mkdir(keyword_dir)
 
-            if 'news' not in os.listdir(keyword_dir):
-                os.mkdir(os.path.join(keyword_dir, 'news'))
+            if 'html' not in os.listdir(keyword_dir):
+                os.mkdir(os.path.join(keyword_dir, 'html'))
 
-            if '36kr' not in os.listdir(os.path.join(keyword_dir, 'news')):
-                os.mkdir(os.path.join(keyword_dir, 'news', '36kr'))
+            if '36kr' not in os.listdir(os.path.join(keyword_dir, 'html')):
+                os.mkdir(os.path.join(keyword_dir, 'html', '36kr'))
 
-            current_path = os.path.join(keyword_dir, 'news', '36kr')
+            current_path = os.path.join(keyword_dir, 'html', '36kr')
 
             if os.path.exists(current_path + "summary.txt"):
                 sum = open(os.path.join(current_path, "summary" + ".json"), "a", encoding='utf-8')

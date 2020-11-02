@@ -115,6 +115,7 @@ class ROBO:
                             'page_num': id_list[id]['data']['pageCount'],
                             'doc_type': id_list[id]['type'],
                             'download_url': download_url,
+                            'has_pdf': 'pdf',
                             'oss_path': 'report/robo/' + str(id) + '.pdf',
                             'title': id_list[id]['data']['title']}
 
@@ -133,13 +134,13 @@ class ROBO:
         if search_keyword not in os.listdir('cache'):
             os.mkdir(keyword_dir)
 
-        if 'report' not in os.listdir(keyword_dir):
-            os.mkdir(os.path.join(keyword_dir, 'report'))
+        if 'pdf' not in os.listdir(keyword_dir):
+            os.mkdir(os.path.join(keyword_dir, 'pdf'))
 
-        if '萝卜投研' not in os.listdir(os.path.join(keyword_dir, 'report')):
-            os.mkdir(os.path.join(keyword_dir, 'report', '萝卜投研'))
+        if '萝卜投研' not in os.listdir(os.path.join(keyword_dir, 'pdf')):
+            os.mkdir(os.path.join(keyword_dir, 'pdf', '萝卜投研'))
 
-        current_path = os.path.join(keyword_dir, 'report', '萝卜投研')
+        current_path = os.path.join(keyword_dir, 'pdf', '萝卜投研')
 
         for pdf_id in url_list:
             pdf_save_path = os.path.join(current_path, str(pdf_id) + '.pdf')
@@ -157,7 +158,7 @@ class ROBO:
                         f.write(content)
 
                     # upload to oss
-                    oss_path = 'report/robo/' + str(pdf_id) + '.pdf'
+                    # oss_path = 'report/robo/' + str(pdf_id) + '.pdf'
                     # print('Uploading file to ali_oss at ' + OSS_PATH + oss_path)
                     # ossfile.upload_file(oss_path, pdf_save_path)
 
@@ -170,10 +171,6 @@ class ROBO:
                 mg.insert_data(doc_info, 'robo')
 
                 pdf_count += 1
-
-                self.summary.update({'source': 'robo'})
-                self.summary.update({'source_type': 'report'})
-
 
                 doc_info_copy = doc_info.copy()
                 doc_info_copy.pop('_id')

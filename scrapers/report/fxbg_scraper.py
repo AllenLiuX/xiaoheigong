@@ -151,6 +151,7 @@ class FXBG:
                            'org_name': doc['orgName'].replace('<em>', '').replace('</em>', ''),
                            'page_num': doc['pageNum'],
                            'doc_type': 'EXTERNAL_REPORT',
+                           'has_pdf': "pdf",
                            'oss_path': 'report/fxbg/' + str(doc_id) + '.pdf',
                            'title': title}
 
@@ -162,7 +163,7 @@ class FXBG:
     def download_pdf(self, search_keyword: str, url_list: dict, get_pdf: bool):
         """
         通过提供的pdf下载url下载所有pdf至新建文件夹
-        下载文件路径: 根目录/cache/[关键词]/report/发现报告/
+        下载文件路径: 根目录/cache/[关键词]/has_pdf/发现报告/
         :param search_keyword: 标题需要包含的关键词（公司名）
         :param url_list: 所有所需要下载的pdf文件的下载链接
         """
@@ -172,13 +173,13 @@ class FXBG:
         if search_keyword not in os.listdir('cache'):
             os.mkdir(keyword_dir)
 
-        if 'report' not in os.listdir(keyword_dir):
-            os.mkdir(os.path.join(keyword_dir, 'report'))
+        if 'pdf' not in os.listdir(keyword_dir):
+            os.mkdir(os.path.join(keyword_dir, 'pdf'))
 
-        if '发现报告' not in os.listdir(os.path.join(keyword_dir, 'report')):
-            os.mkdir(os.path.join(keyword_dir, 'report', '发现报告'))
+        if '发现报告' not in os.listdir(os.path.join(keyword_dir, 'pdf')):
+            os.mkdir(os.path.join(keyword_dir, 'pdf', '发现报告'))
 
-        current_path = os.path.join(keyword_dir, 'report', '发现报告')
+        current_path = os.path.join(keyword_dir, 'pdf', '发现报告')
 
         pdf_count = 0
 
@@ -220,7 +221,6 @@ class FXBG:
             pdf_count += 1
 
             # Saving into summary
-
             doc_info_copy = doc_info.copy()
             doc_info_copy.pop('_id')
             self.summary['data'].append(doc_info_copy)
