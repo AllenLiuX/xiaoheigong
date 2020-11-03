@@ -23,6 +23,8 @@ def update_filtered(search_keyword):
         data_dir = os.path.join(ROOT_DIR, 'cache', search_keyword, source_type, translate[source_name])
 
         for doc in source['data']:
+            if not os.path.exists(data_dir):
+                os.makedirs(data_dir)
             pdf_id = doc['doc_id']
             json_path = os.path.join(data_dir, str(pdf_id) + '.json')
             json_file = json.load(open(json_path))

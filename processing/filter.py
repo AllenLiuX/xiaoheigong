@@ -148,9 +148,12 @@ class Filter:
             if filename.endswith('.pdf'):
                 doc_id = filename[0:len(filename) - 4]
                 json_filename = doc_id + '.json'
-                source = json.load(open(json_filename, 'r', encoding='utf-8'))['source']
-                print('Processing file with id %s' % doc_id)
-
+                try:
+                    source = json.load(open(json_filename, 'r', encoding='utf-8'))['source']
+                    print('Processing file with id %s' % doc_id)
+                except:
+                    print(json_filename+' NOT FOUND. Skipped.')
+                    continue
                 try:
                     # Getting text from pdf
                     text = self.pdf_to_text(filename)[0]
