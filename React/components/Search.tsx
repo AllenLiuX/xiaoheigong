@@ -31,7 +31,7 @@ export default function Search() {
 		axios.post(`http://8.210.91.108:5000/`, {params}) /*company, year, page, words */
         .then(res => {
 			console.log(res)
-			setResults(res.data.data[0])
+			setResults(res.data.data[0].db_search_results)
 			setStatus(res.status)
         })
         .catch(err => {
