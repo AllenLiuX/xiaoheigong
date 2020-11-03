@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restful import Resource, Api
 from flask import request
 from flask_cors import CORS
-from entry_point import run
+from entry_point import search_db
 import json
 app = Flask(__name__)
 api = Api(app)
@@ -12,7 +12,7 @@ CORS(app)
 def get_query_string():
     query = request.get_json()["params"]
     return {
-        "data":run(query["search_keyword"], "", 500, int(query["pdf_min_num_page"]), int(query["num_years"]))
+        "data":search_db(query["search_keyword"], 500, int(query["pdf_min_num_page"]), int(query["num_years"]))
     }
 
 
