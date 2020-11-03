@@ -12,7 +12,7 @@ CORS(app)
 def get_query_string():
     query = request.get_json()["params"]
     return {
-        "data":search_db(query["search_keyword"], 500, int(query["pdf_min_num_page"]), int(query["num_years"]))
+        "data":search_db(query["search_keyword"], '500', str(query["pdf_min_num_page"]), int(query["num_years"]))
     }
 
 
