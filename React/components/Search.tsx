@@ -28,7 +28,7 @@ export default function Search() {
 			inputType: inputType
 		}
 		JSON.stringify(params)
-		axios.post(`http://8.210.91.108:8080/`, {params}) /*company, year, page, words */
+		axios.post(`http://8.210.91.108:5000/`, {params}) /*company, year, page, words */
         .then(res => {
 			console.log(res)
 			setResults(res.data.data[0])
