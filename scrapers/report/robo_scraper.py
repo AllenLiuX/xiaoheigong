@@ -42,7 +42,7 @@ class ROBO:
         self.source = 'robo'
         self.blacklist = None
         self.whitelist = set()
-        self.summary = {'source': 'robo', 'source_type': 'report', 'search_keyword': '', 'search_time': '', 'data': []}
+        self.summary = {'source': 'robo', 'has_pdf': 'pdf', 'search_keyword': '', 'search_time': '', 'data': []}
 
     def check_database(self, search_keyword: str, pdf_min_num_page: str, num_years: int):
         db_existing = mg.search_datas(search_keyword=search_keyword, min_word_count='',

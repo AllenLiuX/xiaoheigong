@@ -25,7 +25,7 @@ class FXBG:
         self.blacklist = None
         self.whitelist = set()
         self.source = 'fxbg'
-        self.summary = {'source': 'fxbg', 'source_type': 'report', 'search_keyword': '', 'search_time': '', 'data': []}
+        self.summary = {'source': 'fxbg', 'has_pdf': 'pdf', 'search_keyword': '', 'search_time': '', 'data': []}
 
         # Request Headers
         self.headers = {
