@@ -19,7 +19,7 @@ def update_filtered(search_keyword):
     for source_summary in summary.keys():
         source = summary[source_summary]
         source_name = source['source']  # e.g. '36kr'
-        source_type = source['source_type']  # 'news'
+        source_type = source['has_pdf']  # 'news'
         data_dir = os.path.join(ROOT_DIR, 'cache', search_keyword, source_type, translate[source_name])
 
         for doc in source['data']:

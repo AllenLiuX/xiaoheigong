@@ -15,7 +15,7 @@ from utils.errors import NoDocError
 now = datetime.now()
 
 
-class _36KR():
+class _36KR:
     def __init__(self):
         self.s = requests.Session()
         self.blacklist = None
@@ -40,12 +40,10 @@ class _36KR():
                              {
                                  "class": "kr-search-result-list-main clearfloat"})  # find class that contains search results
 
-
-
         articles_count = 0
 
         self.summary.update({'source': '36kr'})
-        self.summary.update({'source_type': 'news'})
+        self.summary.update({'has_pdf': 'html'})
         self.summary.update({'search_keyword': search_keyword})
         self.summary.update({'search_time': str(datetime.now().date())})
         self.summary.update({'data': []})
