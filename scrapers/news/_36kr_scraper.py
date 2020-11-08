@@ -138,7 +138,8 @@ class _36KR():
                 'date': date,
                 'org_name': author,
                 'oss_path': 'news/36kr/' + str(doc_id) + '.pdf',
-                'doc_type': 'NEWS'
+                'doc_type': 'NEWS',
+                'download_url': url
             }
 
             doc_info_copy = doc_info.copy()
@@ -185,4 +186,4 @@ def run(search_keyword, min_word_count, num_years, get_pdf):
 
 
 if __name__ == '__main__':
-    run(search_keyword='sdflksdlkfj', min_word_count='3000', num_years=1, get_pdf=True)
+    run(search_keyword='中芯国际', min_word_count='3000', num_years=1, get_pdf=True)
