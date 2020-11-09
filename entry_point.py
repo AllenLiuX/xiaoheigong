@@ -25,10 +25,10 @@ def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_year
                          pdf_min_num_page=pdf_min_num_page, num_years=num_years)
     filter.run_both_filters(search_keyword=search_keyword)
     upload.update_filtered(search_keyword=search_keyword)
+    return 1
 
 
 if __name__ == '__main__':
-#    pp.pprint(
-#        search_db(search_keyword='中芯国际', min_words='3000', pdf_min_num_page='150', num_years=1))
-    scrape('特斯拉', min_words='5000', pdf_min_num_page='150', num_years=1, filter_keyword='')
-    
+    # pp.pprint(
+    #     search_db(search_keyword='中芯国际', min_words='3000', pdf_min_num_page='150', num_years=1))
+    scrape(search_keyword='特斯拉', filter_keyword='', min_words='3000', pdf_min_num_page='150', num_years=1)

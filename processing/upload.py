@@ -5,6 +5,8 @@ import pprint as pp
 from definitions import ROOT_DIR
 from definitions import translate
 from oss.mongodb import update_datas
+from utils.errors import UploadError
+from utils.errors import updateError
 
 
 def update_filtered(search_keyword):
@@ -19,17 +21,21 @@ def update_filtered(search_keyword):
     for source_summary in summary.keys():
         source = summary[source_summary]
         source_name = source['source']  # e.g. '36kr'
-        source_type = source['source_type']  # 'news'
-        data_dir = os.path.join(ROOT_DIR, 'cache', search_keyword, source_type, translate[source_name])
+        try:
+            source_type = source['has_pdf']  # 'html' or 'pdf'
+            data_dir = os.path.join(ROOT_DIR, 'cache', search_keyword, source_type, translate[source_name])
 
-        for doc in source['data']:
-            if not os.path.exists(data_dir):
-                os.makedirs(data_dir)
-            pdf_id = doc['doc_id']
-            json_path = os.path.join(data_dir, str(pdf_id) + '.json')
-            json_file = json.load(open(json_path))
+            for doc in source['data']:
+                if not os.path.exists(data_dir):
+                    os.makedirs(data_dir)
+                pdf_id = doc['doc_id']
+                json_path = os.path.join(data_dir, str(pdf_id) + '.json')
+                json_file = json.load(open(json_path))
 
-            update_datas({'doc_id': str(pdf_id)}, {'$set': json_file}, source_name)
+                update_datas({'doc_id': str(pdf_id)}, {'$set': json_file}, source_name)
+        except:
+            updateError('Upload error: Error occurred when uploading %s data to database' % source_name)
+            continue
 
 
 def transfer(search_keyword):

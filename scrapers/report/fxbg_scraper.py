@@ -10,6 +10,8 @@ import oss.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError
+from utils.errors import DownloadError
+from utils.errors import updateError
 
 
 class FXBG:
@@ -25,7 +27,7 @@ class FXBG:
         self.blacklist = None
         self.whitelist = set()
         self.source = 'fxbg'
-        self.summary = {'source': 'fxbg', 'source_type': 'report', 'search_keyword': '', 'search_time': '', 'data': []}
+        self.summary = {'source': 'fxbg', 'has_pdf': 'pdf', 'search_keyword': '', 'search_time': '', 'data': []}
 
         # Request Headers
         self.headers = {
@@ -95,7 +97,7 @@ class FXBG:
         response = self.s.post(url=search_url, data=json.dumps(payload), headers=headers)
 
         if response.status_code != 200:
-            raise NoDocError('No documents found')
+            raise NoDocError('Bad response')
 
         response = response.json()
 
@@ -234,9 +236,16 @@ class FXBG:
 
     def run_fxbg(self, search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):
         print('--------Begin searching pdfs from 发现报告--------')
-        pdf_id_list = self.get_pdf_id(search_keyword, filter_keyword, pdf_min_num_page, num_years)
-        pdf_url_list = self.get_pdf_url(pdf_id_list)
-        self.download_pdf(search_keyword, pdf_url_list, get_pdf)
+        try:
+            pdf_id_list = self.get_pdf_id(search_keyword, filter_keyword, pdf_min_num_page, num_years)
+            pdf_url_list = self.get_pdf_url(pdf_id_list)
+        except NoDocError:
+            updateError("No Doc Error: Empty response from FXBG.")
+
+        try:
+            self.download_pdf(search_keyword, pdf_url_list, get_pdf)
+        except:
+            updateError("Download Error: Error occurred when downloading pdfs from fxbg.")
 
 
 def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):
@@ -250,7 +259,8 @@ def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_yea
                               pdf_min_num_page=pdf_min_num_page, num_years=num_years, get_pdf=get_pdf)
     except NoDocError:
         print('--------No documents found in 发现报告--------')
-        pass
+    except DownloadError:
+        print('')
 
 
 if __name__ == '__main__':

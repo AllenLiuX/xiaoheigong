@@ -9,6 +9,7 @@ import oss.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError
+from utils.errors import updateError
 from utils.get_cookies import get_cookies
 
 
@@ -42,7 +43,7 @@ class ROBO:
         self.source = 'robo'
         self.blacklist = None
         self.whitelist = set()
-        self.summary = {'source': 'robo', 'source_type': 'report', 'search_keyword': '', 'search_time': '', 'data': []}
+        self.summary = {'source': 'robo', 'has_pdf': 'pdf', 'search_keyword': '', 'search_time': '', 'data': []}
 
     def check_database(self, search_keyword: str, pdf_min_num_page: str, num_years: int):
         db_existing = mg.search_datas(search_keyword=search_keyword, min_word_count='',
@@ -176,6 +177,7 @@ class ROBO:
                 doc_info_copy.pop('_id')
                 self.summary['data'].append(doc_info_copy)
             except:
+                updateError('Error occurred when saving pdf %s from ROBO' % pdf_id)
                 if os.path.exists(pdf_save_path):
                     os.remove(pdf_save_path)
 
@@ -196,10 +198,15 @@ class ROBO:
         print('--------Begin searching pdfs from 萝卜投研--------')
         try:
             pdf_id_list = self.get_pdf_id(search_keyword, filter_keyword, pdf_min_num_page, num_years)
-            self.download_pdf(search_keyword, pdf_id_list, get_pdf)
         except NoDocError:
-            print('--------No documents found in 萝卜投研--------')
-            pass
+            updateError("No Doc Error: Empty response from ROBO.")
+            return
+
+        try:
+            self.download_pdf(search_keyword, pdf_id_list, get_pdf)
+        except:
+            updateError("Download Error: Error occurred when downloading pdfs from ROBO")
+
 
 
 def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):
