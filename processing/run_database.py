@@ -3,14 +3,21 @@ import pprint as pp
 import os
 import json
 from definitions import ROOT_DIR
+from utils.errors import updateError
 
 
 def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
     pdf_min_page = int(pdf_min_page) if int(pdf_min_page) > 0 else 0
     min_word_count = int(min_word_count) if int(min_word_count) > 0 else 0
-    existing_pdfs = mg.search_datas(search_keyword=search_keyword, pdf_min_page=int(pdf_min_page),
-                                    min_word_count=int(min_word_count),
-                                    num_years=num_years, db='articles')
+
+    try:
+        existing_pdfs = mg.search_datas(search_keyword=search_keyword, pdf_min_page=int(pdf_min_page),
+                                        min_word_count=int(min_word_count),
+                                        num_years=num_years, db='articles')
+    except:
+        updateError('Database Error: Error occurred when getting database results for %s.' % search_keyword)
+        pass
+
     for pdf in existing_pdfs:
         pdf.pop('_id')
         pdf.pop('content')

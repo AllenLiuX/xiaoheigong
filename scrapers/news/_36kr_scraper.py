@@ -10,12 +10,12 @@ from bs4 import BeautifulSoup
 import oss.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
-from utils.errors import NoDocError
+from utils.errors import NoDocError, updateError
 
 now = datetime.now()
 
 
-class _36KR():
+class _36KR:
     def __init__(self):
         self.s = requests.Session()
         self.blacklist = None
@@ -40,12 +40,10 @@ class _36KR():
                              {
                                  "class": "kr-search-result-list-main clearfloat"})  # find class that contains search results
 
-
-
         articles_count = 0
 
         self.summary.update({'source': '36kr'})
-        self.summary.update({'source_type': 'news'})
+        self.summary.update({'has_pdf': 'html'})
         self.summary.update({'search_keyword': search_keyword})
         self.summary.update({'search_time': str(datetime.now().date())})
         self.summary.update({'data': []})
@@ -101,58 +99,63 @@ class _36KR():
         return ret
 
     def textScrape(self, search_keyword, url, path, num_years, get_pdf: bool):
-        url = url
-        res = requests.get(url)
-        html_page = res.content
-        soup = BeautifulSoup(html_page, 'html.parser')
+        try:
+            url = url
+            res = requests.get(url)
+            html_page = res.content
+            soup = BeautifulSoup(html_page, 'html.parser')
 
-        pattern = re.compile(r"(?<=\"articleDetailData\":{\"code\":0,\"data\":{\"itemId\":)[0-9]*")
-        doc_id = re.search(pattern, str(soup)).group(0)
+            pattern = re.compile(r"(?<=\"articleDetailData\":{\"code\":0,\"data\":{\"itemId\":)[0-9]*")
+            doc_id = re.search(pattern, str(soup)).group(0)
 
-        pattern = re.compile(r"(?<=\"author\":\")(.*)(?=\",\"authorId)")
-        author = re.search(pattern, str(soup)).group(0)
+            pattern = re.compile(r"(?<=\"author\":\")(.*)(?=\",\"authorId)")
+            author = re.search(pattern, str(soup)).group(0)
 
-        title = soup.find('h1').getText()
-        title = title.replace('|', '')
-        date = soup.find('span', {"class": "title-icon-item item-time"}).getText()[3:]
+            title = soup.find('h1').getText()
+            title = title.replace('|', '')
+            date = soup.find('span', {"class": "title-icon-item item-time"}).getText()[3:]
 
-        article = soup.find('div', {"class": "article-content"})
+            article = soup.find('div', {"class": "article-content"})
 
-        valid = self.prefilter(date, num_years, search_keyword, doc_id)
+            valid = self.prefilter(date, num_years, search_keyword, doc_id)
 
-        if valid:
-            print('Processing article %s' % doc_id)
-            json_save_path = os.path.join(path, str(doc_id) + '.json')
-            html_save_path = os.path.join(path, str(doc_id) + '.html')
-            pdf_save_path = os.path.join(path, str(doc_id) + '.pdf')
+            if valid:
+                print('Processing article %s' % doc_id)
+                json_save_path = os.path.join(path, str(doc_id) + '.json')
+                html_save_path = os.path.join(path, str(doc_id) + '.html')
+                pdf_save_path = os.path.join(path, str(doc_id) + '.pdf')
 
-            if get_pdf:
-                with open(html_save_path, "w", encoding='utf-8') as file:
-                    file.write(str(article))
+                if get_pdf:
+                    with open(html_save_path, "w", encoding='utf-8') as file:
+                        file.write(str(article))
 
-            # Saving doc attributes
-            doc_info = {
-                'source': '36kr',
-                'doc_id': doc_id,
-                'title': title,
-                'date': date,
-                'org_name': author,
-                'oss_path': 'news/36kr/' + str(doc_id) + '.pdf',
-                'doc_type': 'NEWS',
-                'has_pdf': 'html'
-            }
+                # Saving doc attributes
+                doc_info = {
+                    'source': '36kr',
+                    'doc_id': doc_id,
+                    'title': title,
+                    'date': date,
+                    'org_name': author,
+                    'oss_path': 'news/36kr/' + str(doc_id) + '.pdf',
+                    'doc_type': 'NEWS',
+                    'download_url': url,
+                    'has_pdf': 'html'
+                }
 
-            doc_info_copy = doc_info.copy()
+                doc_info_copy = doc_info.copy()
 
-            with open(json_save_path, 'w', encoding='utf-8') as f:
-                json.dump(doc_info, f, ensure_ascii=False, indent=4)
+                with open(json_save_path, 'w', encoding='utf-8') as f:
+                    json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
-            self.summary['data'].append(doc_info_copy)
+                self.summary['data'].append(doc_info_copy)
 
-            # store doc_info to mongodb
-            mg.insert_data(doc_info, '36kr')
+                # store doc_info to mongodb
+                mg.insert_data(doc_info, '36kr')
+                return valid
+        except:
+            updateError('Error occurred when scraping text from 36kr')
+            pass
 
-        return valid
 
     def run(self, search_keyword, min_word_count, num_years, get_pdf: bool):
         print('--------Begin searching articles from 36kr--------')
@@ -190,4 +193,4 @@ def run(search_keyword, min_word_count, num_years, get_pdf):
 
 
 if __name__ == '__main__':
-    run(search_keyword='sdflksdlkfj', min_word_count='3000', num_years=1, get_pdf=True)
+    run(search_keyword='科比', min_word_count='3000', num_years=1, get_pdf=True)

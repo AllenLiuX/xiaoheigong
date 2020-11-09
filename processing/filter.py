@@ -7,6 +7,7 @@ import pdfkit
 import xpdf_python.wrapper as xpdf
 from definitions import ROOT_DIR, COMPANY_NAME_OCCUR
 from utils import bwlist
+from utils.errors import updateError
 
 
 class Filter:
@@ -128,7 +129,7 @@ class Filter:
                 try:
                     pdfkit.from_file(filename, pdf_filename, options=options)
                 except:
-                    print("fuck!!!!")
+                    updateError("Error occurred when converting html to pdf for file %s in %s" % (filename, directory))
                     continue
                 # Removing html files
                 os.remove(filename)
@@ -137,6 +138,7 @@ class Filter:
     def pdf_process(self, directory, search_keyword):
         """
         Data processing for data collected from websites that allow pdf download
+        :param search_keyword: the search keyword
         :param directory: the directory that contains the .pdf and .json files
         """
         curr_dir = os.getcwd()
@@ -148,12 +150,22 @@ class Filter:
             if filename.endswith('.pdf'):
                 doc_id = filename[0:len(filename) - 4]
                 json_filename = doc_id + '.json'
-                source = json.load(open(json_filename, 'r', encoding='utf-8'))['source']
-                print('Processing file with id %s' % doc_id)
+
+                try:
+                    source = json.load(open(json_filename, 'r', encoding='utf-8'))['source']
+                    print('Processing file with id %s' % doc_id)
+                except FileNotFoundError:
+                    updateError('FILE NOT FOUND: %s. Skipped.' % json_filename)
+                    continue
 
                 try:
                     # Getting text from pdf
                     text = self.pdf_to_text(filename)[0]
+                except FileNotFoundError:
+                    updateError('FILE NOT FOUND: %s. Skipped.' % filename)
+                    continue
+
+                try:
                     word_count = len(text.strip('\n'))
 
                     # Add company name to keyword
@@ -189,7 +201,7 @@ class Filter:
                         json.dump(attributes, file, ensure_ascii=False, indent=4)
                         file.close()
 
-                except (ValueError, SyntaxError, FileNotFoundError):
+                except (ValueError, SyntaxError):
                     print('--------%s put to blacklist--------' % doc_id)
                     # Save problematic id to blacklist
                     self.blacklist.add_to_bwlist(source, doc_id)
@@ -206,6 +218,7 @@ class Filter:
         # Saving blacklist
         self.blacklist.save_bwlist()
 
+
         if os.path.exists('summary.json'):
             self.add_summary(search_keyword)
         os.chdir(curr_dir)
@@ -215,40 +228,46 @@ class Filter:
         For EACH website, add all json files from local summary (just for that website) to universal summary
         :param search_keyword: search keyword
         """
-        # Loading local summary
-        source_summary = json.load(open('summary.json', 'r', encoding='utf-8'))
+        try:
+            # Loading local summary
+            source_summary = json.load(open('summary.json', 'r', encoding='utf-8'))
 
-        # Removing unnecessary attribute
-        if 'search_keyword' in source_summary.keys():
-            source_summary.pop('search_keyword')
+            # Removing unnecessary attribute
+            if 'search_keyword' in source_summary.keys():
+                source_summary.pop('search_keyword')
 
-        source_name = source_summary['source']                              # '36kr'
+            source_name = source_summary['source']  # '36kr'
 
-        # Removing blacklisted ids from local summary
-        for doc in source_summary['data'].copy():
-            if source_name in self.blacklist.list.keys() and doc['doc_id'] in self.blacklist.list[source_name]:
-                source_summary['data'].remove(doc)
+            # Removing blacklisted ids from local summary
+            for doc in source_summary['data'].copy():
+                if source_name in self.blacklist.list.keys() and doc['doc_id'] in self.blacklist.list[source_name]:
+                    source_summary['data'].remove(doc)
 
-        # Update to overall summary
-        if search_keyword not in self.summary.keys():
-            self.summary.update({search_keyword: {source_name: source_summary.copy()}})
-        elif 'data' in source_summary.keys():
-            updated = self.summary[search_keyword]
-            updated.update({source_name: source_summary.copy()})
-            self.summary.update({search_keyword: updated})
+            # Update to overall summary
+            if search_keyword not in self.summary.keys():
+                self.summary.update({search_keyword: {source_name: source_summary.copy()}})
+            elif 'data' in source_summary.keys():
+                updated = self.summary[search_keyword]
+                updated.update({source_name: source_summary.copy()})
+                self.summary.update({search_keyword: updated})
 
-        # Saving local summary
-        json.dump(source_summary, open('summary.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+            # Saving local summary
+            json.dump(source_summary, open('summary.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+        except:
+            updateError("Error occurred when writing summary for keyword: " + search_keyword)
 
     def save_summary(self, search_keyword):
         """
         Save the summary for EACH KEYWORD
         :param search_keyword: search keyword
         """
-        save_path = os.path.join(ROOT_DIR, 'cache', search_keyword, 'summary.json')
-        if self.summary[search_keyword]:
-            with open(save_path, 'w', encoding='utf-8') as f:
-                json.dump(self.summary, f, ensure_ascii=False, indent=4)
+        try:
+            save_path = os.path.join(ROOT_DIR, 'cache', search_keyword, 'summary.json')
+            if self.summary[search_keyword]:
+                with open(save_path, 'w', encoding='utf-8') as f:
+                    json.dump(self.summary, f, ensure_ascii=False, indent=4)
+        except:
+            updateError("Error occurred when saving summary for keyword: " + search_keyword)
 
     def run_filter(self, search_keyword: str, file_type: str):
         """
