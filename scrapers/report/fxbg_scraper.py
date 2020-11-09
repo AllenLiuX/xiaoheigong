@@ -14,6 +14,8 @@ from utils.errors import DownloadError
 from utils.errors import updateError
 
 
+token = '6PwWhSrcWZdMGiqNAPZHzZj2UHM2S5lVsqGbncDZN9grbufTWP1NF8BXjpbVTI60'
+
 class FXBG:
     def __init__(self, user_token: str, user_id: str):
         """
@@ -101,7 +103,9 @@ class FXBG:
 
         response = response.json()
 
-        id_list = {doc['docId']: doc for doc in response['data']['dataList']}
+        id_list = []
+        if response['data']['dataList']:
+            id_list = {doc['docId']: doc for doc in response['data']['dataList']}
 
         # Checking blacklist
         if blacklist_exist:
@@ -252,7 +256,7 @@ def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_yea
     # User ID does not change for a fixed account
     # User Token changes for each individual login
     USER_ID = '43934'
-    USER_TOKEN = 'UWv0J0jlQG3AMl1nJRfRBAsJXim6sz7kWrTPw94DtdsYT1tNAWrJvzAIczDPHHVj'
+    USER_TOKEN = token
     try:
         fxbg_scraper = FXBG(USER_TOKEN, USER_ID)
         fxbg_scraper.run_fxbg(search_keyword=search_keyword, filter_keyword=filter_keyword,

@@ -52,9 +52,10 @@ def transfer(search_keyword):
         all_results += summary[source]['data']
 
     db_search_results = os.path.join(ROOT_DIR, 'cache', search_keyword, 'db_search_results.json')
-    db_search_results = json.load(open(db_search_results, 'r', encoding='utf-8'))['db_search_results']
+    if os.path.exists(db_search_results):
+        db_search_results = json.load(open(db_search_results, 'r', encoding='utf-8'))['db_search_results']
 
-    all_results += db_search_results
+        all_results += db_search_results
 
     with open(os.path.join(ROOT_DIR, 'cache', search_keyword, 'all_search_results.json'), 'w', encoding='utf-8') as f:
         json.dump(all_results, f, ensure_ascii=False, indent=4)

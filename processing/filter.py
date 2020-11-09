@@ -263,6 +263,7 @@ class Filter:
         """
         try:
             save_path = os.path.join(ROOT_DIR, 'cache', search_keyword, 'summary.json')
+#            print(self.summary)
             if self.summary[search_keyword]:
                 with open(save_path, 'w', encoding='utf-8') as f:
                     json.dump(self.summary, f, ensure_ascii=False, indent=4)
@@ -300,8 +301,8 @@ class Filter:
             print('======== Processing files from %s ========' % source_name)
 
             # Convert html files to pdf first for news sources
-#            if file_type == 'html':
-#                self.html_to_pdf(curr_dir)
+            if file_type == 'html':
+                self.html_to_pdf(curr_dir)
 
             # Process all pdf files
             self.pdf_process(curr_dir, search_keyword)
