@@ -127,8 +127,8 @@ class Filter:
                 }
                 try:
                     pdfkit.from_file(filename, pdf_filename, options=options)
-                except:
-                    print("fuck!!!!")
+                except Exception as e:
+                    print("fuck!!!!", e)
                     continue
                 # Removing html files
                 os.remove(filename)
@@ -264,11 +264,13 @@ class Filter:
 
         if not os.path.isdir(os.path.join('cache', search_keyword)):
             # cache/中芯国际 not exist
-            return
+            os.makedirs(os.path.join('cache', search_keyword))
+            # return
 
         if not os.path.isdir(os.path.join('cache', search_keyword, file_type)):
             # cache/中芯国际/news 不存在
-            return
+            os.makedirs(os.path.join('cache', search_keyword, file_type))
+            # return
 
         for source_name in os.listdir(os.path.join('cache', search_keyword, file_type)):
             # source_name: 发现报告/萝卜投研……
@@ -276,13 +278,14 @@ class Filter:
 
             # path does not exist
             if not os.path.isdir(curr_dir):
-                continue
+                os.makedirs(curr_dir)
+                # continue
 
             print('======== Processing files from %s ========' % source_name)
 
             # Convert html files to pdf first for news sources
-            if file_type == 'html':
-                self.html_to_pdf(curr_dir)
+#            if file_type == 'html':
+#                self.html_to_pdf(curr_dir)
 
             # Process all pdf files
             self.pdf_process(curr_dir, search_keyword)
