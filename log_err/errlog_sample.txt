@@ -1,0 +1,16 @@
+
+2020-10-29 23:29:26.222 search {"company": "\u4e2d\u82af\u56fd\u9645", "year": "2018", "page": "5", "type": "\u2018\u2018"}
+Traceback (most recent call last):
+  File "flask_api.py", line 168, in post
+    res = dic_api[api_name](args)
+  File "flask_api.py", line 142, in search
+    res = entry.run(company, '', 3000, page, year)
+AttributeError: module 'entry_point' has no attribute 'run'
+
+2020-10-29 23:29:48.468 search {"company": "\u4e2d\u82af\u56fd\u9645", "year": "2018", "page": "5", "type": "\u2018\u2018"}
+Traceback (most recent call last):
+  File "flask_api.py", line 168, in post
+    res = dic_api[api_name](args)
+  File "flask_api.py", line 142, in search
+    res = entry.run(company, '', 3000, page, year)
+AttributeError: module 'entry_point' has no attribute 'run'

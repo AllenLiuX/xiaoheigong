@@ -9,6 +9,7 @@ import oss.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError
+from utils.errors import updateError
 from utils.get_cookies import get_cookies
 
 
@@ -42,7 +43,7 @@ class ROBO:
         self.source = 'robo'
         self.blacklist = None
         self.whitelist = set()
-        self.summary = {'source': 'robo', 'source_type': 'report', 'search_keyword': '', 'search_time': '', 'data': []}
+        self.summary = {'source': 'robo', 'has_pdf': 'pdf', 'search_keyword': '', 'search_time': '', 'data': []}
 
     def check_database(self, search_keyword: str, pdf_min_num_page: str, num_years: int):
         db_existing = mg.search_datas(search_keyword=search_keyword, min_word_count='',
@@ -115,6 +116,7 @@ class ROBO:
                             'page_num': id_list[id]['data']['pageCount'],
                             'doc_type': id_list[id]['type'],
                             'download_url': download_url,
+                            'has_pdf': 'pdf',
                             'oss_path': 'report/robo/' + str(id) + '.pdf',
                             'title': id_list[id]['data']['title']}
 
@@ -133,13 +135,13 @@ class ROBO:
         if search_keyword not in os.listdir('cache'):
             os.mkdir(keyword_dir)
 
-        if 'report' not in os.listdir(keyword_dir):
-            os.mkdir(os.path.join(keyword_dir, 'report'))
+        if 'pdf' not in os.listdir(keyword_dir):
+            os.mkdir(os.path.join(keyword_dir, 'pdf'))
 
-        if '萝卜投研' not in os.listdir(os.path.join(keyword_dir, 'report')):
-            os.mkdir(os.path.join(keyword_dir, 'report', '萝卜投研'))
+        if '萝卜投研' not in os.listdir(os.path.join(keyword_dir, 'pdf')):
+            os.mkdir(os.path.join(keyword_dir, 'pdf', '萝卜投研'))
 
-        current_path = os.path.join(keyword_dir, 'report', '萝卜投研')
+        current_path = os.path.join(keyword_dir, 'pdf', '萝卜投研')
 
         for pdf_id in url_list:
             pdf_save_path = os.path.join(current_path, str(pdf_id) + '.pdf')
@@ -157,7 +159,7 @@ class ROBO:
                         f.write(content)
 
                     # upload to oss
-                    oss_path = 'report/robo/' + str(pdf_id) + '.pdf'
+                    # oss_path = 'report/robo/' + str(pdf_id) + '.pdf'
                     # print('Uploading file to ali_oss at ' + OSS_PATH + oss_path)
                     # ossfile.upload_file(oss_path, pdf_save_path)
 
@@ -171,14 +173,11 @@ class ROBO:
 
                 pdf_count += 1
 
-                self.summary.update({'source': 'robo'})
-                self.summary.update({'source_type': 'report'})
-
-
                 doc_info_copy = doc_info.copy()
                 doc_info_copy.pop('_id')
                 self.summary['data'].append(doc_info_copy)
             except:
+                updateError('Error occurred when saving pdf %s from ROBO' % pdf_id)
                 if os.path.exists(pdf_save_path):
                     os.remove(pdf_save_path)
 
@@ -199,10 +198,15 @@ class ROBO:
         print('--------Begin searching pdfs from 萝卜投研--------')
         try:
             pdf_id_list = self.get_pdf_id(search_keyword, filter_keyword, pdf_min_num_page, num_years)
-            self.download_pdf(search_keyword, pdf_id_list, get_pdf)
         except NoDocError:
-            print('--------No documents found in 萝卜投研--------')
-            pass
+            updateError("No Doc Error: Empty response from ROBO.")
+            return
+
+        try:
+            self.download_pdf(search_keyword, pdf_id_list, get_pdf)
+        except:
+            updateError("Download Error: Error occurred when downloading pdfs from ROBO")
+
 
 
 def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):
