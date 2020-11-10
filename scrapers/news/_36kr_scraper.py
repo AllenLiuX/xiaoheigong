@@ -193,4 +193,4 @@ def run(search_keyword, min_word_count, num_years, get_pdf):
 
 
 if __name__ == '__main__':
-    run(search_keyword='科比', min_word_count='3000', num_years=1, get_pdf=True)
+    run(search_keyword='特斯拉', min_word_count='3000', num_years=1, get_pdf=True)

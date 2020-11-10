@@ -218,7 +218,6 @@ class Filter:
         # Saving blacklist
         self.blacklist.save_bwlist()
 
-
         if os.path.exists('summary.json'):
             self.add_summary(search_keyword)
         os.chdir(curr_dir)
