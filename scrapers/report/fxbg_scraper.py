@@ -100,9 +100,11 @@ class FXBG:
             raise NoDocError('Bad response')
 
         response = response.json()
-
-        id_list = {doc['docId']: doc for doc in response['data']['dataList']}
-
+        try:
+            id_list = {doc['docId']: doc for doc in response['data']['dataList']}
+        except:
+            print('error! FXBG Not Working or Not Found')
+            return []            
         # Checking blacklist
         if blacklist_exist:
             id_list = self.blacklist.bwlist_filter(id_list, self.source)
