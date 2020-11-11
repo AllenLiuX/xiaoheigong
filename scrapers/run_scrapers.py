@@ -18,8 +18,8 @@ import sys
 
 def search(search_keyword: str, filter_keyword: str, min_words: str, pdf_min_num_page: str, num_years: int,
            get_pdf: bool):
-    fxbg.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
-             num_years=num_years, get_pdf=get_pdf)
+    # fxbg.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
+    #          num_years=num_years, get_pdf=get_pdf)
     robo.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
              num_years=num_years, get_pdf=get_pdf)
     _36kr.run(search_keyword=search_keyword, min_word_count=min_words, num_years=num_years, get_pdf=get_pdf)
