@@ -17,8 +17,8 @@ def run_all(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_yea
 
 
 def search_db(search_keyword, min_words, pdf_min_num_page, num_years):
-    return run_database.get_db_results(search_keyword, pdf_min_num_page, min_words, num_years)
-
+    # return run_database.get_db_results(search_keyword, pdf_min_num_page, min_words, num_years)
+    return run_database.get_results(search_keyword, pdf_min_num_page, min_words, num_years)
 
 def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_years):
     run_scrapers.run_all(search_keyword=search_keyword, filter_keyword=filter_keyword, min_words=min_words,

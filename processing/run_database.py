@@ -5,6 +5,23 @@ import json
 from definitions import ROOT_DIR
 from utils.errors import updateError
 
+def get_results(search_keyword, pdf_min_page, min_word_count, num_years):
+    pdf_min_page = int(pdf_min_page) if int(pdf_min_page) > 0 else 0
+    min_word_count = int(min_word_count) if int(min_word_count) > 0 else 0
+
+    try:
+        existing_pdfs = mg.show_datas(search_keyword, query={})
+    except:
+        updateError('Database Error: Error occurred when getting database results for %s.' % search_keyword)
+    for pdf in existing_pdfs:
+        pdf.pop('_id')
+        pdf.pop('content')
+        pdf.pop('keywordCount')
+        pdf.pop('filtered')
+        pdf.pop('wordCount')
+    result = {'db_search_results': existing_pdfs}
+    return result
+
 
 def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
     pdf_min_page = int(pdf_min_page) if int(pdf_min_page) > 0 else 0
