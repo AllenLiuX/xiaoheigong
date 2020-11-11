@@ -1,4 +1,5 @@
 import pymongo
+import sys
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 
@@ -51,13 +52,16 @@ def delete_col(collection, db='articles'):
 
 
 if __name__ == '__main__':
-    insert_datas([{'a': 'hello2'}, {'a': 'hello3'}, {'a': 'hello4'}], 'fxbg')
-    data = show_datas('fxbg',sortby='a', seq=False)
-    print(data)
-    delete_datas({'a': {'$regex': '^mod'}}, 'fxbg')
-    update_datas({'a': {'$regex': '^hello'}}, {'$set': {'a': 'modified'}}, 'fxbg')
-    data = show_datas('fxbg')
-    print(data)
-    # 获取数据库list
-    dblist = myclient.list_database_names()
-    print(dblist)
+    # insert_datas([{'a': 'hello2'}, {'a': 'hello3'}, {'a': 'hello4'}], 'fxbg')
+    # data = show_datas('fxbg',sortby='a', seq=False)
+    # print(data)
+    # delete_datas({'a': {'$regex': '^mod'}}, 'fxbg')
+    # update_datas({'a': {'$regex': '^hello'}}, {'$set': {'a': 'modified'}}, 'fxbg')
+    # data = show_datas('fxbg')
+    # print(data)
+    # # 获取数据库list
+    # dblist = myclient.list_database_names()
+    # print(dblist)
+    keyword = sys.argv[1]
+
+    delete_datas('', 'robo')

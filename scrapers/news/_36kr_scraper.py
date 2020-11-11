@@ -89,6 +89,7 @@ class _36KR:
 
         # whitelist by database
         id_match_res = mg.show_datas('36kr', query={'doc_id': str(doc_id)})
+        id_match_res = mg.show_datas(search_keyword, query={'doc_id': str(doc_id)})
         if id_match_res:
             print('article #' + str(doc_id) + ' is already in database. Skipped.')
             ret = False
@@ -150,7 +151,8 @@ class _36KR:
                 self.summary['data'].append(doc_info_copy)
 
                 # store doc_info to mongodb
-                mg.insert_data(doc_info, '36kr')
+                # mg.insert_data(doc_info, '36kr')
+                mg.insert_data(doc_info, search_keyword)
                 return valid
         except:
             updateError('Error occurred when scraping text from 36kr')

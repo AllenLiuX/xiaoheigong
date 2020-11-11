@@ -90,7 +90,8 @@ class ROBO:
 
         # Filter Whitelist
         for doc_id in id_list.copy():
-            id_match_res = mg.show_datas('robo', query={'doc_id': str(doc_id)})
+            # id_match_res = mg.show_datas('robo', query={'doc_id': str(doc_id)})
+            id_match_res = mg.show_datas(search_keyword, query={'doc_id': str(doc_id)})
             if id_match_res:
                 print('article #' + str(doc_id) + ' is already in database. Skipped.')
                 id_list.pop(doc_id)
@@ -169,7 +170,8 @@ class ROBO:
                     json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
                 # store doc_info to mongodb
-                mg.insert_data(doc_info, 'robo')
+                if not mg.show_datas(search_keyword, {'doc_id': pdf_id}, 'articles'):
+                    mg.insert_data(doc_info, search_keyword, 'Articles')
 
                 pdf_count += 1
 

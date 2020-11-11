@@ -111,6 +111,7 @@ class FXBG:
         # self.check_database(search_keyword=search_keyword, pdf_min_num_page=pdf_min_num_page, num_years=num_years)
         for doc_id in id_list.copy():
             id_match_res = mg.show_datas('fxbg', query={'doc_id': doc_id})
+            id_match_res = mg.show_datas(search_keyword, query={'doc_id': doc_id})
             if doc_id in self.whitelist or id_match_res:
                 print('article #' + str(doc_id) + ' is already in database. Skipped.')
                 id_list.pop(doc_id)
@@ -187,6 +188,7 @@ class FXBG:
 
         for pdf_id in url_list:
             id_match_res = mg.show_datas('fxbg', query={'doc_id': pdf_id})
+            id_match_res = mg.show_datas(search_keyword, query={'doc_id': pdf_id})
             if id_match_res:
                 print('article #' + str(pdf_id) + ' is already in database. Skipped.')
                 continue
@@ -219,6 +221,7 @@ class FXBG:
 
             # store doc_info to mongodb
             mg.insert_data(doc_info, 'fxbg')
+            mg.insert_data(doc_info, search_keyword)
 
             pdf_count += 1
 
