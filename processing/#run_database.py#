@@ -13,6 +13,12 @@ def get_results(search_keyword, pdf_min_page, min_word_count, num_years):
         existing_pdfs = mg.show_datas(search_keyword, query={})
     except:
         updateError('Database Error: Error occurred when getting database results for %s.' % search_keyword)
+    for pdf in existing_pdfs:
+        pdf.pop('_id')
+        pdf.pop('content')
+        pdf.pop('keywordCount')
+        pdf.pop('filtered')
+        pdf.pop('wordCount')
     result = {'db_search_results': existing_pdfs}
     return result
 
@@ -27,14 +33,6 @@ def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
                                         num_years=num_years, db='articles')
     except:
         updateError('Database Error: Error occurred when getting database results for %s.' % search_keyword)
-        pass
-
-    for pdf in existing_pdfs:
-        pdf.pop('_id')
-        pdf.pop('content')
-        pdf.pop('keywordCount')
-        pdf.pop('filtered')
-        pdf.pop('wordCount')
 
     result = {'db_search_results': existing_pdfs}
 
@@ -48,4 +46,4 @@ def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
 
 
 if __name__ == '__main__':
-    pp.pprint(get_results('宝马', '150', '3000', 5))
+    get_results('宝马', '150', '3000', 5)

@@ -13,6 +13,7 @@ from utils.errors import NoDocError
 from utils.errors import DownloadError
 from utils.errors import updateError
 
+token = 'EjkHvFxapQrr5UiUxLQgPLw4I7rryND2uUCEmSOOB31Hng7YctDOo1Y5W4QRxnvf'
 
 class FXBG:
     def __init__(self, user_token: str, user_id: str):
@@ -258,6 +259,7 @@ def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_yea
     # User Token changes for each individual login
     USER_ID = '43934'
     USER_TOKEN = 'UWv0J0jlQG3AMl1nJRfRBAsJXim6sz7kWrTPw94DtdsYT1tNAWrJvzAIczDPHHVj'
+    USER_TOKEN = token
     try:
         fxbg_scraper = FXBG(USER_TOKEN, USER_ID)
         fxbg_scraper.run_fxbg(search_keyword=search_keyword, filter_keyword=filter_keyword,

@@ -4,6 +4,7 @@ import processing.filter as filter
 import processing.run_database as run_database
 import processing.upload as upload
 import scrapers.run_scrapers as run_scrapers
+import sys
 
 
 def run_all(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_years):
@@ -31,4 +32,10 @@ def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_year
 if __name__ == '__main__':
     # pp.pprint(
     #     search_db(search_keyword='中芯国际', min_words='3000', pdf_min_num_page='150', num_years=1))
-    scrape(search_keyword='麦当劳', filter_keyword='', min_words='3000', pdf_min_num_page='150', num_years=1)
+    if len(sys.argv) > 1:
+        keyword = sys.argv[1]
+    else:
+        keyword = '雷克萨斯'
+#    scrape(search_keyword=keyword, filter_keyword='', min_words='3000', pdf_min_num_page='150', num_years=1)
+    res = search_db(search_keyword=keyword, min_words='3000', pdf_min_num_page='150', num_years=1)
+    print(res)
