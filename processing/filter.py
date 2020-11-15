@@ -2,8 +2,6 @@ import json
 import os
 import time
 
-import pdfkit
-
 import xpdf_python.wrapper as xpdf
 from definitions import ROOT_DIR, COMPANY_NAME_OCCUR
 from utils import bwlist
@@ -102,39 +100,6 @@ class Filter:
         text = xpdf.to_text(pdf_path)
         return text
 
-    def html_to_pdf(self, directory):
-        """
-        Data processing for data collected from websites that do now allow pdf download
-        :param directory: the directory that contains the .html and .json files
-        """
-        curr_dir = os.getcwd()
-        os.chdir(directory)
-
-        for filename in os.listdir(os.curdir):
-            if filename.endswith('.html'):
-                doc_id = filename[0:len(filename) - 5]
-                json_filename = doc_id + '.json'
-
-                # Converting to PDF
-                options = {
-                    'quiet': '',
-                    'page-size': 'Letter',
-                    'margin-top': '0.75in',
-                    'margin-right': '0.75in',
-                    'margin-bottom': '0.75in',
-                    'margin-left': '0.75in',
-                    'encoding': "UTF-8",
-                    'no-outline': None
-                }
-                try:
-                    pdfkit.from_file(filename, pdf_filename, options=options)
-                except:
-                    updateError("Error occurred when converting html to pdf for file %s in %s" % (filename, directory))
-                    continue
-                # Removing html files
-                os.remove(filename)
-        os.chdir(curr_dir)
-
     def pdf_process(self, directory, search_keyword):
         """
         Data processing for data collected from websites that allow pdf download
@@ -187,7 +152,6 @@ class Filter:
                     json.dump(attributes, file, ensure_ascii=False, indent=4)
                     file.close()
 
-
         os.chdir(curr_dir)
 
     def generate_tags(self, directory, search_keyword, has_pdf):
@@ -200,6 +164,8 @@ class Filter:
             if filename.endswith(file_type):
                 doc_id = filename[0:len(filename) - len(file_type)]
                 json_filename = doc_id + '.json'
+
+                print('generating tags for pdf with id %s' % doc_id)
 
                 with open(json_filename, 'r', encoding='utf-8') as file:
                     # Update content to json

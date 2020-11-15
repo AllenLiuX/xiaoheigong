@@ -1,8 +1,9 @@
-from oss import mongodb as mg
-import pprint as pp
-import os
 import json
+import os
+import pprint as pp
+
 from definitions import ROOT_DIR
+from oss import mongodb as mg
 from utils.errors import updateError
 
 
@@ -37,4 +38,4 @@ def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
 
 
 if __name__ == '__main__':
-    pp.pprint(get_db_results('中芯国际', '150', '3000', 5))
+    pp.pprint(get_db_results('恒大', '20', '3000', 5))
