@@ -9,8 +9,8 @@ from fake_useragent import UserAgent
 import oss.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
-from utils.errors import NoDocError
 from utils.errors import DownloadError
+from utils.errors import NoDocError
 from utils.errors import updateError
 
 
@@ -100,6 +100,9 @@ class FXBG:
             raise NoDocError('Bad response')
 
         response = response.json()
+
+        if not response['data']:
+            raise NoDocError('Bad response')
 
         id_list = {doc['docId']: doc for doc in response['data']['dataList']}
 
@@ -218,7 +221,7 @@ class FXBG:
                 json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
             # store doc_info to mongodb
-            mg.insert_data(doc_info, 'fxbg')
+            mg.insert_data(doc_info, 'articles')
 
             pdf_count += 1
 

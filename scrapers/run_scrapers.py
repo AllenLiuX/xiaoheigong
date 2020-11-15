@@ -1,8 +1,4 @@
-from definitions import ROOT_DIR
-import scrapers.report.fxbg_scraper as fxbg
-import scrapers.report.robo_scraper as robo
-import scrapers.report.woshipm_scrapper as wspm
-import scrapers.news._36kr_scraper as _36kr
+import sys
 # import scrapers.news.cyzone as cyzone
 # import scrapers.news.huxiu as huxiu
 # import scrapers.news.iyiou as iyiou
@@ -13,13 +9,16 @@ import scrapers.news._36kr_scraper as _36kr
 # import scrapers.news._51pdf as _51pdf
 # import scrapers.news._767stock as _767stock
 import time
-import sys
+
+import scrapers.news._36kr_scraper as _36kr
+import scrapers.report.fxbg_scraper as fxbg
+import scrapers.report.robo_scraper as robo
 
 
 def search(search_keyword: str, filter_keyword: str, min_words: str, pdf_min_num_page: str, num_years: int,
            get_pdf: bool):
-    # fxbg.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
-    #          num_years=num_years, get_pdf=get_pdf)
+    fxbg.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
+             num_years=num_years, get_pdf=get_pdf)
     robo.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
              num_years=num_years, get_pdf=get_pdf)
     _36kr.run(search_keyword=search_keyword, min_word_count=min_words, num_years=num_years, get_pdf=get_pdf)
@@ -50,5 +49,4 @@ def run_all(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_yea
 
 
 if __name__ == '__main__':
-    run_all(search_keyword='中芯国际', filter_keyword='', min_words='3000', pdf_min_num_page='120', num_years=1)
-
+    run_all(search_keyword='特斯拉', filter_keyword='', min_words='0', pdf_min_num_page='0', num_years=10)
