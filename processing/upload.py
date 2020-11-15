@@ -1,11 +1,9 @@
 import json
 import os
-import pprint as pp
 
 from definitions import ROOT_DIR
 from definitions import translate
 from oss.mongodb import update_datas
-from utils.errors import UploadError
 from utils.errors import updateError
 
 
@@ -21,25 +19,27 @@ def update_filtered(search_keyword):
     for source_summary in summary.keys():
         source = summary[source_summary]
         source_name = source['source']  # e.g. '36kr'
-        try:
-            source_type = source['has_pdf']  # 'html' or 'pdf'
-            data_dir = os.path.join(ROOT_DIR, 'cache', search_keyword, source_type, translate[source_name])
 
-            for doc in source['data']:
+        source_type = source['has_pdf']  # 'html' or 'pdf'
+        data_dir = os.path.join(ROOT_DIR, 'cache', search_keyword, source_type, translate[source_name])
+
+        for doc in source['data']:
+            try:
                 if not os.path.exists(data_dir):
                     os.makedirs(data_dir)
                 pdf_id = doc['doc_id']
                 json_path = os.path.join(data_dir, str(pdf_id) + '.json')
                 json_file = json.load(open(json_path))
 
-                update_datas({'doc_id': str(pdf_id)}, {'$set': json_file}, source_name)
-        except:
-            updateError('Upload error: Error occurred when uploading %s data to database' % source_name)
-            continue
+                update_datas({'doc_id': str(pdf_id)}, {'$set': json_file}, 'articles')
+            except:
+                updateError('Upload error: Error occurred when uploading %s data to database' % source_name)
+                continue
 
 
 def transfer(search_keyword):
     """
+    DEPRECATED. DO NOT USE. DID NOT UPDATE WITH DB STRUCTURE.
     Collects all the data from current search and from database, and return a list of results to the frontend
     :param search_keyword: current search keyword
     :return: a tuple of a list of results, and the length of the list
@@ -64,5 +64,5 @@ def transfer(search_keyword):
 
 
 if __name__ == '__main__':
-    # update_filtered('中芯国际')
-    pp.pprint(transfer("中芯国际"))
+    update_filtered('恒大')
+    # pp.pprint(transfer("恒大"))

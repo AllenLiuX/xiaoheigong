@@ -1,0 +1,4 @@
+2020-11-16 03:10:52.158693: No Doc Error: Empty response from FXBG.
+2020-11-16 03:10:52.158890: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-16 03:11:17.234590: No Doc Error: Empty response from FXBG.
+2020-11-16 03:11:17.234718: Download Error: Error occurred when downloading pdfs from fxbg.

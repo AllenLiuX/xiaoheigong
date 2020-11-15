@@ -113,7 +113,7 @@ class Filter:
         for filename in os.listdir(os.curdir):
             if filename.endswith('.html'):
                 doc_id = filename[0:len(filename) - 5]
-                pdf_filename = doc_id + '.pdf'
+                json_filename = doc_id + '.json'
 
                 # Converting to PDF
                 options = {
@@ -143,7 +143,6 @@ class Filter:
         """
         curr_dir = os.getcwd()
         os.chdir(directory)
-        company_name_threshold = COMPANY_NAME_OCCUR
         self.blacklist = bwlist.BWList(search_keyword, 'black')
 
         for filename in os.listdir(os.curdir):
@@ -152,10 +151,16 @@ class Filter:
                 json_filename = doc_id + '.json'
 
                 try:
-                    source = json.load(open(json_filename, 'r', encoding='utf-8'))['source']
+                    # Open json file
                     print('Processing file with id %s' % doc_id)
                 except FileNotFoundError:
                     updateError('FILE NOT FOUND: %s. Skipped.' % json_filename)
+                    if os.path.exists(json_filename):
+                        os.remove(json_filename)
+                    if os.path.exists(filename):
+                        os.remove(filename)
+                    if os.path.exists(doc_id + '.txt'):
+                        os.remove(doc_id + '.txt')
                     continue
 
                 try:
@@ -163,7 +168,44 @@ class Filter:
                     text = self.pdf_to_text(filename)[0]
                 except FileNotFoundError:
                     updateError('FILE NOT FOUND: %s. Skipped.' % filename)
+                    if os.path.exists(json_filename):
+                        os.remove(json_filename)
+                    if os.path.exists(filename):
+                        os.remove(filename)
+                    if os.path.exists(doc_id + '.txt'):
+                        os.remove(doc_id + '.txt')
                     continue
+
+                with open(json_filename, 'r', encoding='utf-8') as file:
+                    # Update content to json
+                    attributes = json.load(file)
+                    file.close()
+
+                with open(json_filename, 'w', encoding='utf-8') as file:
+                    # Update content to json
+                    attributes.update({'content': text})
+                    json.dump(attributes, file, ensure_ascii=False, indent=4)
+                    file.close()
+
+
+        os.chdir(curr_dir)
+
+    def generate_tags(self, directory, search_keyword, has_pdf):
+        print("========generating tags========")
+        curr_dir = os.getcwd()
+        os.chdir(directory)
+        company_name_threshold = COMPANY_NAME_OCCUR
+        file_type = '.' + has_pdf  # '.html' or '.pdf'
+        for filename in os.listdir(os.curdir):
+            if filename.endswith(file_type):
+                doc_id = filename[0:len(filename) - len(file_type)]
+                json_filename = doc_id + '.json'
+
+                with open(json_filename, 'r', encoding='utf-8') as file:
+                    # Update content to json
+                    attributes = json.load(file)
+                    text = attributes['content']
+                    source = json.load(open(json_filename, 'r', encoding='utf-8'))['source']
 
                 try:
                     word_count = len(text.strip('\n'))
@@ -186,12 +228,11 @@ class Filter:
                         attributes = json.load(file)
 
                         # Already been processed
-                        if 'content' in attributes.keys() and 'keywordCount' in attributes.keys():
+                        if 'keywordCount' in attributes.keys():
                             continue
 
                         # Update json file
-                        attributes.update({'content': text,
-                                           'wordCount': word_count,
+                        attributes.update({'wordCount': word_count,
                                            'keywordCount': keywords_count,
                                            'tags': tags_count,
                                            'filtered': 1})
@@ -214,12 +255,12 @@ class Filter:
                     if os.path.exists(doc_id + '.txt'):
                         os.remove(doc_id + '.txt')
                     continue
-
         # Saving blacklist
         self.blacklist.save_bwlist()
 
         if os.path.exists('summary.json'):
             self.add_summary(search_keyword)
+
         os.chdir(curr_dir)
 
     def add_summary(self, search_keyword):
@@ -300,11 +341,12 @@ class Filter:
             print('======== Processing files from %s ========' % source_name)
 
             # Convert html files to pdf first for news sources
-            if file_type == 'html':
-                self.html_to_pdf(curr_dir)
+            # if file_type == 'html':
+            #     self.html_to_pdf(curr_dir)
 
             # Process all pdf files
             self.pdf_process(curr_dir, search_keyword)
+            self.generate_tags(curr_dir, search_keyword, file_type)
         self.save_summary(search_keyword)
 
 
@@ -315,9 +357,9 @@ def run_both_filters(search_keyword):
     start_time = time.time()
     file_filter = Filter()
     file_filter.run_filter(search_keyword=search_keyword, file_type='html')
-    file_filter.run_filter(search_keyword=search_keyword, file_type='has_pdf')
+    file_filter.run_filter(search_keyword=search_keyword, file_type='pdf')
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
 if __name__ == '__main__':
-    run_both_filters(search_keyword='中芯国际')
+    run_both_filters(search_keyword='恒大')

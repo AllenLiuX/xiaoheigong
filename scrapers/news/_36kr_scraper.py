@@ -139,7 +139,8 @@ class _36KR:
                     'oss_path': 'news/36kr/' + str(doc_id) + '.pdf',
                     'doc_type': 'NEWS',
                     'download_url': url,
-                    'has_pdf': 'html'
+                    'has_pdf': 'html',
+                    'content': str(article)
                 }
 
                 doc_info_copy = doc_info.copy()
@@ -150,12 +151,11 @@ class _36KR:
                 self.summary['data'].append(doc_info_copy)
 
                 # store doc_info to mongodb
-                mg.insert_data(doc_info, '36kr')
+                mg.insert_data(doc_info, 'articles')
                 return valid
         except:
             updateError('Error occurred when scraping text from 36kr')
             pass
-
 
     def run(self, search_keyword, min_word_count, num_years, get_pdf: bool):
         print('--------Begin searching articles from 36kr--------')
