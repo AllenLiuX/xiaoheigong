@@ -27,10 +27,17 @@ export default function Search() {
 	const submitHandler = event => {
 		event.preventDefault();
 		event.target.className += " was-validated";
+		var ret = {
+			inputType: inputType,
+			num_years: inputDate,
+			pdf_min_num_page: inputLength,
+			search_keyword: inputText
+		}
 		if (inputText != "") {
 			const params = "search_keyword=" + inputText + "&num_years=" + inputDate + "&pdf_min_num_page=" + inputLength + "&inputType=" + inputType
 			router.push("/search?" + params)
 		}
+		fetchData(ret)
 	};
 
 	const changeHandler = (input, fields) => {
