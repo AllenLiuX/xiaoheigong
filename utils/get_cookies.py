@@ -1,7 +1,8 @@
-from selenium import webdriver
 import os
-from definitions import ROOT_DIR, CHROME_DRIVER_PATH
-import pprint as pp
+
+from selenium import webdriver
+
+from definitions import ROOT_DIR
 
 
 def get_cookies(url):
@@ -12,8 +13,8 @@ def get_cookies(url):
     chrome_options.add_argument('--window-size=1420,1080')
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
-    driver = webdriver.Chrome(executable_path=chrome_driver, chrome_options=chrome_options)             # On Linux
-    # driver = webdriver.Chrome(CHROME_DRIVER_PATH, chrome_options=chrome_options)                          # On Mac
+    # driver = webdriver.Chrome(executable_path=chrome_driver, chrome_options=chrome_options)             # On Linux
+    driver = webdriver.Chrome(CHROME_DRIVER_PATH, chrome_options=chrome_options)  # On Mac
     driver.get(url)
     cookies = driver.get_cookies()
     driver.close()

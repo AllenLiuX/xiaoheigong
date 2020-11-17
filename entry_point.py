@@ -1,5 +1,3 @@
-import pprint as pp
-
 import processing.filter as filter
 import processing.run_database as run_database
 import processing.upload as upload
@@ -31,4 +29,4 @@ def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_year
 if __name__ == '__main__':
     # pp.pprint(
     #     search_db(search_keyword='中芯国际', min_words='3000', pdf_min_num_page='150', num_years=1))
-    scrape(search_keyword='特斯拉', filter_keyword='', min_words='3000', pdf_min_num_page='150', num_years=1)
+    scrape(search_keyword='恒大', filter_keyword='', min_words='0', pdf_min_num_page='0', num_years=10)
