@@ -71,8 +71,7 @@ export default function Search() {
 			inputType: String(inp["inputType"])
 		}
 		JSON.stringify(params)
-		/*axios.post(`http://8.210.91.108:5000/`, {params}) company, year, page, words */
-		axios.post('http://localhost:5000', { params })
+		axios.post(`http://8.210.91.108:5000/`, { params })
 			.then(res => {
 				console.log(res)
 				setArticles(res.data.data.db_search_results)
