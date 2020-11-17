@@ -225,5 +225,4 @@ fabric.properties
 
 React/node_modules
 
-.next
-React/.next/build-manifest.json
+React/.next
