@@ -1,0 +1,17 @@
+.bg-primary-darker{
+    background-color: #3366cc
+}
+
+.bg-bland-gray{
+    background-color: #F3F5F7;
+}
+
+div.rowHover:hover
+{
+  background-color: rgb(236, 236, 236);
+}
+
+div.rowHover
+{
+  background-color: rgb(255, 255, 255);
+}
