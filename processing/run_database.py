@@ -35,6 +35,39 @@ def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
 
     return result
 
+def get_db_results_new(search_keyword, pdf_min_page, min_word_count, num_years):
+    pdf_min_page = int(pdf_min_page) if int(pdf_min_page) > 0 else 0
+    min_word_count = int(min_word_count) if int(min_word_count) > 0 else 0
+
+    try:
+        existing_pdfs = mg.show_datas(collection='articles', query={'search_keyword': search_keyword, 'filtered': 1})
+    except:
+        updateError('Database Error: Error occurred when getting database results for %s.' % search_keyword)
+
+    for pdf in existing_pdfs:
+        pdf.pop('_id')
+        pdf.pop('content')
+        pdf.pop('keywordCount')
+        pdf.pop('filtered')
+        pdf.pop('wordCount')
+
+    filtered_pdfs = []
+    for pdf in existing_pdfs:
+        if 'page_num' in pdf and pdf['page_num'] > pdf_min_page:
+            filter_pdfs.append(pdf)
+
+    result = {'db_search_results': filtered_pdfs}
+    return result
+
+def pre_filter():
+    try:
+        existing_pdfs = mg.show_datas(collection='articles', query={'filtered': 0})
+    except:
+        updateError('Database Error: Error occurred when getting database results for filtered=0.')
+    for pdf in existing_pdfs:
+        pdf['filtered'] = 1
+        mg.delete_datas(query={'source': pdf['source'], 'doc_id': pdf['doc_id']}, collection='articles')
+        mg.insert_data(pdf, collection='articles')
 
 if __name__ == '__main__':
-    pp.pprint(get_db_results('恒大', '150', '3000', 5))
+    pp.pprint(get_db_results_new('恒大', '150', '3000', 5))
