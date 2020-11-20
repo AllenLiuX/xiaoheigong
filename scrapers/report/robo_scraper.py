@@ -94,7 +94,9 @@ class ROBO:
 
         # Filter Whitelist
         for doc_id in id_list.copy():
-            id_match_res = mg.show_datas('robo', query={'doc_id': str(doc_id)})
+            # new whitelist --vincent
+            # id_match_res = mg.show_datas('robo', query={'doc_id': str(doc_id)})
+            id_match_res = mg.show_datas('article', query={'doc_id': str(doc_id), 'search_keyword': search_keyword})
             if id_match_res:
                 print('article #' + str(doc_id) + ' is already in database. Skipped.')
                 id_list.pop(doc_id)
@@ -102,7 +104,7 @@ class ROBO:
         print('--------Found %d pdfs in 萝卜投研--------' % len(id_list))
         return id_list
 
-    def update_json(self, id_list: dict):
+    def update_json(self, id_list: dict, search_keyword: str):
         download_api_url = f'https://gw.datayes.com/rrp_adventure/web/externalReport/'
         updated_json = {}
 
@@ -122,14 +124,17 @@ class ROBO:
                             'download_url': download_url,
                             'has_pdf': 'pdf',
                             'oss_path': 'report/robo/' + str(id) + '.pdf',
-                            'title': id_list[id]['data']['title']}
+                            'title': id_list[id]['data']['title'],
+                            'filtered': 0,      # -- new filter vincent
+                            'search_keyword': search_keyword,
+            }
 
             updated_json.update({id: updated_dict})
 
         return updated_json
 
     def download_pdf(self, search_keyword: str, doc_id_list: dict, get_pdf: bool):
-        url_list = self.update_json(doc_id_list)
+        url_list = self.update_json(doc_id_list, search_keyword)
 
         pdf_count = 0
 
@@ -174,6 +179,8 @@ class ROBO:
 
                 # store doc_info to mongodb
                 mg.insert_data(doc_info, 'articles')
+                # new db method --vincent
+                mg.insert_data(doc_info, )
 
                 pdf_count += 1
 
