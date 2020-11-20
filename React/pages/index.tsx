@@ -1,11 +1,11 @@
 
-import Search from "../components/Search"
+import Home from "../components/Home"
 import React from "react"
 
 function HomePage() {
 	return (
 		<React.Fragment>
-			<Search />
+			<Home />
 		</React.Fragment>
 	)
 }

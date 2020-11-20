@@ -1,5 +1,6 @@
-import os
 import datetime
+import os
+
 from definitions import ROOT_DIR
 
 
@@ -20,7 +21,7 @@ class DownloadError(Exception):
 
 def updateError(message):
     print(message)
-    error_file = open(os.path.join(ROOT_DIR, 'error_report'), 'w')
+    error_file = open(os.path.join(ROOT_DIR, 'error_report.txt'), 'a')
     error_file.write('%s: ' % str(datetime.datetime.now()))
-    error_file.write(message)
+    error_file.write(message + '\n')
     error_file.close()

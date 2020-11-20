@@ -26,15 +26,15 @@ def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
         pdf.pop('wordCount')
 
     result = {'db_search_results': existing_pdfs}
-
+    
     if not os.path.exists(os.path.join(ROOT_DIR, 'cache', search_keyword)):
         os.mkdir(os.path.join(ROOT_DIR, 'cache', search_keyword))
 
-    with open(os.path.join(ROOT_DIR, 'cache', search_keyword, 'db_search_results.json'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(ROOT_DIR, 'cache', search_keyword, 'all_search_results.json'), 'w', encoding='utf-8') as f:
         json.dump(result, f, ensure_ascii=False, indent=4)
 
     return result
 
 
 if __name__ == '__main__':
-    pp.pprint(get_db_results('中芯国际', '150', '3000', 5))
+    pp.pprint(get_db_results('恒大', '150', '3000', 5))

@@ -9,10 +9,12 @@ from fake_useragent import UserAgent
 import oss.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
-from utils.errors import NoDocError
 from utils.errors import DownloadError
+from utils.errors import NoDocError
 from utils.errors import updateError
 
+
+token = '6PwWhSrcWZdMGiqNAPZHzZj2UHM2S5lVsqGbncDZN9grbufTWP1NF8BXjpbVTI60'
 
 class FXBG:
     def __init__(self, user_token: str, user_id: str):
@@ -100,6 +102,10 @@ class FXBG:
             raise NoDocError('Bad response')
 
         response = response.json()
+
+        id_list = []
+        if not response['data']:
+            raise NoDocError('Bad response')
 
         id_list = {doc['docId']: doc for doc in response['data']['dataList']}
 
@@ -218,7 +224,7 @@ class FXBG:
                 json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
             # store doc_info to mongodb
-            mg.insert_data(doc_info, 'fxbg')
+            mg.insert_data(doc_info, 'articles')
 
             pdf_count += 1
 
@@ -252,7 +258,7 @@ def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_yea
     # User ID does not change for a fixed account
     # User Token changes for each individual login
     USER_ID = '43934'
-    USER_TOKEN = 'UWv0J0jlQG3AMl1nJRfRBAsJXim6sz7kWrTPw94DtdsYT1tNAWrJvzAIczDPHHVj'
+    USER_TOKEN = token
     try:
         fxbg_scraper = FXBG(USER_TOKEN, USER_ID)
         fxbg_scraper.run_fxbg(search_keyword=search_keyword, filter_keyword=filter_keyword,

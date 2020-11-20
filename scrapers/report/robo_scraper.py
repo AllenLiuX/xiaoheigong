@@ -23,23 +23,26 @@ class ROBO:
             for cookie in cookies:
                 if cookie['name'] == 'cloud-sso-token':
                     sso = cookie['value']
+        try:
+            self.s = requests.Session()
+            self.cookie = 'cloud-sso-token=%s; ' % sso
 
-        self.s = requests.Session()
-        self.cookie = 'cloud-sso-token=%s; ' % sso
-        self.headers = {
-            'accept': 'text/html, application/xhtml+xml, application/xml; q=0.9, image/webp, image/apng, */*; '
-                      'q=0.8, application/signed-exchange; v=b3;q=0.9',
-            'accept-encoding': 'gzip, deflate, br',
-            'accept-language': 'en-US,en;q=0.9',
-            'cache-control': 'max-age=0',
-            'cookie': self.cookie,
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-site',
-            'sec-fetch-user': '?1',
-            'upgrade-insecure-requests': '1',
-            'user-agent': str(UserAgent().random)
-        }
+            self.headers = {
+                'accept': 'text/html, application/xhtml+xml, application/xml; q=0.9, image/webp, image/apng, */*; '
+                          'q=0.8, application/signed-exchange; v=b3;q=0.9',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9',
+                'cache-control': 'max-age=0',
+                'cookie': self.cookie,
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'same-site',
+                'sec-fetch-user': '?1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': str(UserAgent().random)
+            }
+        except:
+            pass
         self.source = 'robo'
         self.blacklist = None
         self.whitelist = set()
@@ -70,7 +73,8 @@ class ROBO:
             'pubTimeEnd': str(curr_year) + '1231',
             'minPageCount': pdf_min_num_page
         }
-        # Updatig summary before search
+
+        # Updating summary before search
         self.summary.update({'search_keyword': search_keyword})
         self.summary.update({'search_time': str(datetime.datetime.now().date())})
 
@@ -169,7 +173,7 @@ class ROBO:
                     json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
                 # store doc_info to mongodb
-                mg.insert_data(doc_info, 'robo')
+                mg.insert_data(doc_info, 'articles')
 
                 pdf_count += 1
 
@@ -206,7 +210,6 @@ class ROBO:
             self.download_pdf(search_keyword, pdf_id_list, get_pdf)
         except:
             updateError("Download Error: Error occurred when downloading pdfs from ROBO")
-
 
 
 def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):
