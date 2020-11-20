@@ -2,3 +2,11 @@
 2020-11-16 03:10:52.158890: Download Error: Error occurred when downloading pdfs from fxbg.
 2020-11-16 03:11:17.234590: No Doc Error: Empty response from FXBG.
 2020-11-16 03:11:17.234718: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-16 03:59:15.679197: No Doc Error: Empty response from FXBG.
+2020-11-16 03:59:15.679374: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-16 04:12:00.402940: No Doc Error: Empty response from FXBG.
+2020-11-16 04:12:00.403120: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-16 04:13:22.934258: No Doc Error: Empty response from FXBG.
+2020-11-16 04:13:22.934449: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-21 00:12:34.661539: No Doc Error: Empty response from FXBG.
+2020-11-21 00:12:34.661732: Download Error: Error occurred when downloading pdfs from fxbg.

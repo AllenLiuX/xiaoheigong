@@ -1,6 +1,7 @@
 import pymongo
 import datetime as dt
 import pprint as pp
+from definitions import COMPANY_NAME_OCCUR
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 
@@ -38,7 +39,7 @@ def search_datas(search_keyword, pdf_min_page, min_word_count, num_years, db='ar
     date = dt.datetime.now() - dt.timedelta(num_years * 365)
 
     query = {
-        'keywordCount.%s' % search_keyword: {'$gt': 30},
+        'keywordCount.%s' % search_keyword: {'$gt': COMPANY_NAME_OCCUR},
         '$or': [{'page_num': {'$gt': pdf_min_page}}, {'wordCount': {'$gt': min_word_count}}],
         # 'date': {'$gt': date},
         'filtered': 1
