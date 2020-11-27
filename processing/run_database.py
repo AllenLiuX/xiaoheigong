@@ -2,6 +2,7 @@ from oss import mongodb as mg
 import pprint as pp
 import os
 import json
+import sys
 from definitions import ROOT_DIR
 from utils.errors import updateError
 
@@ -46,15 +47,15 @@ def get_db_results_new(search_keyword, pdf_min_page, min_word_count, num_years):
 
     for pdf in existing_pdfs:
         pdf.pop('_id')
-        pdf.pop('content')
-        pdf.pop('keywordCount')
-        pdf.pop('filtered')
-        pdf.pop('wordCount')
+        #pdf.pop('content')
+        #pdf.pop('keywordCount')
+        #pdf.pop('filtered')
+        #pdf.pop('wordCount')
 
     filtered_pdfs = []
     for pdf in existing_pdfs:
-        if 'page_num' in pdf and pdf['page_num'] > pdf_min_page:
-            filter_pdfs.append(pdf)
+        #if 'page_num' in pdf and pdf['page_num'] > pdf_min_page:
+        filtered_pdfs.append(pdf)
 
     result = {'db_search_results': filtered_pdfs}
     return result
@@ -70,4 +71,9 @@ def pre_filter():
         mg.insert_data(pdf, collection='articles')
 
 if __name__ == '__main__':
-    pp.pprint(get_db_results_new('恒大', '150', '3000', 5))
+    if len(sys.argv) > 1:
+        keywords = sys.argv[1]
+    else:
+        keywords = '恒大'
+    pp.pprint(get_db_results_new(keywords, '150', '3000', 5))
+    pre_filter()

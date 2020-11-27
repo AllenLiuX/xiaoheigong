@@ -10,3 +10,101 @@
 2020-11-16 04:13:22.934449: Download Error: Error occurred when downloading pdfs from fxbg.
 2020-11-21 00:12:34.661539: No Doc Error: Empty response from FXBG.
 2020-11-21 00:12:34.661732: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-21 02:40:17.636462: No Doc Error: Empty response from FXBG.
+2020-11-21 02:40:17.636659: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-21 02:40:40.727204: Error occurred when saving pdf 4381391 from ROBO
+2020-11-21 02:40:42.197786: Error occurred when saving pdf 4380435 from ROBO
+2020-11-21 02:40:42.876006: Error occurred when saving pdf 4372854 from ROBO
+2020-11-21 02:40:43.898387: Error occurred when saving pdf 4362589 from ROBO
+2020-11-21 02:40:45.458971: Error occurred when saving pdf 4360956 from ROBO
+2020-11-21 02:40:46.807252: Error occurred when saving pdf 4358674 from ROBO
+2020-11-21 02:40:48.652194: Error occurred when saving pdf 4358641 from ROBO
+2020-11-21 02:40:50.056588: Error occurred when saving pdf 4359261 from ROBO
+2020-11-21 02:40:51.147484: Error occurred when saving pdf 4359277 from ROBO
+2020-11-21 02:40:52.309682: Error occurred when saving pdf 4358257 from ROBO
+2020-11-21 02:40:53.602089: Error occurred when saving pdf 4358315 from ROBO
+2020-11-21 02:40:55.181347: Error occurred when saving pdf 4357900 from ROBO
+2020-11-21 02:40:56.784274: Error occurred when saving pdf 4357858 from ROBO
+2020-11-21 02:40:59.508545: Error occurred when saving pdf 4358184 from ROBO
+2020-11-21 02:41:02.801290: Error occurred when saving pdf 4357979 from ROBO
+2020-11-21 02:41:04.580327: Error occurred when saving pdf 4358047 from ROBO
+2020-11-21 02:41:05.905490: Error occurred when saving pdf 4361858 from ROBO
+2020-11-21 02:41:11.752735: Error occurred when saving pdf 4357764 from ROBO
+2020-11-21 02:41:13.210975: Error occurred when saving pdf 4356367 from ROBO
+2020-11-21 02:41:15.096636: Error occurred when saving pdf 4356414 from ROBO
+2020-11-21 02:41:17.132841: Error occurred when saving pdf 4356229 from ROBO
+2020-11-21 02:41:17.865479: Error occurred when saving pdf 4357058 from ROBO
+2020-11-21 02:41:19.858484: Error occurred when saving pdf 4356369 from ROBO
+2020-11-21 02:41:20.864059: Error occurred when saving pdf 4356340 from ROBO
+2020-11-21 02:41:21.575725: Error occurred when saving pdf 4356173 from ROBO
+2020-11-21 02:41:24.650178: Error occurred when saving pdf 4353873 from ROBO
+2020-11-21 02:41:25.913833: Error occurred when saving pdf 4353477 from ROBO
+2020-11-21 02:41:27.600677: Error occurred when saving pdf 4350181 from ROBO
+2020-11-21 02:41:28.240306: Error occurred when saving pdf 4348929 from ROBO
+2020-11-21 02:41:30.028344: Error occurred when saving pdf 4348969 from ROBO
+2020-11-21 02:41:30.950918: Error occurred when saving pdf 4347511 from ROBO
+2020-11-21 02:41:32.623797: Error occurred when saving pdf 4347295 from ROBO
+2020-11-21 02:41:33.417739: Error occurred when saving pdf 4346103 from ROBO
+2020-11-21 02:41:35.922256: Error occurred when saving pdf 4345914 from ROBO
+2020-11-21 02:41:37.155690: Error occurred when saving pdf 4346093 from ROBO
+2020-11-21 02:41:38.900124: Error occurred when saving pdf 4346229 from ROBO
+2020-11-21 02:41:42.107854: Error occurred when saving pdf 4346322 from ROBO
+2020-11-21 02:41:43.288198: Error occurred when saving pdf 4346638 from ROBO
+2020-11-21 02:41:44.671290: Error occurred when saving pdf 4345882 from ROBO
+2020-11-21 02:41:45.310940: Error occurred when saving pdf 4346128 from ROBO
+2020-11-21 02:41:46.031987: Error occurred when saving pdf 4346078 from ROBO
+2020-11-21 02:41:48.224030: Error occurred when saving pdf 4345570 from ROBO
+2020-11-21 02:41:50.647217: Error occurred when saving pdf 4345620 from ROBO
+2020-11-21 02:41:52.981232: Error occurred when saving pdf 4344591 from ROBO
+2020-11-21 02:41:54.280321: Error occurred when saving pdf 4344544 from ROBO
+2020-11-21 02:41:55.051532: Error occurred when saving pdf 4344291 from ROBO
+2020-11-21 02:49:34.945859: No Doc Error: Empty response from FXBG.
+2020-11-21 02:49:34.946120: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-21 02:49:49.142727: Error occurred when saving pdf 4345204 from ROBO
+2020-11-21 02:49:51.938487: Error occurred when saving pdf 4343786 from ROBO
+2020-11-21 02:49:55.603026: Error occurred when saving pdf 4342964 from ROBO
+2020-11-21 02:49:56.704164: Error occurred when saving pdf 4307787 from ROBO
+2020-11-21 02:49:57.900734: Error occurred when saving pdf 4274572 from ROBO
+2020-11-21 02:49:58.390247: Error occurred when saving pdf 4270567 from ROBO
+2020-11-21 02:50:00.114373: Error occurred when saving pdf 4238362 from ROBO
+2020-11-21 02:50:00.694109: Error occurred when saving pdf 4209196 from ROBO
+2020-11-21 02:50:01.358651: Error occurred when saving pdf 4176115 from ROBO
+2020-11-21 02:50:02.980223: Error occurred when saving pdf 4164080 from ROBO
+2020-11-21 02:50:04.752096: Error occurred when saving pdf 4381612 from ROBO
+2020-11-21 02:50:06.810000: Error occurred when saving pdf 4381520 from ROBO
+2020-11-21 02:50:09.062117: Error occurred when saving pdf 4381623 from ROBO
+2020-11-21 02:50:11.676984: Error occurred when saving pdf 4380967 from ROBO
+2020-11-21 02:50:12.411133: Error occurred when saving pdf 4380798 from ROBO
+2020-11-21 02:50:16.565624: Error occurred when saving pdf 4380839 from ROBO
+2020-11-21 02:50:19.712621: Error occurred when saving pdf 4381173 from ROBO
+2020-11-21 02:50:23.664186: Error occurred when saving pdf 4381066 from ROBO
+2020-11-21 02:50:26.801161: Error occurred when saving pdf 4380759 from ROBO
+2020-11-21 02:50:29.121332: Error occurred when saving pdf 4380624 from ROBO
+2020-11-21 02:50:30.560262: Error occurred when saving pdf 4380403 from ROBO
+2020-11-21 02:50:32.106858: Error occurred when saving pdf 4379602 from ROBO
+2020-11-21 02:50:36.271741: Error occurred when saving pdf 4379912 from ROBO
+2020-11-21 02:50:39.854538: Error occurred when saving pdf 4378797 from ROBO
+2020-11-21 02:50:42.723864: Error occurred when saving pdf 4378976 from ROBO
+2020-11-21 02:50:45.518114: Error occurred when saving pdf 4379899 from ROBO
+2020-11-21 02:50:52.295367: Error occurred when saving pdf 4378880 from ROBO
+2020-11-21 02:50:57.041655: Error occurred when saving pdf 4379431 from ROBO
+2020-11-21 02:50:58.967543: Error occurred when saving pdf 4378969 from ROBO
+2020-11-21 02:51:00.430313: Error occurred when saving pdf 4379002 from ROBO
+2020-11-21 02:51:01.697115: Error occurred when saving pdf 4379037 from ROBO
+2020-11-21 02:51:02.411426: Error occurred when saving pdf 4379774 from ROBO
+2020-11-21 02:51:04.208254: Error occurred when saving pdf 4377717 from ROBO
+2020-11-21 02:51:04.868700: Error occurred when saving pdf 4377856 from ROBO
+2020-11-21 02:51:08.733679: Error occurred when saving pdf 4377897 from ROBO
+2020-11-21 02:51:10.631927: Error occurred when saving pdf 4378118 from ROBO
+2020-11-21 02:51:13.136250: Error occurred when saving pdf 4377916 from ROBO
+2020-11-21 02:51:15.561465: Error occurred when saving pdf 4378620 from ROBO
+2020-11-21 02:51:17.264373: Error occurred when saving pdf 4377923 from ROBO
+2020-11-21 02:51:19.337191: Error occurred when saving pdf 4378229 from ROBO
+2020-11-21 02:51:21.519817: Error occurred when saving pdf 4377407 from ROBO
+2020-11-21 02:51:23.433901: Error occurred when saving pdf 4377439 from ROBO
+2020-11-21 02:51:25.066439: Error occurred when saving pdf 4377409 from ROBO
+2020-11-21 02:51:25.687477: Error occurred when saving pdf 4377402 from ROBO
+2020-11-21 02:53:34.083006: No Doc Error: Empty response from FXBG.
+2020-11-21 02:53:34.083246: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-21 14:20:44.070026: No Doc Error: Empty response from FXBG.
+2020-11-21 14:20:44.070276: Download Error: Error occurred when downloading pdfs from fxbg.

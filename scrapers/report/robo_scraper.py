@@ -177,17 +177,16 @@ class ROBO:
                 with open(txt_save_path, 'w', encoding='utf-8') as f:
                     json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
-                # store doc_info to mongodb
+                # store doc_info to mongodb --vincent
                 mg.insert_data(doc_info, 'articles')
-                # new db method --vincent
-                mg.insert_data(doc_info, )
 
                 pdf_count += 1
 
                 doc_info_copy = doc_info.copy()
                 doc_info_copy.pop('_id')
                 self.summary['data'].append(doc_info_copy)
-            except:
+            except Exception as e:
+                print(e)
                 updateError('Error occurred when saving pdf %s from ROBO' % pdf_id)
                 if os.path.exists(pdf_save_path):
                     os.remove(pdf_save_path)
