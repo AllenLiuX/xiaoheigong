@@ -14,8 +14,9 @@ Deleting files
 	pm2 stop y
 	pm2 delete y
 
-Clone files #start React and server.py
+Getting React ready
 	npm install
 	npm run build
+Starting server and starting react
 	pm2 start npm  -- run start
     pm2 start server.py
