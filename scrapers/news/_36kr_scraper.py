@@ -7,7 +7,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-import oss.mongodb as mg
+import storage.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError, updateError
@@ -88,7 +88,7 @@ class _36KR:
             ret = False
 
         # whitelist by database
-        id_match_res = mg.show_datas('36kr', query={'doc_id': str(doc_id)})
+        id_match_res = mg.show_datas('articles', query={'doc_id': str(doc_id), 'search_keyword': search_keyword})   # new whitelist --vincent
         if id_match_res:
             print('article #' + str(doc_id) + ' is already in database. Skipped.')
             ret = False
@@ -140,7 +140,9 @@ class _36KR:
                     'doc_type': 'NEWS',
                     'download_url': url,
                     'has_pdf': 'html',
-                    'content': str(article)
+                    'content': str(article),
+                    'filtered': 0,  # -- new filter vincent
+                    'search_keyword': search_keyword,
                 }
 
                 doc_info_copy = doc_info.copy()
@@ -150,7 +152,7 @@ class _36KR:
 
                 self.summary['data'].append(doc_info_copy)
 
-                # store doc_info to mongodb
+                # store doc_info to mongodb     --vincent
                 mg.insert_data(doc_info, 'articles')
                 return valid
         except:

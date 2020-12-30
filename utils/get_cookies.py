@@ -1,6 +1,7 @@
 import os
 
 from selenium import webdriver
+import pprint as pp
 
 from definitions import ROOT_DIR
 
@@ -19,3 +20,7 @@ def get_cookies(url):
     cookies = driver.get_cookies()
     driver.close()
     return cookies
+
+
+if __name__ == "__main__":
+    pp.pprint(get_cookies("https://robo.datayes.com"))

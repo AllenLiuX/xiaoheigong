@@ -9,7 +9,7 @@ import traceback
 import os, sys
 import numpy as np
 import entry_point as entry
-import oss.mongodb
+import storage.mongodb
 
 # sys.path.append('/Users/vincentl/PycharmProjects/')
 
@@ -120,7 +120,7 @@ def search(args):
         'company',
         'year',
         'page',
-        'type'
+        'words'
     ]
     lost_keys = get_lost_keys(args, keys)
     if lost_keys:
@@ -129,17 +129,17 @@ def search(args):
 
     # 检查数据类型
     try:
-        company = args['compnay']  # str
+        company = args['company']  # str
         year = int(args['year'])  # int
         page = args['page']  # str
-        type = args['type']  # str
+        words = args['words']  # str
     except Exception as e:
         return {
             'respCode': '9999',
              'respMsg': '数据类型错误: %s' % str(e),
         }
     # 接口函数主内容
-    res = entry.run(company, '', 3000, page, year)
+    res = entry.search_db(company, words, page, year)
 
     # 特殊返回数据结构样例
 
@@ -174,7 +174,7 @@ class Service_name(Resource):
         return json.dumps(res, ensure_ascii=False)
 
 
-api.add_resource(Service_name, '/liushui/<string:api_name>')  # sample 替换为service_name
+api.add_resource(Service_name, '/<string:api_name>')  # sample 替换为service_name
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=8080)

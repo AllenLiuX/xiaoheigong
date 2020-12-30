@@ -4,8 +4,9 @@ import os
 
 import requests
 from fake_useragent import UserAgent
+import pprint as pp
 
-import oss.mongodb as mg
+import storage.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError
@@ -16,7 +17,6 @@ from utils.get_cookies import get_cookies
 class ROBO:
     def __init__(self):
         sso = ''
-
         # Prevents the case where cookies does not contain cloud sso token; loops until we have sso
         while sso == '':
             cookies = get_cookies('https://robo.datayes.com')
@@ -25,6 +25,7 @@ class ROBO:
                     sso = cookie['value']
         try:
             self.s = requests.Session()
+            sso = '4029958A5B8C1F2C47CF330963D003D0'
             self.cookie = 'cloud-sso-token=%s; ' % sso
 
             self.headers = {
@@ -94,7 +95,9 @@ class ROBO:
 
         # Filter Whitelist
         for doc_id in id_list.copy():
-            id_match_res = mg.show_datas('robo', query={'doc_id': str(doc_id)})
+            # new whitelist --vincent
+            # id_match_res = mg.show_datas('robo', query={'doc_id': str(doc_id)})
+            id_match_res = mg.show_datas('article', query={'doc_id': str(doc_id), 'search_keyword': search_keyword})
             if id_match_res:
                 print('article #' + str(doc_id) + ' is already in database. Skipped.')
                 id_list.pop(doc_id)
@@ -102,13 +105,23 @@ class ROBO:
         print('--------Found %d pdfs in 萝卜投研--------' % len(id_list))
         return id_list
 
-    def update_json(self, id_list: dict):
+    def update_json(self, id_list: dict, search_keyword: str):
+        """
+        Formats the doc_object into a standard format
+        :param id_list: a dict of {doc_id: doc_object}
+        :param search_keyword: the search keyword
+        :return: an dict of {doc_id: doc_object} with more details in the object
+        """
         download_api_url = f'https://gw.datayes.com/rrp_adventure/web/externalReport/'
         updated_json = {}
 
         for id in id_list:
-            download_url = self.s.get(url=download_api_url + str(id), headers=self.headers).json()['data'][
-                'downloadUrl']
+            download_url = self.s.get(url=download_api_url + str(id), headers=self.headers).json()
+
+            try:
+                download_url = download_url['data']['downloadUrl']
+            except:
+                continue
 
             date = id_list[id]['data']['publishTime']
             date = datetime.datetime(int(date[0:4]), int(date[5:7]), int(date[8:10])).date()
@@ -122,15 +135,17 @@ class ROBO:
                             'download_url': download_url,
                             'has_pdf': 'pdf',
                             'oss_path': 'report/robo/' + str(id) + '.pdf',
-                            'title': id_list[id]['data']['title']}
+                            'title': id_list[id]['data']['title'],
+                            'filtered': 0,  # -- new filter vincent
+                            'search_keyword': search_keyword,
+                            }
 
             updated_json.update({id: updated_dict})
 
         return updated_json
 
     def download_pdf(self, search_keyword: str, doc_id_list: dict, get_pdf: bool):
-        url_list = self.update_json(doc_id_list)
-
+        url_list = self.update_json(doc_id_list, search_keyword)
         pdf_count = 0
 
         os.chdir(ROOT_DIR)
@@ -172,7 +187,7 @@ class ROBO:
                 with open(txt_save_path, 'w', encoding='utf-8') as f:
                     json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
-                # store doc_info to mongodb
+                # store doc_info to mongodb --vincent
                 mg.insert_data(doc_info, 'articles')
 
                 pdf_count += 1
@@ -180,7 +195,8 @@ class ROBO:
                 doc_info_copy = doc_info.copy()
                 doc_info_copy.pop('_id')
                 self.summary['data'].append(doc_info_copy)
-            except:
+            except Exception as e:
+                print(e)
                 updateError('Error occurred when saving pdf %s from ROBO' % pdf_id)
                 if os.path.exists(pdf_save_path):
                     os.remove(pdf_save_path)
@@ -206,10 +222,10 @@ class ROBO:
             updateError("No Doc Error: Empty response from ROBO.")
             return
 
-        try:
-            self.download_pdf(search_keyword, pdf_id_list, get_pdf)
-        except:
-            updateError("Download Error: Error occurred when downloading pdfs from ROBO")
+        # try:
+        self.download_pdf(search_keyword, pdf_id_list, get_pdf)
+        # except:
+        #     updateError("Download Error: Error occurred when downloading pdfs from ROBO")
 
 
 def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):
@@ -220,4 +236,4 @@ def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_yea
 
 
 if __name__ == '__main__':
-    run(search_keyword='中芯国际', filter_keyword='', pdf_min_num_page='3000', num_years=2, get_pdf=True)
+    run(search_keyword='恒大', filter_keyword='', pdf_min_num_page='0', num_years=0, get_pdf=True)

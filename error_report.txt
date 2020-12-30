@@ -1,0 +1,320 @@
+2020-11-16 03:10:52.158693: No Doc Error: Empty response from FXBG.
+2020-11-16 03:10:52.158890: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-16 03:11:17.234590: No Doc Error: Empty response from FXBG.
+2020-11-16 03:11:17.234718: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-16 03:59:15.679197: No Doc Error: Empty response from FXBG.
+2020-11-16 03:59:15.679374: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-16 04:12:00.402940: No Doc Error: Empty response from FXBG.
+2020-11-16 04:12:00.403120: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-16 04:13:22.934258: No Doc Error: Empty response from FXBG.
+2020-11-16 04:13:22.934449: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-21 00:12:34.661539: No Doc Error: Empty response from FXBG.
+2020-11-21 00:12:34.661732: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-21 02:40:17.636462: No Doc Error: Empty response from FXBG.
+2020-11-21 02:40:17.636659: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-21 02:40:40.727204: Error occurred when saving pdf 4381391 from ROBO
+2020-11-21 02:40:42.197786: Error occurred when saving pdf 4380435 from ROBO
+2020-11-21 02:40:42.876006: Error occurred when saving pdf 4372854 from ROBO
+2020-11-21 02:40:43.898387: Error occurred when saving pdf 4362589 from ROBO
+2020-11-21 02:40:45.458971: Error occurred when saving pdf 4360956 from ROBO
+2020-11-21 02:40:46.807252: Error occurred when saving pdf 4358674 from ROBO
+2020-11-21 02:40:48.652194: Error occurred when saving pdf 4358641 from ROBO
+2020-11-21 02:40:50.056588: Error occurred when saving pdf 4359261 from ROBO
+2020-11-21 02:40:51.147484: Error occurred when saving pdf 4359277 from ROBO
+2020-11-21 02:40:52.309682: Error occurred when saving pdf 4358257 from ROBO
+2020-11-21 02:40:53.602089: Error occurred when saving pdf 4358315 from ROBO
+2020-11-21 02:40:55.181347: Error occurred when saving pdf 4357900 from ROBO
+2020-11-21 02:40:56.784274: Error occurred when saving pdf 4357858 from ROBO
+2020-11-21 02:40:59.508545: Error occurred when saving pdf 4358184 from ROBO
+2020-11-21 02:41:02.801290: Error occurred when saving pdf 4357979 from ROBO
+2020-11-21 02:41:04.580327: Error occurred when saving pdf 4358047 from ROBO
+2020-11-21 02:41:05.905490: Error occurred when saving pdf 4361858 from ROBO
+2020-11-21 02:41:11.752735: Error occurred when saving pdf 4357764 from ROBO
+2020-11-21 02:41:13.210975: Error occurred when saving pdf 4356367 from ROBO
+2020-11-21 02:41:15.096636: Error occurred when saving pdf 4356414 from ROBO
+2020-11-21 02:41:17.132841: Error occurred when saving pdf 4356229 from ROBO
+2020-11-21 02:41:17.865479: Error occurred when saving pdf 4357058 from ROBO
+2020-11-21 02:41:19.858484: Error occurred when saving pdf 4356369 from ROBO
+2020-11-21 02:41:20.864059: Error occurred when saving pdf 4356340 from ROBO
+2020-11-21 02:41:21.575725: Error occurred when saving pdf 4356173 from ROBO
+2020-11-21 02:41:24.650178: Error occurred when saving pdf 4353873 from ROBO
+2020-11-21 02:41:25.913833: Error occurred when saving pdf 4353477 from ROBO
+2020-11-21 02:41:27.600677: Error occurred when saving pdf 4350181 from ROBO
+2020-11-21 02:41:28.240306: Error occurred when saving pdf 4348929 from ROBO
+2020-11-21 02:41:30.028344: Error occurred when saving pdf 4348969 from ROBO
+2020-11-21 02:41:30.950918: Error occurred when saving pdf 4347511 from ROBO
+2020-11-21 02:41:32.623797: Error occurred when saving pdf 4347295 from ROBO
+2020-11-21 02:41:33.417739: Error occurred when saving pdf 4346103 from ROBO
+2020-11-21 02:41:35.922256: Error occurred when saving pdf 4345914 from ROBO
+2020-11-21 02:41:37.155690: Error occurred when saving pdf 4346093 from ROBO
+2020-11-21 02:41:38.900124: Error occurred when saving pdf 4346229 from ROBO
+2020-11-21 02:41:42.107854: Error occurred when saving pdf 4346322 from ROBO
+2020-11-21 02:41:43.288198: Error occurred when saving pdf 4346638 from ROBO
+2020-11-21 02:41:44.671290: Error occurred when saving pdf 4345882 from ROBO
+2020-11-21 02:41:45.310940: Error occurred when saving pdf 4346128 from ROBO
+2020-11-21 02:41:46.031987: Error occurred when saving pdf 4346078 from ROBO
+2020-11-21 02:41:48.224030: Error occurred when saving pdf 4345570 from ROBO
+2020-11-21 02:41:50.647217: Error occurred when saving pdf 4345620 from ROBO
+2020-11-21 02:41:52.981232: Error occurred when saving pdf 4344591 from ROBO
+2020-11-21 02:41:54.280321: Error occurred when saving pdf 4344544 from ROBO
+2020-11-21 02:41:55.051532: Error occurred when saving pdf 4344291 from ROBO
+2020-11-21 02:49:34.945859: No Doc Error: Empty response from FXBG.
+2020-11-21 02:49:34.946120: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-21 02:49:49.142727: Error occurred when saving pdf 4345204 from ROBO
+2020-11-21 02:49:51.938487: Error occurred when saving pdf 4343786 from ROBO
+2020-11-21 02:49:55.603026: Error occurred when saving pdf 4342964 from ROBO
+2020-11-21 02:49:56.704164: Error occurred when saving pdf 4307787 from ROBO
+2020-11-21 02:49:57.900734: Error occurred when saving pdf 4274572 from ROBO
+2020-11-21 02:49:58.390247: Error occurred when saving pdf 4270567 from ROBO
+2020-11-21 02:50:00.114373: Error occurred when saving pdf 4238362 from ROBO
+2020-11-21 02:50:00.694109: Error occurred when saving pdf 4209196 from ROBO
+2020-11-21 02:50:01.358651: Error occurred when saving pdf 4176115 from ROBO
+2020-11-21 02:50:02.980223: Error occurred when saving pdf 4164080 from ROBO
+2020-11-21 02:50:04.752096: Error occurred when saving pdf 4381612 from ROBO
+2020-11-21 02:50:06.810000: Error occurred when saving pdf 4381520 from ROBO
+2020-11-21 02:50:09.062117: Error occurred when saving pdf 4381623 from ROBO
+2020-11-21 02:50:11.676984: Error occurred when saving pdf 4380967 from ROBO
+2020-11-21 02:50:12.411133: Error occurred when saving pdf 4380798 from ROBO
+2020-11-21 02:50:16.565624: Error occurred when saving pdf 4380839 from ROBO
+2020-11-21 02:50:19.712621: Error occurred when saving pdf 4381173 from ROBO
+2020-11-21 02:50:23.664186: Error occurred when saving pdf 4381066 from ROBO
+2020-11-21 02:50:26.801161: Error occurred when saving pdf 4380759 from ROBO
+2020-11-21 02:50:29.121332: Error occurred when saving pdf 4380624 from ROBO
+2020-11-21 02:50:30.560262: Error occurred when saving pdf 4380403 from ROBO
+2020-11-21 02:50:32.106858: Error occurred when saving pdf 4379602 from ROBO
+2020-11-21 02:50:36.271741: Error occurred when saving pdf 4379912 from ROBO
+2020-11-21 02:50:39.854538: Error occurred when saving pdf 4378797 from ROBO
+2020-11-21 02:50:42.723864: Error occurred when saving pdf 4378976 from ROBO
+2020-11-21 02:50:45.518114: Error occurred when saving pdf 4379899 from ROBO
+2020-11-21 02:50:52.295367: Error occurred when saving pdf 4378880 from ROBO
+2020-11-21 02:50:57.041655: Error occurred when saving pdf 4379431 from ROBO
+2020-11-21 02:50:58.967543: Error occurred when saving pdf 4378969 from ROBO
+2020-11-21 02:51:00.430313: Error occurred when saving pdf 4379002 from ROBO
+2020-11-21 02:51:01.697115: Error occurred when saving pdf 4379037 from ROBO
+2020-11-21 02:51:02.411426: Error occurred when saving pdf 4379774 from ROBO
+2020-11-21 02:51:04.208254: Error occurred when saving pdf 4377717 from ROBO
+2020-11-21 02:51:04.868700: Error occurred when saving pdf 4377856 from ROBO
+2020-11-21 02:51:08.733679: Error occurred when saving pdf 4377897 from ROBO
+2020-11-21 02:51:10.631927: Error occurred when saving pdf 4378118 from ROBO
+2020-11-21 02:51:13.136250: Error occurred when saving pdf 4377916 from ROBO
+2020-11-21 02:51:15.561465: Error occurred when saving pdf 4378620 from ROBO
+2020-11-21 02:51:17.264373: Error occurred when saving pdf 4377923 from ROBO
+2020-11-21 02:51:19.337191: Error occurred when saving pdf 4378229 from ROBO
+2020-11-21 02:51:21.519817: Error occurred when saving pdf 4377407 from ROBO
+2020-11-21 02:51:23.433901: Error occurred when saving pdf 4377439 from ROBO
+2020-11-21 02:51:25.066439: Error occurred when saving pdf 4377409 from ROBO
+2020-11-21 02:51:25.687477: Error occurred when saving pdf 4377402 from ROBO
+2020-11-21 02:53:34.083006: No Doc Error: Empty response from FXBG.
+2020-11-21 02:53:34.083246: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-11-21 14:20:44.070026: No Doc Error: Empty response from FXBG.
+2020-11-21 14:20:44.070276: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-12-18 17:08:51.179703: No Doc Error: Empty response from FXBG.
+2020-12-18 17:08:51.181224: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-12-18 17:17:41.936312: Download Error: Error occurred when downloading pdfs from ROBO
+2020-12-18 17:18:15.503093: Download Error: Error occurred when downloading pdfs from ROBO
+2020-12-18 17:20:13.537756: Download Error: Error occurred when downloading pdfs from ROBO
+2020-12-18 17:20:38.929310: Download Error: Error occurred when downloading pdfs from ROBO
+2020-12-18 17:23:26.223604: Download Error: Error occurred when downloading pdfs from ROBO
+2020-12-18 17:23:46.466821: Download Error: Error occurred when downloading pdfs from ROBO
+2020-12-18 17:37:57.132871: Download Error: Error occurred when downloading pdfs from ROBO
+2020-12-18 17:38:16.109591: Download Error: Error occurred when downloading pdfs from ROBO
+2020-12-18 17:47:11.761818: Error occurred when saving pdf 4383559 from ROBO
+2020-12-18 17:47:11.762232: Error occurred when saving pdf 4382740 from ROBO
+2020-12-18 17:47:11.762621: Error occurred when saving pdf 4382377 from ROBO
+2020-12-18 17:47:11.763029: Error occurred when saving pdf 4345204 from ROBO
+2020-12-18 17:47:11.763395: Error occurred when saving pdf 4343786 from ROBO
+2020-12-18 17:47:11.763759: Error occurred when saving pdf 4343352 from ROBO
+2020-12-18 17:47:11.764160: Error occurred when saving pdf 4342964 from ROBO
+2020-12-18 17:47:11.764524: Error occurred when saving pdf 4336493 from ROBO
+2020-12-18 17:47:11.764888: Error occurred when saving pdf 4307787 from ROBO
+2020-12-18 17:47:11.765251: Error occurred when saving pdf 4297773 from ROBO
+2020-12-18 17:47:11.765648: Error occurred when saving pdf 4274572 from ROBO
+2020-12-18 17:47:11.766072: Error occurred when saving pdf 4270567 from ROBO
+2020-12-18 17:47:11.766437: Error occurred when saving pdf 4209196 from ROBO
+2020-12-18 17:47:11.766841: Error occurred when saving pdf 4176115 from ROBO
+2020-12-18 17:47:11.767205: Error occurred when saving pdf 4164080 from ROBO
+2020-12-18 17:47:11.767569: Error occurred when saving pdf 4402139 from ROBO
+2020-12-18 17:47:11.767952: Error occurred when saving pdf 4402044 from ROBO
+2020-12-18 17:47:11.768335: Error occurred when saving pdf 4401989 from ROBO
+2020-12-18 17:47:11.768697: Error occurred when saving pdf 4401848 from ROBO
+2020-12-18 17:47:11.769058: Error occurred when saving pdf 4401658 from ROBO
+2020-12-18 17:47:11.769457: Error occurred when saving pdf 4401471 from ROBO
+2020-12-18 17:47:11.769818: Error occurred when saving pdf 4401422 from ROBO
+2020-12-18 17:47:11.770180: Error occurred when saving pdf 4401421 from ROBO
+2020-12-18 17:47:11.770561: Error occurred when saving pdf 4401198 from ROBO
+2020-12-18 17:47:11.771031: Error occurred when saving pdf 4401144 from ROBO
+2020-12-18 17:47:11.771402: Error occurred when saving pdf 4400519 from ROBO
+2020-12-18 17:47:11.771761: Error occurred when saving pdf 4400810 from ROBO
+2020-12-18 17:47:11.772331: Error occurred when saving pdf 4400937 from ROBO
+2020-12-18 17:47:11.772730: Error occurred when saving pdf 4400909 from ROBO
+2020-12-18 17:47:11.773102: Error occurred when saving pdf 4400714 from ROBO
+2020-12-18 17:47:11.773508: Error occurred when saving pdf 4400713 from ROBO
+2020-12-18 17:47:11.773875: Error occurred when saving pdf 4400442 from ROBO
+2020-12-18 17:47:11.774241: Error occurred when saving pdf 4400348 from ROBO
+2020-12-18 17:47:11.774646: Error occurred when saving pdf 4399968 from ROBO
+2020-12-18 17:47:11.775013: Error occurred when saving pdf 4399531 from ROBO
+2020-12-18 17:47:11.775364: Error occurred when saving pdf 4399644 from ROBO
+2020-12-18 17:47:11.775704: Error occurred when saving pdf 4399597 from ROBO
+2020-12-18 17:47:11.776165: Error occurred when saving pdf 4399772 from ROBO
+2020-12-18 17:47:11.776631: Error occurred when saving pdf 4400345 from ROBO
+2020-12-18 17:47:11.777028: Error occurred when saving pdf 4400347 from ROBO
+2020-12-18 17:47:11.777543: Error occurred when saving pdf 4398500 from ROBO
+2020-12-18 17:47:11.777967: Error occurred when saving pdf 4398739 from ROBO
+2020-12-18 17:47:11.778390: Error occurred when saving pdf 4399653 from ROBO
+2020-12-18 17:47:11.778729: Error occurred when saving pdf 4398599 from ROBO
+2020-12-18 17:47:11.779063: Error occurred when saving pdf 4398415 from ROBO
+2020-12-18 17:47:11.779395: Error occurred when saving pdf 4398877 from ROBO
+2020-12-18 17:47:11.779771: Error occurred when saving pdf 4398422 from ROBO
+2020-12-18 17:47:11.780103: Error occurred when saving pdf 4399239 from ROBO
+2020-12-18 17:47:11.780436: Error occurred when saving pdf 4398384 from ROBO
+2020-12-18 17:47:11.780772: Error occurred when saving pdf 4398395 from ROBO
+2020-12-18 18:54:56.440852: FILE NOT FOUND: 4399597.pdf. Skipped.
+2020-12-18 18:54:56.635500: FILE NOT FOUND: 4400714.pdf. Skipped.
+2020-12-18 18:54:56.672104: FILE NOT FOUND: 4398500.pdf. Skipped.
+2020-12-18 18:54:57.936181: FILE NOT FOUND: 4400713.pdf. Skipped.
+2020-12-18 18:54:58.141436: FILE NOT FOUND: 4398415.pdf. Skipped.
+2020-12-18 18:54:59.067906: FILE NOT FOUND: 4398384.pdf. Skipped.
+2020-12-18 18:54:59.424343: FILE NOT FOUND: 4398422.pdf. Skipped.
+2020-12-18 18:54:59.434225: FILE NOT FOUND: 4336493.pdf. Skipped.
+2020-12-18 18:55:00.456773: FILE NOT FOUND: 4297773.pdf. Skipped.
+2020-12-18 18:55:00.678520: FILE NOT FOUND: 4399968.pdf. Skipped.
+2020-12-18 19:09:31.947202: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:09:31.949143: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:09:31.974272: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:09:31.974435: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:09:31.974547: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:09:31.974650: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:09:31.979405: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:09:31.979598: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:09:31.979712: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:09:31.979818: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:14:39.059701: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:14:39.063579: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:14:39.115878: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:14:39.116212: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:14:39.116390: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:14:39.116535: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:14:39.128351: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:14:39.128593: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:14:39.128771: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:14:39.128963: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:15:36.965720: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:15:36.966998: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:15:36.983472: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:15:36.983643: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:15:36.983759: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:15:36.983868: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:15:36.987949: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:15:36.988165: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:15:36.988277: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:15:36.988382: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:19:17.690502: No Doc Error: Empty response from FXBG.
+2020-12-18 19:19:17.690858: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-12-18 19:21:00.110130: No Doc Error: Empty response from FXBG.
+2020-12-18 19:21:00.110532: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-12-18 19:21:29.518933: Error occurred when scraping text from 36kr
+2020-12-18 19:21:48.760413: No Doc Error: Empty response from FXBG.
+2020-12-18 19:21:48.760563: Download Error: Error occurred when downloading pdfs from fxbg.
+2020-12-18 19:35:34.810600: FILE NOT FOUND: 4399597.pdf. Skipped.
+2020-12-18 19:35:35.114794: FILE NOT FOUND: 4400714.pdf. Skipped.
+2020-12-18 19:35:35.141790: FILE NOT FOUND: 4398500.pdf. Skipped.
+2020-12-18 19:35:36.388706: FILE NOT FOUND: 4400713.pdf. Skipped.
+2020-12-18 19:35:36.593359: FILE NOT FOUND: 4398415.pdf. Skipped.
+2020-12-18 19:35:37.497263: FILE NOT FOUND: 4398384.pdf. Skipped.
+2020-12-18 19:35:37.850981: FILE NOT FOUND: 4398422.pdf. Skipped.
+2020-12-18 19:35:37.861678: FILE NOT FOUND: 4336493.pdf. Skipped.
+2020-12-18 19:35:38.891735: FILE NOT FOUND: 4297773.pdf. Skipped.
+2020-12-18 19:35:39.099505: FILE NOT FOUND: 4399968.pdf. Skipped.
+2020-12-18 19:43:57.483062: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:43:57.485074: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:43:57.510756: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:43:57.510910: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:43:57.511128: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:43:57.511242: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:43:57.517872: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:43:57.518018: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:43:57.518135: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:43:57.518237: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:43:57.535187: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.541224: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.542425: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.565308: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.572990: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.595215: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.612206: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.614485: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.618893: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.624802: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.634751: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.668652: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.674374: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.682343: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.693456: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.693780: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.694060: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.708113: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.708298: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.712514: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:43:57.712674: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.619340: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:11.621627: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:11.682255: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:11.682653: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:11.682900: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:11.683097: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:11.697898: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:11.699462: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:11.700669: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:11.701289: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:11.741731: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.749816: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.752250: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.786455: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.797716: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.836350: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.857674: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.860989: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.866549: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.877883: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.889815: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.923076: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.926333: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.931266: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.939988: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.940181: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.940302: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.947583: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.947782: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.951762: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:11.951957: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.650166: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:26.651531: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:26.666466: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:26.666628: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:26.666742: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:26.666847: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:26.670990: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:26.671148: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:26.671317: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:26.671508: Upload error: Error occurred when uploading robo data to database
+2020-12-18 19:49:26.684681: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.689985: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.690967: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.710745: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.716418: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.734582: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.748072: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.749787: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.753109: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.757170: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.763028: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.785286: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.787060: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.790604: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.796599: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.796747: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.796852: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.802158: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.802329: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.805213: Upload error: Error occurred when uploading fxbg data to database
+2020-12-18 19:49:26.805375: Upload error: Error occurred when uploading fxbg data to database

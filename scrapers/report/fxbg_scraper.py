@@ -6,12 +6,14 @@ from typing import Optional
 import requests
 from fake_useragent import UserAgent
 
-import oss.mongodb as mg
+import storage.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import DownloadError
 from utils.errors import NoDocError
 from utils.errors import updateError
+
+token = '2CzYeE3MLNV1PKF7u0yvJRjJwscH0Sb4FlRKJn6kUTuHOQfQCSiM0RQwS4L8MsMN'
 
 
 class FXBG:
@@ -101,6 +103,7 @@ class FXBG:
 
         response = response.json()
 
+        id_list = []
         if not response['data']:
             raise NoDocError('Bad response')
 
@@ -114,13 +117,15 @@ class FXBG:
         # self.check_database(search_keyword=search_keyword, pdf_min_num_page=pdf_min_num_page, num_years=num_years)
         for doc_id in id_list.copy():
             id_match_res = mg.show_datas('fxbg', query={'doc_id': doc_id})
+            # new whitelist --vincent
+            id_match_res = mg.show_datas('articles', query={'doc_id': doc_id, 'search_keyword': search_keyword})
             if doc_id in self.whitelist or id_match_res:
                 print('article #' + str(doc_id) + ' is already in database. Skipped.')
                 id_list.pop(doc_id)
 
         return id_list
 
-    def get_pdf_url(self, doc_list: dict, doc_type: Optional[str] = '2') -> dict:
+    def get_pdf_url(self, doc_list: dict, search_keyword: str, doc_type: Optional[str] = '2') -> dict:
         """
         根据文档的id和类型选择获取pdf下载链接，该链接为在线查看pdf文档的链接
         :param doc_list: a list of 所有文档的id
@@ -158,7 +163,10 @@ class FXBG:
                            'doc_type': 'EXTERNAL_REPORT',
                            'has_pdf': "pdf",
                            'oss_path': 'report/fxbg/' + str(doc_id) + '.pdf',
-                           'title': title}
+                           'title': title,
+                           'filtered': 0,  # -- new filter vincent
+                           'search_keyword': search_keyword,
+                           }
 
             doc_list.update({doc_id: updated_doc})
 
@@ -189,7 +197,8 @@ class FXBG:
         pdf_count = 0
 
         for pdf_id in url_list:
-            id_match_res = mg.show_datas('fxbg', query={'doc_id': pdf_id})
+            # new whitelist --vincent
+            id_match_res = mg.show_datas(search_keyword, query={'doc_id': pdf_id})
             if id_match_res:
                 print('article #' + str(pdf_id) + ' is already in database. Skipped.')
                 continue
@@ -223,6 +232,9 @@ class FXBG:
             # store doc_info to mongodb
             mg.insert_data(doc_info, 'articles')
 
+            # new db --vincent
+            # mg.insert_data(doc_info, search_keyword)
+
             pdf_count += 1
 
             # Saving into summary
@@ -241,7 +253,7 @@ class FXBG:
         print('--------Begin searching pdfs from 发现报告--------')
         try:
             pdf_id_list = self.get_pdf_id(search_keyword, filter_keyword, pdf_min_num_page, num_years)
-            pdf_url_list = self.get_pdf_url(pdf_id_list)
+            pdf_url_list = self.get_pdf_url(pdf_id_list, search_keyword)
         except NoDocError:
             updateError("No Doc Error: Empty response from FXBG.")
 
@@ -255,7 +267,7 @@ def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_yea
     # User ID does not change for a fixed account
     # User Token changes for each individual login
     USER_ID = '43934'
-    USER_TOKEN = 'UWv0J0jlQG3AMl1nJRfRBAsJXim6sz7kWrTPw94DtdsYT1tNAWrJvzAIczDPHHVj'
+    USER_TOKEN = token
     try:
         fxbg_scraper = FXBG(USER_TOKEN, USER_ID)
         fxbg_scraper.run_fxbg(search_keyword=search_keyword, filter_keyword=filter_keyword,

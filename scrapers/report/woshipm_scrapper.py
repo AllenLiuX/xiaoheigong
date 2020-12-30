@@ -14,8 +14,8 @@ import getopt
 import time
 sys.path.append('/root/xiaoheigong')
 from definitions import ROOT_DIR, OSS_PATH
-import oss.mongodb as mg
-import oss.oss as ossfile
+import storage.mongodb as mg
+import storage.oss as ossfile
 
 
 def get_pagenum(path):

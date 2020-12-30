@@ -15,8 +15,20 @@ import scrapers.report.fxbg_scraper as fxbg
 import scrapers.report.robo_scraper as robo
 
 
-def search(search_keyword: str, filter_keyword: str, min_words: str, pdf_min_num_page: str, num_years: int,
-           get_pdf: bool):
+def run_all(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_years):
+    """
+    Run all scrapers with time
+    :param search_keyword:
+    :param filter_keyword:
+    :param min_words:
+    :param pdf_min_num_page:
+    :param num_years:
+    :return:
+    """
+    start_time = time.time()
+    search_keyword = sys.argv[1] if len(sys.argv) > 1 else search_keyword
+    get_pdf = len(sys.argv) <= 1
+
     fxbg.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
              num_years=num_years, get_pdf=get_pdf)
     robo.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
@@ -34,19 +46,8 @@ def search(search_keyword: str, filter_keyword: str, min_words: str, pdf_min_num
     # _51pdf.main(search_word=search_keyword, max_art=30, max_text=300, s_date='2018-01-01')
     # _767stock.main(search_word=search_keyword, max_art=30, max_text=300, s_date='2018-01-01')
 
-
-def run_all(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_years):
-    start_time = time.time()
-    if len(sys.argv) > 1:
-        search(search_keyword=sys.argv[1], filter_keyword=filter_keyword, min_words=min_words,
-               pdf_min_num_page=pdf_min_num_page, num_years=num_years,
-               get_pdf=False)
-    else:
-        search(search_keyword=search_keyword, filter_keyword=filter_keyword, min_words=min_words,
-               pdf_min_num_page=pdf_min_num_page, num_years=num_years,
-               get_pdf=True)
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
 if __name__ == '__main__':
-    run_all(search_keyword='特斯拉', filter_keyword='', min_words='0', pdf_min_num_page='0', num_years=10)
+    run_all(search_keyword='恒大', filter_keyword='', min_words='0', pdf_min_num_page='0', num_years=10)
