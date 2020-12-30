@@ -116,11 +116,16 @@ class Filter:
             if filename.endswith('.pdf'):
                 doc_id = filename[0:len(filename) - 4]
                 json_filename = doc_id + '.json'
+                source = json.load(open(json_filename, 'r', encoding='utf-8'))['source']
 
                 try:
                     # Open json file
                     print('Processing file with id %s' % doc_id)
+                    # Getting text from pdf
+                    text = pdf_to_text(filename)[0]
                 except FileNotFoundError:
+                    # Save problematic id to blacklist
+                    self.blacklist.add_to_bwlist(source, doc_id)
                     updateError('FILE NOT FOUND: %s. Skipped.' % json_filename)
                     if os.path.exists(json_filename):
                         os.remove(json_filename)
@@ -129,12 +134,10 @@ class Filter:
                     if os.path.exists(doc_id + '.txt'):
                         os.remove(doc_id + '.txt')
                     continue
-
-                try:
-                    # Getting text from pdf
-                    text = pdf_to_text(filename)[0]
-                except FileNotFoundError:
-                    updateError('FILE NOT FOUND: %s. Skipped.' % filename)
+                except UnicodeDecodeError:
+                    # Save problematic id to blacklist
+                    self.blacklist.add_to_bwlist(source, doc_id)
+                    updateError('UNICODE DECODE ERROR: %s. Skipped.' % json_filename)
                     if os.path.exists(json_filename):
                         os.remove(json_filename)
                     if os.path.exists(filename):
@@ -237,33 +240,34 @@ class Filter:
         Called in filter_and_generate_tags()
         :param search_keyword: search keyword
         """
-        try:
-            # Loading local summary
-            source_summary = json.load(open('summary.json', 'r', encoding='utf-8'))
+        # try:
+        # Loading local summary
+        source_summary = json.load(open('summary.json', 'r', encoding='utf-8'))
 
-            # Removing unnecessary attribute
-            if 'search_keyword' in source_summary.keys():
-                source_summary.pop('search_keyword')
+        # Removing unnecessary attribute
+        if 'search_keyword' in source_summary.keys():
+            source_summary.pop('search_keyword')
 
-            source_name = source_summary['source']  # '36kr'
+        source_name = source_summary['source']  # '36kr'
 
-            # Removing blacklisted ids from local summary
-            for doc in source_summary['data'].copy():
-                if source_name in self.blacklist.list.keys() and doc['doc_id'] in self.blacklist.list[source_name]:
-                    source_summary['data'].remove(doc)
+        # Removing blacklisted ids from local summary
+        for doc in source_summary['data'].copy():
+            print("Filtering from blacklist: %s" % doc['doc_id'])
+            if source_name in self.blacklist.list.keys() and doc['doc_id'] in self.blacklist.list[source_name]:
+                source_summary['data'].remove(doc)
 
-            # Update to overall summary
-            if search_keyword not in self.summary.keys():
-                self.summary.update({search_keyword: {source_name: source_summary.copy()}})
-            elif 'data' in source_summary.keys():
-                updated = self.summary[search_keyword]
-                updated.update({source_name: source_summary.copy()})
-                self.summary.update({search_keyword: updated})
+        # Update to overall summary
+        if search_keyword not in self.summary.keys():
+            self.summary.update({search_keyword: {source_name: source_summary.copy()}})
+        elif 'data' in source_summary.keys():
+            updated = self.summary[search_keyword]
+            updated.update({source_name: source_summary.copy()})
+            self.summary.update({search_keyword: updated})
 
-            # Saving local summary
-            json.dump(source_summary, open('summary.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
-        except:
-            updateError("Error occurred when writing summary for keyword: " + search_keyword)
+        # Saving local summary
+        json.dump(source_summary, open('summary.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+        # except:
+        #     updateError("Error occurred when writing summary for keyword: " + search_keyword)
 
     def save_summary(self, search_keyword):
         """
@@ -316,9 +320,10 @@ def run_filter(search_keyword):
     """
     start_time = time.time()
     file_filter = Filter()
+    file_filter.run_filter(search_keyword=search_keyword, file_type='html')
     file_filter.run_filter(search_keyword=search_keyword, file_type='pdf')
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
 if __name__ == '__main__':
-    run_filter(search_keyword='恒大')
+    run_filter(search_keyword='特斯拉')

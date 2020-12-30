@@ -5,7 +5,7 @@ import sys
 
 from definitions import ROOT_DIR, translate
 from storage import mongodb as mg
-from storage.mongodb import update_datas
+from storage.mongodb import insert_data
 from utils.errors import updateError
 
 
@@ -27,7 +27,8 @@ def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
 
     filtered_pdfs = []
     for pdf in existing_pdfs:
-        if pdf['page_num'] and pdf['page_num'] >= pdf_min_page or (not pdf['page_num'] and pdf['wordCount'] > min_word_count):
+        if pdf['page_num'] and pdf['page_num'] >= pdf_min_page or (
+                not pdf['page_num'] and pdf['wordCount'] > min_word_count):
             filtered_pdfs.append(pdf)
 
     result = {'db_search_results': filtered_pdfs}
@@ -43,15 +44,6 @@ def pre_filter():
         pdf['filtered'] = 1
         mg.delete_datas(query={'source': pdf['source'], 'doc_id': pdf['doc_id']}, collection='articles')
         mg.insert_data(pdf, collection='articles')
-
-
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        keywords = sys.argv[1]
-    else:
-        keywords = '恒大'
-    pp.pprint(get_db_results(keywords, '150', '3000', 5))
-    pre_filter()
 
 
 def upload_to_db(search_keyword):
@@ -72,14 +64,41 @@ def upload_to_db(search_keyword):
         data_dir = os.path.join(ROOT_DIR, 'cache', search_keyword, source_type, translate[source_name])
 
         for doc in source['data']:
-            try:
-                if not os.path.exists(data_dir):
-                    os.makedirs(data_dir)
-                pdf_id = doc['doc_id']
-                json_path = os.path.join(data_dir, str(pdf_id) + '.json')
-                json_file = json.load(open(json_path))
+            if not os.path.exists(data_dir):
+                continue
 
-                update_datas({'doc_id': str(pdf_id)}, {'$set': json_file}, 'articles')
+            pdf_id = doc['doc_id']
+            json_path = os.path.join(data_dir, str(pdf_id) + '.json')
+
+            try:
+                json_file = json.load(open(json_path))
+            except FileNotFoundError:
+                updateError('File not found error: Error occurred when uploading %s data to database' % source_name)
+                continue
+
+            try:
+                insert_data(json_file, 'articles')
             except:
                 updateError('Upload error: Error occurred when uploading %s data to database' % source_name)
                 continue
+
+        # for doc in source['data']:
+        #     try:
+        #         if not os.path.exists(data_dir):
+        #             os.makedirs(data_dir)
+        #         pdf_id = doc['doc_id']
+        #         json_path = os.path.join(data_dir, str(pdf_id) + '.json')
+        #         json_file = json.load(open(json_path))
+        #
+        #         update_datas({'doc_id': str(pdf_id)}, {'$set': json_file}, 'articles')
+        #     except:
+        #         updateError('Upload error: Error occurred when uploading %s data to database' % source_name)
+        #         continue
+
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        keywords = sys.argv[1]
+    else:
+        keywords = '中芯国际'
+    upload_to_db(keywords)

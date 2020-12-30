@@ -13,7 +13,7 @@ from utils.errors import DownloadError
 from utils.errors import NoDocError
 from utils.errors import updateError
 
-token = '2CzYeE3MLNV1PKF7u0yvJRjJwscH0Sb4FlRKJn6kUTuHOQfQCSiM0RQwS4L8MsMN'
+token = 'jaOLojHQVzv45khzOXkacIoiUUIYxwUIz9R8ywGC5qutZUMwgHW82H6YMIxHS1pi'
 
 
 class FXBG:
@@ -230,7 +230,7 @@ class FXBG:
                 json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
             # store doc_info to mongodb
-            mg.insert_data(doc_info, 'articles')
+            # mg.insert_data(doc_info, 'articles')
 
             # new db --vincent
             # mg.insert_data(doc_info, search_keyword)
@@ -239,7 +239,6 @@ class FXBG:
 
             # Saving into summary
             doc_info_copy = doc_info.copy()
-            doc_info_copy.pop('_id')
             self.summary['data'].append(doc_info_copy)
 
         # Saving summary
@@ -279,4 +278,4 @@ def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_yea
 
 
 if __name__ == '__main__':
-    run(search_keyword='中芯国际', filter_keyword='', pdf_min_num_page='10', num_years=5, get_pdf=True)
+    run(search_keyword='特斯拉', filter_keyword='', pdf_min_num_page='20', num_years=1, get_pdf=True)

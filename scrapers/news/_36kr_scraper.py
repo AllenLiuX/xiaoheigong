@@ -153,7 +153,7 @@ class _36KR:
                 self.summary['data'].append(doc_info_copy)
 
                 # store doc_info to mongodb     --vincent
-                mg.insert_data(doc_info, 'articles')
+                # mg.insert_data(doc_info, 'articles')
                 return valid
         except:
             updateError('Error occurred when scraping text from 36kr')
@@ -195,4 +195,4 @@ def run(search_keyword, min_word_count, num_years, get_pdf):
 
 
 if __name__ == '__main__':
-    run(search_keyword='特斯拉', min_word_count='3000', num_years=1, get_pdf=True)
+    run(search_keyword='特斯拉', min_word_count='0', num_years=0, get_pdf=False)

@@ -1,7 +1,6 @@
 import processing.filter_and_process as filter
 import storage.database
 import storage.database as run_database
-import storage.upload as upload
 import scrapers.run_scrapers as run_scrapers
 import sys
 
@@ -33,5 +32,5 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         keyword = sys.argv[1]
     else:
-        keyword = '恒大'
-    scrape(search_keyword=keyword, filter_keyword='', min_words='0', pdf_min_num_page='0', num_years=10)
+        keyword = '中芯国际'
+    scrape(search_keyword=keyword, filter_keyword='', min_words='3000', pdf_min_num_page='40', num_years=10)
