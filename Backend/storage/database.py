@@ -1,11 +1,10 @@
 import json
 import os
-import pprint as pp
 import sys
 
 from definitions import ROOT_DIR, translate
-from storage import mongodb as mg
-from storage.mongodb import insert_data
+from Backend.storage import mongodb as mg
+from Backend.storage.mongodb import insert_data
 from utils.errors import updateError
 
 
@@ -82,18 +81,6 @@ def upload_to_db(search_keyword):
                 updateError('Upload error: Error occurred when uploading %s data to database' % source_name)
                 continue
 
-        # for doc in source['data']:
-        #     try:
-        #         if not os.path.exists(data_dir):
-        #             os.makedirs(data_dir)
-        #         pdf_id = doc['doc_id']
-        #         json_path = os.path.join(data_dir, str(pdf_id) + '.json')
-        #         json_file = json.load(open(json_path))
-        #
-        #         update_datas({'doc_id': str(pdf_id)}, {'$set': json_file}, 'articles')
-        #     except:
-        #         updateError('Upload error: Error occurred when uploading %s data to database' % source_name)
-        #         continue
 
 
 if __name__ == '__main__':

@@ -6,10 +6,9 @@ import pandas as pd
 import json
 import datetime
 import traceback
-import os, sys
+import os
 import numpy as np
 import entry_point as entry
-import storage.mongodb
 
 # sys.path.append('/Users/vincentl/PycharmProjects/')
 

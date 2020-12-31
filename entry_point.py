@@ -1,13 +1,15 @@
-import processing.filter_and_process as filter
-import storage.database
-import storage.database as run_database
-import scrapers.run_scrapers as run_scrapers
+import Backend
+import Backend.processing.filter_and_process as filter
+from Backend.storage import database
+from Backend.scrapers import run_scrapers
 import sys
+import shutil
+import os
 
 
 def search_db(search_keyword, min_words, pdf_min_num_page, num_years):
     # new search db --vincent
-    return run_database.get_db_results(search_keyword, pdf_min_num_page, min_words, num_years)
+    return database.get_db_results(search_keyword, pdf_min_num_page, min_words, num_years)
 
 
 def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_years):
@@ -19,11 +21,14 @@ def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_year
         Process text and generate tags
     3. upload_to_db():
         Add to database
+    4. Clear cache
     """
+    os.mkdir('cache')
     run_scrapers.run_all(search_keyword=search_keyword, filter_keyword=filter_keyword, min_words=min_words,
                          pdf_min_num_page=pdf_min_num_page, num_years=num_years)
     filter.run_filter(search_keyword=search_keyword)
-    storage.database.upload_to_db(search_keyword=search_keyword)
+    Backend.storage.database.upload_to_db(search_keyword=search_keyword)
+    shutil.rmtree('cache')
 
 
 if __name__ == '__main__':

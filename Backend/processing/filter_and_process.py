@@ -188,7 +188,8 @@ class Filter:
                     keywords_count = self.count_keywords(text)
 
                     # Company name count
-                    if keywords_count[search_keyword] <= company_name_threshold:
+                    if keywords_count[search_keyword] <= company_name_threshold or source == '199it' and \
+                            keywords_count[search_keyword] <= 1:
                         raise ValueError
 
                     # Adding tags to txt
@@ -277,7 +278,7 @@ class Filter:
         """
         try:
             save_path = os.path.join(ROOT_DIR, 'cache', search_keyword, 'summary.json')
-#            print(self.summary)
+            #            print(self.summary)
             if self.summary[search_keyword]:
                 with open(save_path, 'w', encoding='utf-8') as f:
                     json.dump(self.summary, f, ensure_ascii=False, indent=4)
@@ -293,17 +294,17 @@ class Filter:
         """
         os.chdir(ROOT_DIR)
 
-        if not os.path.isdir(os.path.join('cache', search_keyword)):        # cache/中芯国际 not exist
+        if not os.path.isdir(os.path.join('cache', search_keyword)):  # cache/中芯国际 not exist
             os.makedirs(os.path.join('cache', search_keyword))
 
-        if not os.path.isdir(os.path.join('cache', search_keyword, file_type)):     # cache/中芯国际/news 不存在
+        if not os.path.isdir(os.path.join('cache', search_keyword, file_type)):  # cache/中芯国际/news 不存在
             os.makedirs(os.path.join('cache', search_keyword, file_type))
 
-        for source_name in os.listdir(os.path.join('cache', search_keyword, file_type)):        # source_name: 发现报告/萝卜投研……
+        for source_name in os.listdir(os.path.join('cache', search_keyword, file_type)):  # source_name: 发现报告/萝卜投研……
             print(source_name)
             curr_dir = os.path.join('cache', search_keyword, file_type, source_name)
 
-            if not os.path.isdir(curr_dir):         # path does not exist
+            if not os.path.isdir(curr_dir):  # path does not exist
                 os.makedirs(curr_dir)
 
             print('======== Processing files from %s ========' % source_name)

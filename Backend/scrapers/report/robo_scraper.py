@@ -4,9 +4,8 @@ import os
 
 import requests
 from fake_useragent import UserAgent
-import pprint as pp
 
-import storage.mongodb as mg
+import Backend.storage.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError
@@ -14,6 +13,7 @@ from utils.errors import updateError
 from utils.get_cookies import get_cookies
 
 token = '6F92C0E64F0F20766C1006C21F3DDECF'
+
 
 class ROBO:
     def __init__(self):
@@ -96,9 +96,7 @@ class ROBO:
 
         # Filter Whitelist
         for doc_id in id_list.copy():
-            # new whitelist --vincent
-            # id_match_res = mg.show_datas('robo', query={'doc_id': str(doc_id)})
-            id_match_res = mg.show_datas('article', query={'doc_id': str(doc_id), 'search_keyword': search_keyword})
+            id_match_res = mg.show_datas('articles', query={'doc_id': str(doc_id), 'search_keyword': search_keyword})
             if id_match_res:
                 print('article #' + str(doc_id) + ' is already in database. Skipped.')
                 id_list.pop(doc_id)

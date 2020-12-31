@@ -10,9 +10,9 @@ import sys
 # import scrapers.news._767stock as _767stock
 import time
 
-import scrapers.news._36kr_scraper as _36kr
-import scrapers.report.fxbg_scraper as fxbg
-import scrapers.report.robo_scraper as robo
+import Backend.scrapers.news._36kr_scraper as _36kr
+import Backend.scrapers.report.fxbg_scraper as fxbg
+import Backend.scrapers.report.robo_scraper as robo
 
 
 def run_all(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_years):

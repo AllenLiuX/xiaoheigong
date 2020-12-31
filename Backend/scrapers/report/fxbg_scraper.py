@@ -6,7 +6,7 @@ from typing import Optional
 import requests
 from fake_useragent import UserAgent
 
-import storage.mongodb as mg
+import Backend.storage.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import DownloadError
@@ -45,12 +45,6 @@ class FXBG:
             'sec-fetch-site': 'cross-site',
             'user-agent': str(UserAgent().random)
         }
-
-    def check_database(self, search_keyword: str, pdf_min_num_page: str, num_years: int):
-        db_existing = mg.search_datas(search_keyword=search_keyword, pdf_min_page=pdf_min_num_page, min_word_count='',
-                                      num_years=num_years)
-        for file in db_existing:
-            self.whitelist.add(file['_id'])
 
     def get_pdf_id(self, search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int) -> dict:
         """
@@ -103,7 +97,6 @@ class FXBG:
 
         response = response.json()
 
-        id_list = []
         if not response['data']:
             raise NoDocError('Bad response')
 
@@ -114,12 +107,9 @@ class FXBG:
             id_list = self.blacklist.bwlist_filter(id_list, self.source)
 
         # Checking whitelist
-        # self.check_database(search_keyword=search_keyword, pdf_min_num_page=pdf_min_num_page, num_years=num_years)
         for doc_id in id_list.copy():
-            id_match_res = mg.show_datas('fxbg', query={'doc_id': doc_id})
-            # new whitelist --vincent
             id_match_res = mg.show_datas('articles', query={'doc_id': doc_id, 'search_keyword': search_keyword})
-            if doc_id in self.whitelist or id_match_res:
+            if id_match_res:
                 print('article #' + str(doc_id) + ' is already in database. Skipped.')
                 id_list.pop(doc_id)
 

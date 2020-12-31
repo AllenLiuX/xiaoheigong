@@ -7,7 +7,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-import storage.mongodb as mg
+import Backend.storage.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError, updateError
