@@ -75,3 +75,5 @@
 2020-12-30 23:29:26.697098: FILE NOT FOUND: 4402586.json. Skipped.
 2020-12-30 23:29:27.547678: FILE NOT FOUND: 4386195.json. Skipped.
 2020-12-30 23:29:28.647727: FILE NOT FOUND: 4385777.json. Skipped.
+2021-01-08 20:55:00.321674: Error occurred when scraping text from 36kr
+2021-01-08 20:56:39.269667: Error occurred when scraping text from 36kr

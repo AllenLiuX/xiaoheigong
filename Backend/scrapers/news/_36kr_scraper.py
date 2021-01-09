@@ -15,6 +15,12 @@ from utils.errors import NoDocError, updateError
 now = datetime.now()
 
 
+def clean_html(text):
+    clean_re = re.compile('<.*?>')
+    clean_text = re.sub(clean_re, '', text)
+    return clean_text
+
+
 class _36KR:
     def __init__(self):
         self.s = requests.Session()
@@ -75,10 +81,14 @@ class _36KR:
 
         # Date processing
         dateToday = datetime.now().strftime("%Y")
+        print(date)
         if date[0:3].isnumeric():
             years = int(dateToday) - int(date[0:4])
             if years > num_years:
+                print("yes")
                 ret = False
+        else:
+            return False
 
         # Blacklist processing
         bl = bwlist.BWList(search_keyword, 'black')
@@ -88,76 +98,79 @@ class _36KR:
             ret = False
 
         # whitelist by database
-        id_match_res = mg.show_datas('articles', query={'doc_id': str(doc_id), 'search_keyword': search_keyword})   # new whitelist --vincent
+        id_match_res = mg.show_datas('articles', query={'doc_id': str(doc_id),
+                                                        'search_keyword': search_keyword})  # new whitelist --vincent
         if id_match_res:
             print('article #' + str(doc_id) + ' is already in database. Skipped.')
             ret = False
 
         date = datetime.strptime(date, '%Y-%m-%d')
         date = datetime(date.year, date.month, date.day)
+        print(ret)
 
         return ret
 
     def textScrape(self, search_keyword, url, path, num_years, get_pdf: bool):
-        try:
-            url = url
-            res = requests.get(url)
-            html_page = res.content
-            soup = BeautifulSoup(html_page, 'html.parser')
+        # try:
+        url = url
+        res = requests.get(url)
+        html_page = res.content
+        soup = BeautifulSoup(html_page, 'html.parser')
 
-            pattern = re.compile(r"(?<=\"articleDetailData\":{\"code\":0,\"data\":{\"itemId\":)[0-9]*")
-            doc_id = re.search(pattern, str(soup)).group(0)
+        pattern = re.compile(r"(?<=\"articleDetailData\":{\"code\":0,\"data\":{\"itemId\":)[0-9]*")
+        doc_id = re.search(pattern, str(soup)).group(0)
 
-            pattern = re.compile(r"(?<=\"author\":\")(.*)(?=\",\"authorId)")
-            author = re.search(pattern, str(soup)).group(0)
+        pattern = re.compile(r"(?<=\"author\":\")(.*)(?=\",\"authorId)")
+        author = re.search(pattern, str(soup)).group(0)
 
-            title = soup.find('h1').getText()
-            title = title.replace('|', '')
-            date = soup.find('span', {"class": "title-icon-item item-time"}).getText()[3:]
+        title = soup.find('h1').getText()
+        title = title.replace('|', '')
+        date = soup.find('span', {"class": "title-icon-item item-time"}).getText()[3:]
 
-            article = soup.find('div', {"class": "article-content"})
+        article = soup.find('div', {"class": "article-content"})
+        article = clean_html(str(article))
 
-            valid = self.prefilter(date, num_years, search_keyword, doc_id)
+        valid = self.prefilter(date, num_years, search_keyword, doc_id)
 
-            if valid:
-                print('Processing article %s' % doc_id)
-                json_save_path = os.path.join(path, str(doc_id) + '.json')
-                html_save_path = os.path.join(path, str(doc_id) + '.html')
-                pdf_save_path = os.path.join(path, str(doc_id) + '.pdf')
+        if valid:
+            print('Processing article %s' % doc_id)
+            json_save_path = os.path.join(path, str(doc_id) + '.json')
+            html_save_path = os.path.join(path, str(doc_id) + '.html')
+            pdf_save_path = os.path.join(path, str(doc_id) + '.pdf')
 
-                if get_pdf:
-                    with open(html_save_path, "w", encoding='utf-8') as file:
-                        file.write(str(article))
+            if get_pdf:
+                with open(html_save_path, "w", encoding='utf-8') as file:
+                    file.write(article)
 
-                # Saving doc attributes
-                doc_info = {
-                    'source': '36kr',
-                    'doc_id': doc_id,
-                    'title': title,
-                    'date': date,
-                    'org_name': author,
-                    'oss_path': 'news/36kr/' + str(doc_id) + '.pdf',
-                    'doc_type': 'NEWS',
-                    'download_url': url,
-                    'has_pdf': 'html',
-                    'content': str(article),
-                    'filtered': 0,  # -- new filter vincent
-                    'search_keyword': search_keyword,
-                }
+            # Saving doc attributes
+            doc_info = {
+                'source': '36kr',
+                'doc_id': doc_id,
+                'title': title,
+                'date': date,
+                'org_name': author,
+                'oss_path': 'news/36kr/' + str(doc_id) + '.pdf',
+                'doc_type': 'NEWS',
+                'download_url': url,
+                'has_pdf': 'html',
+                'content': article,
+                'filtered': 0,  # -- new filter vincent
+                'search_keyword': search_keyword,
+            }
 
-                doc_info_copy = doc_info.copy()
+            doc_info_copy = doc_info.copy()
+            print(json_save_path)
+            with open(json_save_path, 'w', encoding='utf-8') as f:
+                json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
-                with open(json_save_path, 'w', encoding='utf-8') as f:
-                    json.dump(doc_info, f, ensure_ascii=False, indent=4)
+            self.summary['data'].append(doc_info_copy)
 
-                self.summary['data'].append(doc_info_copy)
-
-                # store doc_info to mongodb     --vincent
-                # mg.insert_data(doc_info, 'articles')
-                return valid
-        except:
-            updateError('Error occurred when scraping text from 36kr')
-            pass
+            # store doc_info to mongodb     --vincent
+            # mg.insert_data(doc_info, 'articles')
+            return valid
+        # except:
+        #     updateError('Error occurred when scraping text from 36kr')
+        #     pass
 
     def run(self, search_keyword, min_word_count, num_years, get_pdf: bool):
         print('--------Begin searching articles from 36kr--------')
@@ -195,4 +208,4 @@ def run(search_keyword, min_word_count, num_years, get_pdf):
 
 
 if __name__ == '__main__':
-    run(search_keyword='特斯拉', min_word_count='0', num_years=0, get_pdf=False)
+    run(search_keyword='特斯拉', min_word_count='0', num_years=1, get_pdf=False)
