@@ -43,18 +43,13 @@ class ROBO:
                 'upgrade-insecure-requests': '1',
                 'user-agent': str(UserAgent().random)
             }
-        except:
+        except Exception as e:
+            updateError('Error occurred when sending request to Robo. \n' + str(e.__traceback__.tb_lineno) + ": " + str(e))
             pass
         self.source = 'robo'
         self.blacklist = None
         self.whitelist = set()
         self.summary = {'source': 'robo', 'has_pdf': 'pdf', 'search_keyword': '', 'search_time': '', 'data': []}
-
-    def check_database(self, search_keyword: str, pdf_min_num_page: str, num_years: int):
-        db_existing = mg.search_datas(search_keyword=search_keyword, min_word_count='',
-                                      pdf_min_page=int(pdf_min_num_page), num_years=num_years)
-        for file in db_existing:
-            self.whitelist.add(file['doc_id'])
 
     def get_pdf_id(self, search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int) -> dict:
         # Adding blacklist
@@ -119,7 +114,8 @@ class ROBO:
 
             try:
                 download_url = download_url['data']['downloadUrl']
-            except:
+            except Exception as e:
+                updateError('Error occurred when getting response from Robo. \n' + str(e.__traceback__.tb_lineno) + ": " + str(e))
                 continue
 
             date = id_list[id]['data']['publishTime']
@@ -217,13 +213,13 @@ class ROBO:
         try:
             pdf_id_list = self.get_pdf_id(search_keyword, filter_keyword, pdf_min_num_page, num_years)
         except NoDocError:
-            updateError("No Doc Error: Empty response from ROBO.")
+            updateError("No Doc Error: Empty response from ROBO. \n" + str(NoDocError.__traceback__.tb_lineno) + ": " + str(NoDocError))
             return
 
-        # try:
-        self.download_pdf(search_keyword, pdf_id_list, get_pdf)
-        # except:
-        #     updateError("Download Error: Error occurred when downloading pdfs from ROBO")
+        try:
+            self.download_pdf(search_keyword, pdf_id_list, get_pdf)
+        except Exception as e:
+            updateError("Download Error: Error occurred when downloading pdfs from ROBO. \n" + str(e.__traceback__.tb_lineno) + ": " + str(e))
 
 
 def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):

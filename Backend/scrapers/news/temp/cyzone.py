@@ -1,12 +1,14 @@
-import os
-import requests
-from lxml import etree
-import re
 import json
+import os
+import re
+
+import requests
+from fake_useragent import UserAgent
+from lxml import etree
+
 import config
 import public_fun
 from definitions import ROOT_DIR
-from fake_useragent import UserAgent
 
 
 def handle(search_keyword, page):

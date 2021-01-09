@@ -137,9 +137,6 @@ class FXBG:
                 'VERSION': '110100',
             })
             response = self.s.get(url=download_api_url, headers=headers, params=params).json()
-            # pp.pprint(response)
-            # time_interval = random.randint(5, 8)
-            # time.sleep(time_interval)
             doc = doc_list[doc_id]
             title = str(doc['title']).replace('<em>', '').replace('</em>', '')
             date = doc['pdfPath'][7:17]
@@ -245,11 +242,12 @@ class FXBG:
             pdf_url_list = self.get_pdf_url(pdf_id_list, search_keyword)
         except NoDocError:
             updateError("No Doc Error: Empty response from FXBG.")
+            return
 
         try:
             self.download_pdf(search_keyword, pdf_url_list, get_pdf)
-        except:
-            updateError("Download Error: Error occurred when downloading pdfs from fxbg.")
+        except Exception as e:
+            updateError("Download Error: Error occurred when downloading pdfs from fxbg. \n" + str(e.__traceback__.tb_lineno) + ": " + str(e))
 
 
 def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):
@@ -263,8 +261,6 @@ def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_yea
                               pdf_min_num_page=pdf_min_num_page, num_years=num_years, get_pdf=get_pdf)
     except NoDocError:
         print('--------No documents found in 发现报告--------')
-    except DownloadError:
-        print('')
 
 
 if __name__ == '__main__':

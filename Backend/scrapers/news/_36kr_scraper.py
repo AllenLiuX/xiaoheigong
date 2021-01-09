@@ -29,22 +29,14 @@ class _36KR:
         self.source = '36kr'
         self.summary = {}
 
-    def check_database(self, search_keyword: str, min_word_count: str, num_years: int):
-        db_existing = mg.search_datas(search_keyword=search_keyword, pdf_min_page='',
-                                      min_word_count=int(min_word_count),
-                                      num_years=num_years)
-        for file in db_existing:
-            self.whitelist.add(file['_id'])
-
-    def urlParser(self, search_keyword, min_word_count, path, num_years, get_pdf: bool):
+    def get_pdf_urls(self, search_keyword, min_word_count, path, num_years, get_pdf: bool):
         url = "https://36kr.com/search/articles/" + search_keyword + "?sort=score"
 
         res = requests.get(url)  # init page
         html_page = res.content
         soup = BeautifulSoup(html_page, 'html.parser')
         articles = soup.find('ul',
-                             {
-                                 "class": "kr-search-result-list-main clearfloat"})  # find class that contains search results
+                             {"class": "kr-search-result-list-main clearfloat"})  # find class that contains search results
 
         articles_count = 0
 
@@ -54,14 +46,11 @@ class _36KR:
         self.summary.update({'search_time': str(datetime.now().date())})
         self.summary.update({'data': []})
 
-        # Generate db whitelist
-        self.check_database(search_keyword=search_keyword, min_word_count=min_word_count, num_years=num_years)
-
         if articles:
             for a in articles.find_all('a', {"class": "article-item-title weight-bold"},
                                        href=True):  # find all a links with href within class
-                valid = self.textScrape(search_keyword, "https://36kr.com" + a['href'], path, num_years,
-                                        get_pdf)
+                valid = self.download_articles(search_keyword, "https://36kr.com" + a['href'], path, num_years,
+                                               get_pdf)
                 if valid:
                     articles_count += 1
 
@@ -81,11 +70,9 @@ class _36KR:
 
         # Date processing
         dateToday = datetime.now().strftime("%Y")
-        print(date)
         if date[0:3].isnumeric():
             years = int(dateToday) - int(date[0:4])
             if years > num_years:
-                print("yes")
                 ret = False
         else:
             return False
@@ -106,71 +93,68 @@ class _36KR:
 
         date = datetime.strptime(date, '%Y-%m-%d')
         date = datetime(date.year, date.month, date.day)
-        print(ret)
 
         return ret
 
-    def textScrape(self, search_keyword, url, path, num_years, get_pdf: bool):
-        # try:
-        url = url
-        res = requests.get(url)
-        html_page = res.content
-        soup = BeautifulSoup(html_page, 'html.parser')
+    def download_articles(self, search_keyword, url, path, num_years, get_pdf: bool):
+        try:
+            url = url
+            res = requests.get(url)
+            html_page = res.content
+            soup = BeautifulSoup(html_page, 'html.parser')
 
-        pattern = re.compile(r"(?<=\"articleDetailData\":{\"code\":0,\"data\":{\"itemId\":)[0-9]*")
-        doc_id = re.search(pattern, str(soup)).group(0)
+            pattern = re.compile(r"(?<=\"articleDetailData\":{\"code\":0,\"data\":{\"itemId\":)[0-9]*")
+            doc_id = re.search(pattern, str(soup)).group(0)
 
-        pattern = re.compile(r"(?<=\"author\":\")(.*)(?=\",\"authorId)")
-        author = re.search(pattern, str(soup)).group(0)
+            pattern = re.compile(r"(?<=\"author\":\")(.*)(?=\",\"authorId)")
+            author = re.search(pattern, str(soup)).group(0)
 
-        title = soup.find('h1').getText()
-        title = title.replace('|', '')
-        date = soup.find('span', {"class": "title-icon-item item-time"}).getText()[3:]
+            title = soup.find('h1').getText()
+            title = title.replace('|', '')
+            date = soup.find('span', {"class": "title-icon-item item-time"}).getText()[3:]
 
-        article = soup.find('div', {"class": "article-content"})
-        article = clean_html(str(article))
+            article = soup.find('div', {"class": "article-content"})
+            article = clean_html(str(article))
 
-        valid = self.prefilter(date, num_years, search_keyword, doc_id)
+            valid = self.prefilter(date, num_years, search_keyword, doc_id)
 
-        if valid:
-            print('Processing article %s' % doc_id)
-            json_save_path = os.path.join(path, str(doc_id) + '.json')
-            html_save_path = os.path.join(path, str(doc_id) + '.html')
-            pdf_save_path = os.path.join(path, str(doc_id) + '.pdf')
+            if valid:
+                print('Processing article %s' % doc_id)
+                json_save_path = os.path.join(path, str(doc_id) + '.json')
+                html_save_path = os.path.join(path, str(doc_id) + '.html')
 
-            if get_pdf:
-                with open(html_save_path, "w", encoding='utf-8') as file:
-                    file.write(article)
+                if get_pdf:
+                    with open(html_save_path, "w", encoding='utf-8') as file:
+                        file.write(article)
 
-            # Saving doc attributes
-            doc_info = {
-                'source': '36kr',
-                'doc_id': doc_id,
-                'title': title,
-                'date': date,
-                'org_name': author,
-                'oss_path': 'news/36kr/' + str(doc_id) + '.pdf',
-                'doc_type': 'NEWS',
-                'download_url': url,
-                'has_pdf': 'html',
-                'content': article,
-                'filtered': 0,  # -- new filter vincent
-                'search_keyword': search_keyword,
-            }
+                # Saving doc attributes
+                doc_info = {
+                    'source': '36kr',
+                    'doc_id': doc_id,
+                    'title': title,
+                    'date': date,
+                    'org_name': author,
+                    'oss_path': 'news/36kr/' + str(doc_id) + '.pdf',
+                    'doc_type': 'NEWS',
+                    'download_url': url,
+                    'has_pdf': 'html',
+                    'content': article,
+                    'filtered': 0,  # -- new filter vincent
+                    'search_keyword': search_keyword,
+                }
 
-            doc_info_copy = doc_info.copy()
-            print(json_save_path)
-            with open(json_save_path, 'w', encoding='utf-8') as f:
-                json.dump(doc_info, f, ensure_ascii=False, indent=4)
+                doc_info_copy = doc_info.copy()
+                with open(json_save_path, 'w', encoding='utf-8') as f:
+                    json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
-            self.summary['data'].append(doc_info_copy)
+                self.summary['data'].append(doc_info_copy)
 
-            # store doc_info to mongodb     --vincent
-            # mg.insert_data(doc_info, 'articles')
-            return valid
-        # except:
-        #     updateError('Error occurred when scraping text from 36kr')
-        #     pass
+                # store doc_info to mongodb     --vincent
+                # mg.insert_data(doc_info, 'articles')
+                return valid
+        except Exception as e:
+            updateError('Error occurred when scraping text from 36kr. \n' + str(e.__traceback__.tb_lineno) + ": " + str(e))
+            pass
 
     def run(self, search_keyword, min_word_count, num_years, get_pdf: bool):
         print('--------Begin searching articles from 36kr--------')
@@ -190,12 +174,7 @@ class _36KR:
 
             current_path = os.path.join(keyword_dir, 'html', '36kr')
 
-            if os.path.exists(current_path + "summary.txt"):
-                sum = open(os.path.join(current_path, "summary" + ".json"), "a", encoding='utf-8')
-            else:
-                sum = open(os.path.join(current_path, "summary" + ".json"), "w", encoding='utf-8')
-
-            self.urlParser(search_keyword, min_word_count, current_path, num_years, get_pdf)
+            self.get_pdf_urls(search_keyword, min_word_count, current_path, num_years, get_pdf)
 
         except NoDocError:
             print('--------No documents found in 36kr--------')
