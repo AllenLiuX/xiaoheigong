@@ -9,7 +9,6 @@ from fake_useragent import UserAgent
 import Backend.storage.mongodb as mg
 from definitions import ROOT_DIR
 from utils import bwlist
-from utils.errors import DownloadError
 from utils.errors import NoDocError
 from utils.errors import updateError
 
