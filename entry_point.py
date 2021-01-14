@@ -23,7 +23,7 @@ def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_year
         Add to database
     4. Clear cache
     """
-    if not os.path.exists('cache'):
+    if not os.path.isdir('cache'):
         os.mkdir('cache')
     run_scrapers.run_all(search_keyword=search_keyword, filter_keyword=filter_keyword, min_words=min_words,
                          pdf_min_num_page=pdf_min_num_page, num_years=num_years)

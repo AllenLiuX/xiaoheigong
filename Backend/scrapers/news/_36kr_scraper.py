@@ -15,6 +15,12 @@ from utils.errors import NoDocError, updateError
 now = datetime.now()
 
 
+def clean_html(text):
+    clean_re = re.compile('<.*?>')
+    clean_text = re.sub(clean_re, '', text)
+    return clean_text
+
+
 class _36KR:
     def __init__(self):
         self.s = requests.Session()
@@ -23,22 +29,14 @@ class _36KR:
         self.source = '36kr'
         self.summary = {}
 
-    def check_database(self, search_keyword: str, min_word_count: str, num_years: int):
-        db_existing = mg.search_datas(search_keyword=search_keyword, pdf_min_page='',
-                                      min_word_count=int(min_word_count),
-                                      num_years=num_years)
-        for file in db_existing:
-            self.whitelist.add(file['_id'])
-
-    def urlParser(self, search_keyword, min_word_count, path, num_years, get_pdf: bool):
+    def get_pdf_urls(self, search_keyword, min_word_count, path, num_years, get_pdf: bool):
         url = "https://36kr.com/search/articles/" + search_keyword + "?sort=score"
 
         res = requests.get(url)  # init page
         html_page = res.content
         soup = BeautifulSoup(html_page, 'html.parser')
         articles = soup.find('ul',
-                             {
-                                 "class": "kr-search-result-list-main clearfloat"})  # find class that contains search results
+                             {"class": "kr-search-result-list-main clearfloat"})  # find class that contains search results
 
         articles_count = 0
 
@@ -48,14 +46,11 @@ class _36KR:
         self.summary.update({'search_time': str(datetime.now().date())})
         self.summary.update({'data': []})
 
-        # Generate db whitelist
-        self.check_database(search_keyword=search_keyword, min_word_count=min_word_count, num_years=num_years)
-
         if articles:
             for a in articles.find_all('a', {"class": "article-item-title weight-bold"},
                                        href=True):  # find all a links with href within class
-                valid = self.textScrape(search_keyword, "https://36kr.com" + a['href'], path, num_years,
-                                        get_pdf)
+                valid = self.download_articles(search_keyword, "https://36kr.com" + a['href'], path, num_years,
+                                               get_pdf)
                 if valid:
                     articles_count += 1
 
@@ -79,6 +74,8 @@ class _36KR:
             years = int(dateToday) - int(date[0:4])
             if years > num_years:
                 ret = False
+        else:
+            return False
 
         # Blacklist processing
         bl = bwlist.BWList(search_keyword, 'black')
@@ -88,7 +85,8 @@ class _36KR:
             ret = False
 
         # whitelist by database
-        id_match_res = mg.show_datas('articles', query={'doc_id': str(doc_id), 'search_keyword': search_keyword})   # new whitelist --vincent
+        id_match_res = mg.show_datas('articles', query={'doc_id': str(doc_id),
+                                                        'search_keyword': search_keyword})  # new whitelist --vincent
         if id_match_res:
             print('article #' + str(doc_id) + ' is already in database. Skipped.')
             ret = False
@@ -98,7 +96,7 @@ class _36KR:
 
         return ret
 
-    def textScrape(self, search_keyword, url, path, num_years, get_pdf: bool):
+    def download_articles(self, search_keyword, url, path, num_years, get_pdf: bool):
         try:
             url = url
             res = requests.get(url)
@@ -116,6 +114,7 @@ class _36KR:
             date = soup.find('span', {"class": "title-icon-item item-time"}).getText()[3:]
 
             article = soup.find('div', {"class": "article-content"})
+            article = clean_html(str(article))
 
             valid = self.prefilter(date, num_years, search_keyword, doc_id)
 
@@ -123,11 +122,10 @@ class _36KR:
                 print('Processing article %s' % doc_id)
                 json_save_path = os.path.join(path, str(doc_id) + '.json')
                 html_save_path = os.path.join(path, str(doc_id) + '.html')
-                pdf_save_path = os.path.join(path, str(doc_id) + '.pdf')
 
                 if get_pdf:
                     with open(html_save_path, "w", encoding='utf-8') as file:
-                        file.write(str(article))
+                        file.write(article)
 
                 # Saving doc attributes
                 doc_info = {
@@ -140,13 +138,12 @@ class _36KR:
                     'doc_type': 'NEWS',
                     'download_url': url,
                     'has_pdf': 'html',
-                    'content': str(article),
+                    'content': article,
                     'filtered': 0,  # -- new filter vincent
                     'search_keyword': search_keyword,
                 }
 
                 doc_info_copy = doc_info.copy()
-
                 with open(json_save_path, 'w', encoding='utf-8') as f:
                     json.dump(doc_info, f, ensure_ascii=False, indent=4)
 
@@ -155,8 +152,8 @@ class _36KR:
                 # store doc_info to mongodb     --vincent
                 # mg.insert_data(doc_info, 'articles')
                 return valid
-        except:
-            updateError('Error occurred when scraping text from 36kr')
+        except Exception as e:
+            updateError('Error occurred when scraping text from 36kr. \n' + str(e.__traceback__.tb_lineno) + ": " + str(e))
             pass
 
     def run(self, search_keyword, min_word_count, num_years, get_pdf: bool):
@@ -177,12 +174,7 @@ class _36KR:
 
             current_path = os.path.join(keyword_dir, 'html', '36kr')
 
-            if os.path.exists(current_path + "summary.txt"):
-                sum = open(os.path.join(current_path, "summary" + ".json"), "a", encoding='utf-8')
-            else:
-                sum = open(os.path.join(current_path, "summary" + ".json"), "w", encoding='utf-8')
-
-            self.urlParser(search_keyword, min_word_count, current_path, num_years, get_pdf)
+            self.get_pdf_urls(search_keyword, min_word_count, current_path, num_years, get_pdf)
 
         except NoDocError:
             print('--------No documents found in 36kr--------')
@@ -195,4 +187,4 @@ def run(search_keyword, min_word_count, num_years, get_pdf):
 
 
 if __name__ == '__main__':
-    run(search_keyword='特斯拉', min_word_count='0', num_years=0, get_pdf=False)
+    run(search_keyword='特斯拉', min_word_count='0', num_years=1, get_pdf=False)
