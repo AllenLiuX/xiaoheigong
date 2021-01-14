@@ -153,8 +153,10 @@ class _36KR:
                 # mg.insert_data(doc_info, 'articles')
                 return valid
         except Exception as e:
-            updateError('Error occurred when scraping text from 36kr. \n' + str(e.__traceback__.tb_lineno) + ": " + str(e))
-            pass
+            # updateError('Error occurred when scraping text from 36kr. \n' + str(e.__traceback__.tb_lineno) + ": " + str(e))
+            updateError('Error occurred when scraping text from 36kr.')
+
+        pass
 
     def run(self, search_keyword, min_word_count, num_years, get_pdf: bool):
         print('--------Begin searching articles from 36kr--------')
