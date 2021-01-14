@@ -1,6 +1,6 @@
 import sys
 # import scrapers.news.cyzone as cyzone
-import Backend.scrapers.news.huxiu as huxiu
+# import Backend.scrapers.news.huxiu as huxiu
 # import scrapers.news.iyiou as iyiou
 # import scrapers.news.leiphone as leiphone
 # import scrapers.news.pencilnews as pencilnews
@@ -37,7 +37,7 @@ def run_all(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_yea
     # wspm.run(search_keyword, min_words, num_years, 15, '', get_pdf=get_pdf)
 
     # cyzone.run(search_keyword=search_keyword)
-    huxiu.run(search_keyword=search_keyword, min_word_count=min_words, get_pdf=get_pdf)
+    # huxiu.run(search_keyword=search_keyword, min_word_count=min_words, get_pdf=get_pdf)
     # iyiou.run(search_keyword=search_keyword)
     # leiphone.run(search_keyword=search_keyword)
     # pencilnews.run(search_keyword=search_keyword)
