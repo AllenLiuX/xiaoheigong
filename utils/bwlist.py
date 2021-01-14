@@ -12,9 +12,9 @@ class BWList:
         self.keyword = search_keyword
 
         if black_white == 'black':
-            self.save_path = os.path.join(ROOT_DIR, 'cache', self.keyword, 'blacklist.pkl')
+            self.save_path = os.path.join(ROOT_DIR, 'blacklist.pkl')
         elif black_white == 'white':
-            self.save_path = os.path.join(ROOT_DIR, 'cache', self.keyword, 'whitelist.pkl')
+            self.save_path = os.path.join(ROOT_DIR, 'whitelist.pkl')
 
         # Initializes/Loads list
         if self.bwlist_exist():

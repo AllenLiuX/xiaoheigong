@@ -23,7 +23,7 @@ def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_year
         Add to database
     4. Clear cache
     """
-    if not os.path.exists('cache'):
+    if not os.path.isdir('cache'):
         os.mkdir('cache')
     run_scrapers.run_all(search_keyword=search_keyword, filter_keyword=filter_keyword, min_words=min_words,
                          pdf_min_num_page=pdf_min_num_page, num_years=num_years)
@@ -38,5 +38,5 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         keyword = sys.argv[1]
     else:
-        keyword = '中芯国际'
+        keyword = '必胜客'
     scrape(search_keyword=keyword, filter_keyword='', min_words='3000', pdf_min_num_page='40', num_years=10)

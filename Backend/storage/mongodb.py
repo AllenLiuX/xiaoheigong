@@ -40,10 +40,12 @@ def search_datas(search_keyword, pdf_min_page, min_word_count, num_years, db='ar
     result = []
     date = dt.datetime.now() - dt.timedelta(num_years * 365)
 
+    print(date)
+
     query = {
         'keywordCount.%s' % search_keyword: {'$gt': COMPANY_NAME_OCCUR},
         '$or': [{'page_num': {'$gt': pdf_min_page}}, {'wordCount': {'$gt': min_word_count}}],
-        # 'date': {'$gt': date},
+        'date': {'$gte': date.isoformat()},
         'filtered': 1
     }
     for collection in mydb.list_collection_names():
@@ -75,4 +77,4 @@ def delete_col(collection, db='articles'):
 if __name__ == '__main__':
     result = search_datas(search_keyword='中芯国际', pdf_min_page=20, min_word_count=3000, num_years=5)
     for r in result:
-        print(r['_id'])
+        print(r['date'])

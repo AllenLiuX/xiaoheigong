@@ -75,6 +75,7 @@
 2020-12-30 23:29:26.697098: FILE NOT FOUND: 4402586.json. Skipped.
 2020-12-30 23:29:27.547678: FILE NOT FOUND: 4386195.json. Skipped.
 2020-12-30 23:29:28.647727: FILE NOT FOUND: 4385777.json. Skipped.
+<<<<<<< HEAD
 2021-01-04 23:20:12.499884: No Doc Error: Empty response from FXBG.
 2021-01-04 23:20:12.521370: Download Error: Error occurred when downloading pdfs from fxbg.
 2021-01-06 11:04:25.315922: No Doc Error: Empty response from FXBG.
@@ -82,3 +83,22 @@
 2021-01-06 11:04:38.840047: No Doc Error: Empty response from ROBO.
 2021-01-14 23:26:12.335922: No Doc Error: Empty response from FXBG.
 2021-01-14 23:26:12.337718: Download Error: Error occurred when downloading pdfs from fxbg.
+=======
+2021-01-08 20:55:00.321674: Error occurred when scraping text from 36kr
+2021-01-08 20:56:39.269667: Error occurred when scraping text from 36kr
+2021-01-09 16:05:54.342218: ResponseError: 429https://search-api.huxiu.com/api/article?platform=www&s=腾讯&sort=&page=1&pagesize=20
+2021-01-09 21:58:43.686580: No Doc Error: Empty response from FXBG.
+2021-01-09 21:58:43.688578: Download Error: Error occurred when downloading pdfs from fxbg.
+2021-01-09 21:58:48.882384: No Doc Error: Empty response from ROBO.
+2021-01-09 21:58:54.957426: ResponseError: 429 https://search-api.huxiu.com/api/article?platform=www&s=恒大&sort=&page=6&pagesize=20
+2021-01-09 22:00:55.011995: No Doc Error: Empty response from FXBG.
+2021-01-09 22:00:55.012248: Download Error: Error occurred when downloading pdfs from fxbg.
+2021-01-09 22:00:59.749556: No Doc Error: Empty response from ROBO.
+2021-01-09 22:01:03.843974: ResponseError: 429 https://search-api.huxiu.com/api/article?platform=www&s=恒大&sort=&page=1&pagesize=20
+2021-01-09 22:37:14.828811: Download Error: Error occurred when downloading article from huxiu. 
+120name 'sb' is not defined
+2021-01-09 22:37:14.981716: Download Error: Error occurred when downloading article from huxiu. 
+120name 'sb' is not defined
+2021-01-09 22:37:15.708035: Download Error: Error occurred when downloading article from huxiu. 
+120name 'sb' is not defined
+>>>>>>> 9f475520aef05cdc7622548f3a9e7bb118e37fbb

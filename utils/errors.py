@@ -19,6 +19,11 @@ class DownloadError(Exception):
         self.message = message
 
 
+class ResponseError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+
 def updateError(message):
     print(message)
     error_file = open(os.path.join(ROOT_DIR, 'error_report.txt'), 'a')
