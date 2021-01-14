@@ -4,7 +4,7 @@ import re
 import subprocess
 
 
-
+:qi:
 def countPages(filename):
 	''' Counts number of pages in PDF '''
 

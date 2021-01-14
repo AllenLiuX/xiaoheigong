@@ -116,7 +116,8 @@ class ROBO:
             try:
                 download_url = download_url['data']['downloadUrl']
             except Exception as e:
-                updateError('Error occurred when getting response from Robo. \n' + str(e.__traceback__.tb_lineno) + ": " + str(e))
+                # updateError('Error occurred when getting response from Robo. \n' + str(e.__traceback__.tb_lineno) + ": " + str(e))
+                updateError('Error occurred when getting response from Robo. ')
                 continue
 
             date = id_list[id]['data']['publishTime']
