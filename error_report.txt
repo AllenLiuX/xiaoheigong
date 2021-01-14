@@ -75,3 +75,10 @@
 2020-12-30 23:29:26.697098: FILE NOT FOUND: 4402586.json. Skipped.
 2020-12-30 23:29:27.547678: FILE NOT FOUND: 4386195.json. Skipped.
 2020-12-30 23:29:28.647727: FILE NOT FOUND: 4385777.json. Skipped.
+2021-01-04 23:20:12.499884: No Doc Error: Empty response from FXBG.
+2021-01-04 23:20:12.521370: Download Error: Error occurred when downloading pdfs from fxbg.
+2021-01-06 11:04:25.315922: No Doc Error: Empty response from FXBG.
+2021-01-06 11:04:25.316151: Download Error: Error occurred when downloading pdfs from fxbg.
+2021-01-06 11:04:38.840047: No Doc Error: Empty response from ROBO.
+2021-01-14 23:26:12.335922: No Doc Error: Empty response from FXBG.
+2021-01-14 23:26:12.337718: Download Error: Error occurred when downloading pdfs from fxbg.
