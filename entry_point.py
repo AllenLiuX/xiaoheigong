@@ -38,5 +38,5 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         keyword = sys.argv[1]
     else:
-        keyword = '中芯国际'
+        keyword = '必胜客'
     scrape(search_keyword=keyword, filter_keyword='', min_words='3000', pdf_min_num_page='40', num_years=10)
