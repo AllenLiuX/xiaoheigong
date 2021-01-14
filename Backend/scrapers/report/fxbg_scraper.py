@@ -247,7 +247,9 @@ class FXBG:
         try:
             self.download_pdf(search_keyword, pdf_url_list, get_pdf)
         except Exception as e:
-            updateError("Download Error: Error occurred when downloading pdfs from fxbg. \n" + str(e.__traceback__.tb_lineno) + ": " + str(e))
+            # updateError("Download Error: Error occurred when downloading pdfs from fxbg. \n" + str(e.__traceback__.tb_lineno) + ": " + str(e))
+            updateError("Download Error: Error occurred when downloading pdfs from fxbg.")
+
 
 
 def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):
