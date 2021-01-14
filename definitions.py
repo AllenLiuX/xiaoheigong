@@ -15,5 +15,10 @@ translate = {'fxbg': '发现报告',
              '36kr': '36kr',
              'woshipm': '我是产品经理'}
 
+tokens = {
+    'fxbg': 'jaOLojHQVzv45khzOXkacIoiUUIYxwUIz9R8ywGC5qutZUMwgHW82H6YMIxHS1pi',
+    'robo': '6F92C0E64F0F20766C1006C21F3DDECF'
+}
+
 if __name__ == '__main__':
     print(ROOT_DIR)

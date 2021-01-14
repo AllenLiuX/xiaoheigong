@@ -11,8 +11,9 @@ from definitions import ROOT_DIR
 from utils import bwlist
 from utils.errors import NoDocError
 from utils.errors import updateError
+from definitions import tokens
 
-token = 'jaOLojHQVzv45khzOXkacIoiUUIYxwUIz9R8ywGC5qutZUMwgHW82H6YMIxHS1pi'
+token = tokens['fxbg']
 
 
 class FXBG:

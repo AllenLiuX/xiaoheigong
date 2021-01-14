@@ -7,12 +7,13 @@ from fake_useragent import UserAgent
 
 import Backend.storage.mongodb as mg
 from definitions import ROOT_DIR
+from definitions import tokens
 from utils import bwlist
 from utils.errors import NoDocError
 from utils.errors import updateError
 from utils.get_cookies import get_cookies
 
-token = '6F92C0E64F0F20766C1006C21F3DDECF'
+token = tokens['robo']
 
 
 class ROBO:
@@ -26,7 +27,7 @@ class ROBO:
                     sso = cookie['value']
         try:
             self.s = requests.Session()
-            sso = '6F92C0E64F0F20766C1006C21F3DDECF'
+            sso = token
             self.cookie = 'cloud-sso-token=%s; ' % sso
 
             self.headers = {
