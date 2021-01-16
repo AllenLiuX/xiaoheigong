@@ -102,3 +102,6 @@
 2021-01-09 22:37:15.708035: Download Error: Error occurred when downloading article from huxiu. 
 120name 'sb' is not defined
 >>>>>>> 9f475520aef05cdc7622548f3a9e7bb118e37fbb
+2021-01-15 00:15:08.696762: No Doc Error: Empty response from ROBO. 
+2021-01-15 00:22:19.298935: No Doc Error: Empty response from FXBG.
+2021-01-15 00:22:37.453491: No Doc Error: Empty response from ROBO. 
