@@ -29,8 +29,8 @@ def run_all(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_yea
     search_keyword = sys.argv[1] if len(sys.argv) > 1 else search_keyword
     get_pdf = len(sys.argv) <= 1
 
-    # fxbg.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
-    #          num_years=num_years, get_pdf=get_pdf)
+    fxbg.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
+             num_years=num_years, get_pdf=get_pdf)
     robo.run(search_keyword=search_keyword, filter_keyword=filter_keyword, pdf_min_num_page=pdf_min_num_page,
              num_years=num_years, get_pdf=get_pdf)
     _36kr.run(search_keyword=search_keyword, min_word_count=min_words, num_years=num_years, get_pdf=get_pdf)

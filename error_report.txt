@@ -92,3 +92,9 @@
 120name 'sb' is not defined
 2021-01-09 22:37:15.708035: Download Error: Error occurred when downloading article from huxiu. 
 120name 'sb' is not defined
+2021-01-21 16:05:55.060470: No Doc Error: Empty response from ROBO. 
+2021-01-21 16:48:25.281223: Database Error: Error occurred when getting database results for 必胜客.
+2021-01-21 17:17:02.024172: FILE NOT FOUND: 4355471.json. Skipped.
+2021-01-21 17:17:04.263224: FILE NOT FOUND: 4257275.json. Skipped.
+2021-01-21 17:17:08.301940: FILE NOT FOUND: 4324379.json. Skipped.
+2021-01-21 17:17:17.667871: File not found error: Error occurred when uploading fxbg data to database

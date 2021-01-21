@@ -5,11 +5,16 @@ from Backend.scrapers import run_scrapers
 import sys
 import shutil
 import os
+import pprint as pp
+from definitions import CATEGORY_TO_TAG
 
 
-def search_db(search_keyword, min_words, pdf_min_num_page, num_years):
-    # new search db --vincent
-    return database.get_db_results(search_keyword, pdf_min_num_page, min_words, num_years)
+def search_db(search_keyword: str, min_words: str, pdf_min_num_page: str, num_years: int, tags=None):
+    return database.get_db_results(search_keyword, pdf_min_num_page, min_words, num_years, tags)
+
+
+def get_all_tags():
+    return CATEGORY_TO_TAG
 
 
 def scrape(search_keyword, filter_keyword, min_words, pdf_min_num_page, num_years):
@@ -38,5 +43,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         keyword = sys.argv[1]
     else:
-        keyword = '必胜客'
-    scrape(search_keyword=keyword, filter_keyword='', min_words='3000', pdf_min_num_page='40', num_years=10)
+        keyword = '中芯国际'
+    # scrape(search_keyword=keyword, filter_keyword='', min_words='1000', pdf_min_num_page='20', num_years=5)
+    # pp.pprint(search_db(search_keyword=keyword, min_words='1000', pdf_min_num_page='20', num_years=5))
+    pp.pprint(get_all_tags())

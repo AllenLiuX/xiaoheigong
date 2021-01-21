@@ -4,9 +4,8 @@ import re
 import subprocess
 
 
-:qi:
 def countPages(filename):
-	''' Counts number of pages in PDF '''
+	""" Counts number of pages in PDF """
 
 	# NOTE: Currently does not work 100% of the time
 	rxcountpages = re.compile(r"/Type\s*/Page([^s]|$)", re.MULTILINE|re.DOTALL)
@@ -14,7 +13,8 @@ def countPages(filename):
 	return len(rxcountpages.findall(data))
 
 def to_text(file_loc, page_nums = True):
-	''' Converts PDF to text
+	"""
+	Converts PDF to text
 
 	Args
 	- - - - - - -
@@ -26,7 +26,7 @@ def to_text(file_loc, page_nums = True):
 		text: extracted text from pdf document, string
 		actual_count: estimated number of pages for pdf document, integer
 
-	'''
+	"""
 
 	# Determines location of file
 	if os.path.isabs(file_loc):

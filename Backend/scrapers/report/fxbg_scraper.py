@@ -144,7 +144,7 @@ class FXBG:
             updated_doc = {'source': self.source,
                            'doc_id': doc_id,
                            'date': str(datetime.datetime.strptime(date, '%Y/%m/%d').date()),
-                           'download_url': 'https://oss-buy.hufangde.com' + response['data'],
+                           'download_url': 'https://fxbaogao.com/pdf?id=' + doc_id,
                            'org_name': doc['orgName'].replace('<em>', '').replace('</em>', ''),
                            'page_num': doc['pageNum'],
                            'doc_type': 'EXTERNAL_REPORT',
@@ -249,7 +249,6 @@ class FXBG:
         except Exception as e:
             # updateError("Download Error: Error occurred when downloading pdfs from fxbg. \n" + str(e.__traceback__.tb_lineno) + ": " + str(e))
             updateError("Download Error: Error occurred when downloading pdfs from fxbg.")
-
 
 
 def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):

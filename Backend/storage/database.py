@@ -8,7 +8,7 @@ from Backend.storage.mongodb import insert_data
 from utils.errors import updateError
 
 
-def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
+def get_db_results(search_keyword: str, pdf_min_page: str, min_word_count: str, num_years: int, tags):
     """
     Given search keyword, page limit, time limit, word limit, find the documents in the database
     :return: a dictionary {'db_search_results': [document objects]}
@@ -16,18 +16,30 @@ def get_db_results(search_keyword, pdf_min_page, min_word_count, num_years):
     pdf_min_page = int(pdf_min_page) if int(pdf_min_page) > 0 else 0
     min_word_count = int(min_word_count) if int(min_word_count) > 0 else 0
 
+    if tags is None:
+        tags = []
+
     try:
-        existing_pdfs = mg.show_datas(collection='articles', query={'search_keyword': search_keyword, 'filtered': 1})
+        existing_pdfs = mg.search_datas(search_keyword, pdf_min_page, min_word_count, num_years, tags)
+        # existing_pdfs = mg.show_datas(collection='articles', query={'search_keyword': search_keyword, 'filtered': 1})
     except:
         updateError('Database Error: Error occurred when getting database results for %s.' % search_keyword)
 
     for pdf in existing_pdfs:
+        # removing unnecessary attributes from the copy sent to frontend
         pdf.pop('_id')
+        pdf.pop('content')
+        pdf.pop('oss_path')
+        pdf.pop('keywordCount')
+        pdf['tags'] = pdf.pop('tags')['list']
+        pdf.pop('wordCount')
+        pdf.pop('filtered')
 
     filtered_pdfs = []
     for pdf in existing_pdfs:
-        if pdf['page_num'] and pdf['page_num'] >= pdf_min_page or (
-                not pdf['page_num'] and pdf['wordCount'] > min_word_count):
+        if 'page_num' in pdf.keys() and pdf['page_num'] >= pdf_min_page:
+            filtered_pdfs.append(pdf)
+        if 'page_num' not in pdf.keys() and pdf['wordCount'] > min_word_count:
             filtered_pdfs.append(pdf)
 
     result = {'db_search_results': filtered_pdfs}
@@ -57,7 +69,6 @@ def upload_to_db(search_keyword):
     for source_summary in summary.keys():
         source = summary[source_summary]
         source_name = source['source']  # e.g. '36kr'
-        print(source_name)
 
         source_type = source['has_pdf']  # 'html' or 'pdf'
         data_dir = os.path.join(ROOT_DIR, 'cache', search_keyword, source_type, translate[source_name])
@@ -80,7 +91,6 @@ def upload_to_db(search_keyword):
             except:
                 updateError('Upload error: Error occurred when uploading %s data to database' % source_name)
                 continue
-
 
 
 if __name__ == '__main__':
