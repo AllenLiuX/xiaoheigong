@@ -226,3 +226,4 @@
 2021-01-22 14:27:55.013448: Error occurred when parsing dates of doc 1524640 from fxbg.
 2021-01-22 14:27:55.075717: Error occurred when parsing dates of doc 1501367 from fxbg.
 2021-01-22 14:27:55.164905: Error occurred when parsing dates of doc 1766693 from fxbg.
+2021-01-22 14:55:58.008026: Download Error: Error occurred when downloading pdfs from fxbg.
