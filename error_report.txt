@@ -226,3 +226,5 @@
 2021-01-22 14:27:55.013448: Error occurred when parsing dates of doc 1524640 from fxbg.
 2021-01-22 14:27:55.075717: Error occurred when parsing dates of doc 1501367 from fxbg.
 2021-01-22 14:27:55.164905: Error occurred when parsing dates of doc 1766693 from fxbg.
+2021-01-22 14:58:49.822509: Download Error: Error occurred when downloading pdfs from fxbg.
+2021-01-22 15:20:37.440284: FILE NOT FOUND: 4425019.json. Skipped.
