@@ -46,6 +46,11 @@ def search_datas(search_keyword, pdf_min_page, min_word_count, num_years, tags, 
         'date': {'$gte': date.isoformat()},
         'filtered': 1,
         'tags.list': {'$all': tags}
+    } if tags else {
+        'keywordCount.%s' % search_keyword: {'$gt': COMPANY_NAME_OCCUR},
+        '$or': [{'page_num': {'$gt': pdf_min_page}}, {'wordCount': {'$gt': min_word_count}}],
+        'date': {'$gte': date.isoformat()},
+        'filtered': 1
     }
 
     for collection in mydb.list_collection_names():
