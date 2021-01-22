@@ -32,7 +32,6 @@ def get_db_results(search_keyword: str, pdf_min_page: str, min_word_count: str, 
         pdf.pop('oss_path')
         pdf.pop('keywordCount')
         pdf['tags'] = pdf.pop('tags')['list']
-        pdf.pop('wordCount')
         pdf.pop('filtered')
 
     filtered_pdfs = []

@@ -45,5 +45,5 @@ if __name__ == '__main__':
     else:
         keyword = '中芯国际'
     # scrape(search_keyword=keyword, filter_keyword='', min_words='1000', pdf_min_num_page='20', num_years=5)
-    # pp.pprint(search_db(search_keyword=keyword, min_words='1000', pdf_min_num_page='20', num_years=5))
-    pp.pprint(get_all_tags())
+    pp.pprint(search_db(search_keyword=keyword, min_words='1000', pdf_min_num_page='20', num_years=5))
+    # pp.pprint(get_all_tags())
