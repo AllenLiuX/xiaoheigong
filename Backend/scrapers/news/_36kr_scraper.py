@@ -136,7 +136,7 @@ class _36KR:
                     'org_name': author,
                     'oss_path': 'news/36kr/' + str(doc_id) + '.pdf',
                     'doc_type': 'NEWS',
-                    'download_url': url,
+                    'source_link': url,
                     'has_pdf': 'html',
                     'content': article,
                     'filtered': 0,  # -- new filter vincent

@@ -45,7 +45,8 @@ class ROBO:
                 'user-agent': str(UserAgent().random)
             }
         except Exception as e:
-            updateError('Error occurred when sending request to Robo. \n' + str(e.__traceback__.tb_lineno) + ": " + str(e))
+            updateError(
+                'Error occurred when sending request to Robo. \n' + str(e.__traceback__.tb_lineno) + ": " + str(e))
             pass
         self.source = 'robo'
         self.blacklist = None
@@ -108,6 +109,7 @@ class ROBO:
         :return: an dict of {doc_id: doc_object} with more details in the object
         """
         download_api_url = f'https://gw.datayes.com/rrp_adventure/web/externalReport/'
+        source_link = 'https://robo.datayes.com/v2/details/report/'
         updated_json = {}
 
         for id in id_list:
@@ -130,6 +132,7 @@ class ROBO:
                             'page_num': id_list[id]['data']['pageCount'],
                             'doc_type': id_list[id]['type'],
                             'download_url': download_url,
+                            'source_link': source_link + str(id),
                             'has_pdf': 'pdf',
                             'oss_path': 'report/robo/' + str(id) + '.pdf',
                             'title': id_list[id]['data']['title'],
@@ -224,7 +227,6 @@ class ROBO:
         except Exception as e:
             # updateError("Download Error: Error occurred when downloading pdfs from ROBO. \n" + str(e.__traceback__.tb_lineno) + ": " + str(e))
             updateError("Download Error: Error occurred when downloading pdfs from ROBO. ")
-
 
 
 def run(search_keyword: str, filter_keyword: str, pdf_min_num_page: str, num_years: int, get_pdf: bool):
