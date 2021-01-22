@@ -139,21 +139,25 @@ class FXBG:
             response = self.s.get(url=download_api_url, headers=headers, params=params).json()
             doc = doc_list[doc_id]
             title = str(doc['title']).replace('<em>', '').replace('</em>', '')
-            date = doc['pdfPath'][7:17]
+            date = doc['pdfPath'][7:17] if doc['pdfPath'][7:9] != 'cn' else doc['pdfPath'][10:20]
 
-            updated_doc = {'source': self.source,
-                           'doc_id': doc_id,
-                           'date': str(datetime.datetime.strptime(date, '%Y/%m/%d').date()),
-                           'download_url': 'https://fxbaogao.com/pdf?id=' + doc_id,
-                           'org_name': doc['orgName'].replace('<em>', '').replace('</em>', ''),
-                           'page_num': doc['pageNum'],
-                           'doc_type': 'EXTERNAL_REPORT',
-                           'has_pdf': "pdf",
-                           'oss_path': 'report/fxbg/' + str(doc_id) + '.pdf',
-                           'title': title,
-                           'filtered': 0,  # -- new filter vincent
-                           'search_keyword': search_keyword,
-                           }
+            try:
+                updated_doc = {'source': self.source,
+                               'doc_id': doc_id,
+                               'date': str(datetime.datetime.strptime(date, '%Y/%m/%d').date()),
+                               'download_url': 'https://fxbaogao.com/pdf?id=' + str(doc_id),
+                               'org_name': doc['orgName'].replace('<em>', '').replace('</em>', ''),
+                               'page_num': doc['pageNum'],
+                               'doc_type': 'EXTERNAL_REPORT',
+                               'has_pdf': "pdf",
+                               'oss_path': 'report/fxbg/' + str(doc_id) + '.pdf',
+                               'title': title,
+                               'filtered': 0,  # -- new filter vincent
+                               'search_keyword': search_keyword,
+                               }
+            except ValueError:
+                updateError("Error occurred when parsing dates of doc %s from fxbg." % str(doc_id))
+                continue
 
             doc_list.update({doc_id: updated_doc})
 

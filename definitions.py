@@ -15,8 +15,8 @@ translate = {'fxbg': '发现报告',
              'woshipm': '我是产品经理'}
 
 tokens = {
-    'fxbg': '7Fz1Yz74MyrLgaG1GkJidpzuoQtX6xaQy4uwLMPlh6Q14UWEhipUyCbKJ4coh62T',
-    'robo': 'CFABE94B8365C84809A63F46998582BB'
+    'fxbg': 'eceuwAfKzJ61kNrdyYI3SRA4ldIus77SAn04LbD5O5IKZhceKQ4nk6YGOndKZByw',
+    'robo': '43297503256ACFA79996A21A6872D8A0'
 }
 
 # Categories, tags and keywords
