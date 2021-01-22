@@ -4,10 +4,6 @@ import re
 import subprocess
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5150c991992a693c84367a375ca215556d32890d
 def countPages(filename):
 	""" Counts number of pages in PDF """
 
