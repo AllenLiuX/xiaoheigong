@@ -226,3 +226,7 @@ fabric.properties
 React/node_modules
 
 React/.next
+
+### Project files
+error_report.txt
+blacklist.pkl
