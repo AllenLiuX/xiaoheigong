@@ -9,8 +9,8 @@ import pprint as pp
 from definitions import CATEGORY_TO_TAG
 
 
-def search_db(search_keyword: str, min_words: str, pdf_min_num_page: str, num_years: int, tags=None):
-    return database.get_db_results(search_keyword, pdf_min_num_page, min_words, num_years, tags)
+def search_db(search_keyword: str, custom_keyword: str, min_words: str, pdf_min_num_page: str, num_years: int, tags=None):
+    return database.get_db_results(search_keyword, custom_keyword, pdf_min_num_page, min_words, num_years, tags)
 
 
 def get_all_tags():
@@ -44,6 +44,6 @@ if __name__ == '__main__':
         keyword = sys.argv[1]
     else:
         keyword = '中芯国际'
-    scrape(search_keyword=keyword, filter_keyword='', min_words='500', pdf_min_num_page='20', num_years=1)
-    # pp.pprint(search_db(search_keyword=keyword, min_words='500', pdf_min_num_page='20', num_years=1))
+    # scrape(search_keyword=keyword, filter_keyword='', min_words='500', pdf_min_num_page='20', num_years=1)
+    pp.pprint(search_db(search_keyword=keyword, custom_keyword='', min_words='500', pdf_min_num_page='20', num_years=1))
     # pp.pprint(get_all_tags())

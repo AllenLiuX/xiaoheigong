@@ -2,19 +2,24 @@ import json
 import os
 import sys
 
-from definitions import ROOT_DIR, translate
+from definitions import ROOT_DIR, translate, CUSTOM_KW_OCCUR
 from Backend.storage import mongodb as mg
 from Backend.storage.mongodb import insert_data
 from utils.errors import updateError
 
 
-def get_db_results(search_keyword: str, pdf_min_page: str, min_word_count: str, num_years: int, tags):
+def get_db_results(search_keyword: str, custom_keyword: str, pdf_min_page: str, min_word_count: str, num_years: int, tags):
     """
     Given search keyword, page limit, time limit, word limit, find the documents in the database
     :return: a dictionary {'db_search_results': [document objects]}
     """
     pdf_min_page = int(pdf_min_page) if int(pdf_min_page) > 0 else 0
     min_word_count = int(min_word_count) if int(min_word_count) > 0 else 0
+    result = {}
+
+    if tags and custom_keyword:
+        updateError('Cannot have tags and custom keyword at the same time')
+        return result
 
     if tags is None:
         tags = []
@@ -24,6 +29,10 @@ def get_db_results(search_keyword: str, pdf_min_page: str, min_word_count: str, 
         # existing_pdfs = mg.show_datas(collection='articles', query={'search_keyword': search_keyword, 'filtered': 1})
     except:
         updateError('Database Error: Error occurred when getting database results for %s.' % search_keyword)
+        return result
+
+    if custom_keyword:
+        existing_pdfs = [pdf for pdf in existing_pdfs if pdf['content'].count(custom_keyword) >= CUSTOM_KW_OCCUR]
 
     for pdf in existing_pdfs:
         # removing unnecessary attributes from the copy sent to frontend
