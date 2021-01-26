@@ -6,15 +6,19 @@ from definitions import ROOT_DIR, translate, CUSTOM_KW_OCCUR
 from Backend.storage import mongodb as mg
 from Backend.storage.mongodb import insert_data
 from utils.errors import updateError
+import traceback
 
 
-def get_db_results(search_keyword: str, custom_keyword: str, pdf_min_page: str, min_word_count: str, num_years: int, tags):
+def get_db_results(search_keyword: str, custom_keyword: str, pdf_min_page: str, min_word_count: str, num_years: int, page: str, tags: list):
     """
     Given search keyword, page limit, time limit, word limit, find the documents in the database
     :return: a dictionary {'db_search_results': [document objects]}
     """
     pdf_min_page = int(pdf_min_page) if int(pdf_min_page) > 0 else 0
     min_word_count = int(min_word_count) if int(min_word_count) > 0 else 0
+    num_years = int(num_years) if int(num_years) > 0 else 0
+    page = int(page) if int(page) > 0 else 0
+
     result = {}
 
     if tags and custom_keyword:
@@ -25,10 +29,12 @@ def get_db_results(search_keyword: str, custom_keyword: str, pdf_min_page: str, 
         tags = []
 
     try:
-        existing_pdfs = mg.search_datas(search_keyword, pdf_min_page, min_word_count, num_years, tags)
+        existing_pdfs = mg.search_datas(search_keyword, pdf_min_page, min_word_count, num_years, page, tags)
         # existing_pdfs = mg.show_datas(collection='articles', query={'search_keyword': search_keyword, 'filtered': 1})
-    except:
+    except Exception as e:
         updateError('Database Error: Error occurred when getting database results for %s.' % search_keyword)
+        print(traceback.format_exc())
+
         return result
 
     if custom_keyword:
