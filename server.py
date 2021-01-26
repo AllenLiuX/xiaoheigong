@@ -17,7 +17,7 @@ def get_query_string():
     return {
         "data": search_db(search_keyword=query["search_keyword"], custom_keyword=query["custom_keyword"], min_words='500',
                           pdf_min_num_page=str(query["pdf_min_num_page"]), num_years=int(query["num_years"]),
-                          tags=tags)
+                          page=query["page"], tags=tags)
     }
 
 
