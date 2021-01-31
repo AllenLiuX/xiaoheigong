@@ -16,8 +16,8 @@ def get_query_string():
     tags = query['tags'] if 'tags' in query.keys() else []
     return {
         "data": search_db(search_keyword=query["search_keyword"], custom_keyword=query["custom_keyword"], min_words='500',
-                          pdf_min_num_page=str(query["pdf_min_num_page"]), num_years=int(query["num_years"]),
-                          page=query["page"], tags=tags)
+                          pdf_min_num_page=query["pdf_min_num_page"], num_years=query["num_years"],
+                          page=query["page"], tags=tags, sort=query['sort'])
     }
 
 
