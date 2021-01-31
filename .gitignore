@@ -230,3 +230,5 @@ React/.next
 ### Project files
 error_report.txt
 blacklist.pkl
+xpdf_python/check_xpdf.py
+utils/get_cookies.py

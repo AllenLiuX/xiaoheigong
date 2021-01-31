@@ -186,6 +186,7 @@ class Filter:
                         # Update json file
                         attributes.update({'wordCount': word_count,
                                            'keywordCount': keywords_count,
+                                           'searchKwCount': keywords_count[search_keyword],
                                            'tags': tags_count,
                                            'filtered': 1})
                         file.close()

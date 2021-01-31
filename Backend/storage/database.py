@@ -9,7 +9,7 @@ from utils.errors import updateError
 import traceback
 
 
-def get_db_results(search_keyword: str, custom_keyword: str, pdf_min_page: str, min_word_count: str, num_years: int, page: str, tags: list):
+def get_db_results(search_keyword: str, custom_keyword: str, pdf_min_page: str, min_word_count: str, num_years: str, page: str, tags: list, sort: str):
     """
     Given search keyword, page limit, time limit, word limit, find the documents in the database
     :return: a dictionary {'db_search_results': [document objects]}
@@ -29,7 +29,7 @@ def get_db_results(search_keyword: str, custom_keyword: str, pdf_min_page: str, 
         tags = []
 
     try:
-        existing_pdfs = mg.search_datas(search_keyword, pdf_min_page, min_word_count, num_years, page, tags)
+        existing_pdfs = mg.search_datas(search_keyword, pdf_min_page, min_word_count, num_years, page, tags, sort)
         # existing_pdfs = mg.show_datas(collection='articles', query={'search_keyword': search_keyword, 'filtered': 1})
     except Exception as e:
         updateError('Database Error: Error occurred when getting database results for %s.' % search_keyword)

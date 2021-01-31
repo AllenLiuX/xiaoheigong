@@ -22,21 +22,26 @@ def insert_datas(data_list, collection, db='articles'):
     print(x.inserted_ids)
 
 
-def show_datas(collection, query={}, page=1, db='articles', sortby='_id', seq=True):
+def show_datas(collection, query={}, page=1, db='articles', sort='default', seq=True):
     mydb = myclient[db]
     mycol = mydb[collection]
     result = []
 
+    if sort == 'default':
+        sort = '_id'
+    elif sort == 'relv':
+        sort = 'searchKwCount'
+
     if seq:
-        objects = mycol.find(query).sort(sortby).skip((page - 1) * 10).limit(10)
+        objects = mycol.find(query).sort(sort).skip((page - 1) * 10).limit(10)
     else:
-        objects = mycol.find(query).sort(sortby, -1).skip((page - 1) * 10).limit(10)
+        objects = mycol.find(query).sort(sort, -1).skip((page - 1) * 10).limit(10)
     for x in objects:
         result.append(x)
     return result
 
 
-def search_datas(search_keyword, pdf_min_page, min_word_count, num_years, page, tags, db='articles'):
+def search_datas(search_keyword, pdf_min_page, min_word_count, num_years, page, tags, sort, db='articles'):
     mydb = myclient[db]
     result = []
     date = dt.datetime.now() - dt.timedelta(num_years * 365)
@@ -52,7 +57,7 @@ def search_datas(search_keyword, pdf_min_page, min_word_count, num_years, page, 
         query.update({'tags.list': {'$all': tags}})
 
     for collection in mydb.list_collection_names():
-        result += show_datas(collection, query, page)
+        result += show_datas(collection, query, page, sort=sort)
 
     return result
 
