@@ -26,6 +26,7 @@ def get_pdf_urls(search_keyword, page):
     index_url2 = 'https://www.huxiu.com/article/{}.html'
     url = 'https://search-api.huxiu.com/api/article?platform=www&s={}&sort=&page={}&pagesize=20'.format(search_keyword,
                                                                                                         page)
+    print(str(UserAgent().random))
     header = {'user-agent': str(UserAgent().random)}
     res = requests.post(url=url, headers=header)
 
@@ -39,10 +40,11 @@ def get_pdf_urls(search_keyword, page):
             if public_fun.calc_date(date) and not d['is_video_article']:  # 时间过滤且不说视文章
                 result.append(index_url2.format(d['aid']))
         print('--------Found %d articles from huxiu--------' % len(result))
+        print(result, pages)
         return result, pages
-    except:
+    except Exception as e:
         updateError("ResponseError: Empty response when downloading from huxiu. Status code: " + str(res.status_code))
-        return [], None
+        return [], 0
 
 
 def download_articles(url, search_keyword, min_word_count, get_pdf, summary):
@@ -146,12 +148,14 @@ def run(search_keyword, min_word_count, get_pdf):
 
     while page:
         one_page_url, pages = get_pdf_urls(search_keyword=search_keyword, page=page)
-        if pages is None:
-            return
+        print(str(page) + '/' + str(pages))
+        if pages == 0:
+            continue
         url2_list += one_page_url
-        if len(url2_list) < 100 and page < int(pages):
+        if len(url2_list) < 1000 and page < int(pages):
             page += 1
         else:
+            print(len(url2_list))
             page = 0
 
     url2_list = url2_list[:3] if config.DEBUG else url2_list
@@ -166,5 +170,5 @@ def run(search_keyword, min_word_count, get_pdf):
 
 
 if __name__ == '__main__':
-    s_w = '腾讯'
+    s_w = '恒大'
     run(search_keyword=s_w, min_word_count=0, get_pdf=True)
