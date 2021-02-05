@@ -9,7 +9,7 @@ from utils.errors import updateError
 import traceback
 
 
-def get_db_results(search_keyword: str, custom_keyword: str, pdf_min_page: str, min_word_count: str, num_years: str, page: str, tags: list, sort: str):
+def get_db_results(search_keyword: str, custom_keyword: str, pdf_min_page: str, min_word_count: str, num_years: str, page: str, tags: list, sort: str) -> dict:
     """
     Given search keyword, page limit, time limit, word limit, find the documents in the database
     :return: a dictionary {'db_search_results': [document objects]}

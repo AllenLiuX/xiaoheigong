@@ -7,7 +7,7 @@ CHROME_DRIVER_PATH = os.path.join(ROOT_DIR, 'venv', 'chromedriver')
 
 # The number of occurrences of the company name in a pdf as a keyword
 COMPANY_NAME_OCCUR = 3
-CUSTOM_KW_OCCUR = 3
+CUSTOM_KW_OCCUR = 10
 
 # Dictionary storing all the relationship between acronyms and Chinese
 translate = {'fxbg': '发现报告',
