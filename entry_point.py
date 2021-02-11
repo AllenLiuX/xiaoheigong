@@ -60,4 +60,5 @@ if __name__ == '__main__':
     # pp.pprint(result)
     # print(len(result['db_search_results']))
     pp.pprint([doc['doc_type'] for doc in result['db_search_results']])
+
     # pp.pprint(get_all_tags())
