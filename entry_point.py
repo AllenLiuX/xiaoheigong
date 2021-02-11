@@ -10,15 +10,15 @@ from definitions import CATEGORY_TO_TAG
 
 
 def search_db(search_keyword: str, custom_keyword: str, min_words: str, pdf_min_num_page: str, num_years: str,
-              page: str, tags=None, sort='default'):
-    results = database.get_db_results(search_keyword, custom_keyword, pdf_min_num_page, min_words, num_years, page,
-                                      tags, sort)
-    if not results['db_search_results']:
-        print("No results in database. Now searching.")
-        scrape(search_keyword=search_keyword, filter_keyword='', min_words=min_words, pdf_min_num_page=pdf_min_num_page,
-               num_years=int(num_years))
-    results = database.get_db_results(search_keyword, custom_keyword, pdf_min_num_page, min_words, num_years, page,
-                                      tags, sort)
+              doc_type: str, page: str, tags=None, sort='default'):
+    results = database.get_db_results(search_keyword, custom_keyword, pdf_min_num_page, min_words, num_years, doc_type,
+                                      page, tags, sort)
+    # if not results['db_search_results']:
+    #     print("No results in database. Now searching.")
+    #     scrape(search_keyword=search_keyword, filter_keyword='', min_words=min_words, pdf_min_num_page=pdf_min_num_page,
+    #            num_years=int(num_years))
+    # results = database.get_db_results(search_keyword, custom_keyword, pdf_min_num_page, min_words, num_years, page,
+    #                                   tags, sort)
     return results
 
 
@@ -52,11 +52,12 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         keyword = sys.argv[1]
     else:
-        keyword = '腾讯'
+        keyword = '中芯国际'
 
     # scrape(search_keyword=keyword, filter_keyword='', min_words='500', pdf_min_num_page='20', num_years=10)
-    result = search_db(search_keyword=keyword, custom_keyword='', min_words='500', pdf_min_num_page='0', num_years='1', page='1', sort='relv')
-    pp.pprint(result)
-    print(len(result['db_search_results']))
-    # pp.pprint([doc['title'] for doc in result['db_search_results']])
+    result = search_db(search_keyword=keyword, custom_keyword='', min_words='0', pdf_min_num_page='0', num_years='10',
+                       doc_type='NEWS', page='1', sort='default')
+    # pp.pprint(result)
+    # print(len(result['db_search_results']))
+    pp.pprint([doc['doc_type'] for doc in result['db_search_results']])
     # pp.pprint(get_all_tags())

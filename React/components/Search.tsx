@@ -12,6 +12,9 @@ export default function Search() {
 	const [inputType, setInputType] = useState("全部")
 	const [articles, setArticles] = useState([])
 	const [status, setStatus] = useState(Number())
+	const [sort, setSort] = useState("default")
+	const [relevance, setRelevance] = useState("H")
+	const [page, setPage] = useState("1")
 
 	useEffect(() => {
 		let url = window.location.search;
@@ -20,6 +23,9 @@ export default function Search() {
 		setInputDate(String(params["num_years"]))
 		setInputLength(String(params["pdf_min_num_page"]))
 		setInputType(String(params["inputType"]))
+		setSort(String(params["sort"]))
+		setRelevance(String(params["relevance"]))
+		setPage(String(params["page"]))
 		console.log(params)
 		fetchData(params)
 	}, []);
@@ -73,9 +79,13 @@ export default function Search() {
 	const fetchData = async (inp) => {
 		const params = {
 			search_keyword: String(inp["search_keyword"]),
+			custom_keyword: String(inp["custom_keyword"]),
+			page: String(inp["page"]),
+			sort: String(inp["sort"]),
+			doc_type: String(inp["inputType"]),
+			relevance: String(inp["relevance"]),
 			num_years: String(inp["num_years"]),
-			pdf_min_num_page: String(inp["pdf_min_num_page"]),
-			inputType: String(inp["inputType"])
+			pdf_min_num_page: String(inp["pdf_min_num_page"])
 		}
 		JSON.stringify(params)
 		axios.post(`http://8.210.91.108:5000/`, { params })

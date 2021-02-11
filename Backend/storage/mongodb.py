@@ -41,13 +41,13 @@ def show_datas(collection, query={}, page=1, db='articles', sort='default', seq=
     return result
 
 
-def search_datas(search_keyword, pdf_min_page, min_word_count, num_years, page, tags, sort, db='articles'):
+def search_datas(search_keyword, pdf_min_page, min_word_count, num_years, doc_type, page, tags, sort, db='articles'):
     mydb = myclient[db]
     result = []
     date = dt.datetime.now() - dt.timedelta(num_years * 365)
 
     query = {
-        'keywordCount.%s' % search_keyword: {'$gt': COMPANY_NAME_OCCUR},
+        'searchKwCount': {'$gt': COMPANY_NAME_OCCUR},
         '$or': [{'page_num': {'$gt': pdf_min_page}}, {'wordCount': {'$gt': min_word_count}}],
         'date': {'$gte': date.isoformat()},
         'filtered': 1
@@ -55,6 +55,9 @@ def search_datas(search_keyword, pdf_min_page, min_word_count, num_years, page, 
 
     if tags:
         query.update({'tags.list': {'$all': tags}})
+
+    if doc_type != 'ALL':
+        query.update({'doc_type': doc_type})
 
     for collection in mydb.list_collection_names():
         result += show_datas(collection, query, page, sort=sort)
