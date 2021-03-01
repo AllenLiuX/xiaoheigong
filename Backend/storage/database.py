@@ -7,6 +7,7 @@ from Backend.storage import mongodb as mg
 from Backend.storage.mongodb import insert_data
 from utils.errors import updateError
 import traceback
+from datetime import datetime
 
 
 def get_db_results(search_keyword: str, custom_keyword: str, pdf_min_page: str, min_word_count: str, num_years: str,
@@ -100,6 +101,8 @@ def upload_to_db(search_keyword):
             except FileNotFoundError:
                 updateError('File not found error: Error occurred when uploading %s data to database' % source_name)
                 continue
+
+            json_file['date'] = datetime.strptime(json_file['date'], '%Y-%m-%d').isoformat()
 
             try:
                 insert_data(json_file, 'articles')
