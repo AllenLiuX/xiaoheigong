@@ -55,10 +55,10 @@ if __name__ == '__main__':
         keyword = '中芯国际'
 
     # scrape(search_keyword=keyword, filter_keyword='', min_words='500', pdf_min_num_page='20', num_years=10)
-    result = search_db(search_keyword=keyword, custom_keyword='', min_words='0', pdf_min_num_page='0', num_years='10',
-                       doc_type='NEWS', page='1', sort='default')
+    result = search_db(search_keyword=keyword, custom_keyword='', min_words='0', pdf_min_num_page='20', num_years='1',
+                       doc_type='ALL', page='1', sort='default', tags=['历史沿革'])
     # pp.pprint(result)
-    # print(len(result['db_search_results']))
-    pp.pprint([doc['doc_type'] for doc in result['db_search_results']])
+    print(len(result['db_search_results']))
+    pp.pprint([doc['title'] for doc in result['db_search_results']])
 
     # pp.pprint(get_all_tags())

@@ -38,6 +38,7 @@ def show_datas(collection, query={}, page=1, db='articles', sort='default', seq=
         objects = mycol.find(query).sort(sort, -1).skip((page - 1) * 10).limit(10)
     for x in objects:
         result.append(x)
+
     return result
 
 
@@ -47,6 +48,7 @@ def search_datas(search_keyword, pdf_min_page, min_word_count, num_years, doc_ty
     date = dt.datetime.now() - dt.timedelta(num_years * 365)
 
     query = {
+        'search_keyword': search_keyword,
         'searchKwCount': {'$gt': COMPANY_NAME_OCCUR},
         '$or': [{'page_num': {'$gt': pdf_min_page}}, {'wordCount': {'$gt': min_word_count}}],
         'date': {'$gte': date.isoformat()},
